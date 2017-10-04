@@ -1,0 +1,10 @@
+23
+
+Good job with the ER diagram!
+
+However, the IT reqs have issues:
+- there are unanswered questions in the writeup; answer them!
+- there are a lot of unjustified numbers and requirements; if you say 50Gigs,
+  explain why? how did you come up with this number? client req? best
+  practices? DoD req? NIST req? please verify every single item and make sure
+  they are all properly justified.
