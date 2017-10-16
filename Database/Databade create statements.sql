@@ -17,23 +17,12 @@ CREATE DATABASE Life_Coach
 
 CREATE TABLE Companies
 (
-    RowID bigint NOT NULL DEFAULT nextval('Companies_RowID_seq'::regclass),
+    CompanyID Serial NOT NULL,
     AdminID bigint NOT NULL,
     Name character varying(500) COLLATE pg_catalog.default NOT NULL,
     Location character varying(500) COLLATE pg_catalog.default NOT NULL,
-    CONSTRAINT CompanyID PRIMARY KEY (RowID),
-    CONSTRAINT AdminID FOREIGN KEY (AdminID)
-        REFERENCES Persons (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE Companies
-    OWNER to postgres;
+    CONSTRAINT CompanyID PRIMARY KEY (CompanyID)
+);
 
 -- Table: Addresses
 
@@ -41,22 +30,15 @@ ALTER TABLE Companies
 
 CREATE TABLE Addresses
 (
-    RowID bigint NOT NULL DEFAULT nextval('Addresses_RowID_seq'::regclass),
+    AddressID Serial NOT NULL,
     AdressLine1 character varying(200) COLLATE pg_catalog.default NOT NULL,
     AdressLine2 character varying(200) COLLATE pg_catalog.default,
     City character varying(200) COLLATE pg_catalog.default NOT NULL,
     Subdivision character varying(200) COLLATE pg_catalog.default,
     Zip character varying(50) COLLATE pg_catalog.default NOT NULL,
     Country character varying(200) COLLATE pg_catalog.default NOT NULL,
-    CONSTRAINT AddressID PRIMARY KEY (RowID)
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE Addresses
-    OWNER to postgres;
+    CONSTRAINT AddressID PRIMARY KEY (AddressID)
+);
 
 -- Table: Photos
 
@@ -64,19 +46,12 @@ ALTER TABLE Addresses
 
 CREATE TABLE Photos
 (
-    RowID bigint NOT NULL DEFAULT nextval('Photos_RowID_seq'::regclass),
+    PhotoID Serial NOT NULL,
     UploadDate timestamp without time zone,
     MIMEType character varying(250) COLLATE pg_catalog.default,
     File bytea,
-    CONSTRAINT PhotoID PRIMARY KEY (RowID)
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE Photos
-    OWNER to postgres;
+    CONSTRAINT PhotoID PRIMARY KEY (PhotoID)
+);
 
 -- Table: Visits
 
@@ -84,24 +59,15 @@ ALTER TABLE Photos
 
 CREATE TABLE Visits
 (
-    RowID bigint NOT NULL DEFAULT nextval('Visits_RowID_seq'::regclass),
+    VisitID Serial NOT NULL,
     Date timestamp without time zone,
     Type character varying COLLATE pg_catalog.default NOT NULL,
     Reason character varying COLLATE pg_catalog.default,
     Location bigint,
-    CONSTRAINT VisitID PRIMARY KEY (RowID),
-    CONSTRAINT LocationID FOREIGN KEY (Location)
-        REFERENCES Addresses (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE Visits
-    OWNER to postgres;
+    CONSTRAINT VisitID PRIMARY KEY (VisitID),
+    CONSTRAINT AddressID FOREIGN KEY (Location)
+        REFERENCES Addresses (AddressID) MATCH SIMPLE
+);
 
 -- Table: Relationship_Types
 
@@ -109,88 +75,10 @@ ALTER TABLE Visits
 
 CREATE TABLE Relationship_Types
 (
-    RowID bigint NOT NULL DEFAULT nextval('Relationship_Types_RowID_seq'::regclass),
+    Relationship_TypeID Serial NOT NULL,
     Type character varying(250) COLLATE pg_catalog.default NOT NULL,
-    CONSTRAINT Relationship_TypeID PRIMARY KEY (RowID)
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE Relationship_Types
-    OWNER to postgres;
-
--- Table: Relationships
-
--- DROP TABLE Relationships;
-
-CREATE TABLE Relationships
-(
-    RowID bigint NOT NULL DEFAULT nextval('Relationships_RowID_seq'::regclass),
-    PersonID1 bigint NOT NULL,
-    Relationship bigint NOT NULL,
-    PersonID2 bigint NOT NULL,
-    CONSTRAINT RelationshipID PRIMARY KEY (RowID),
-    CONSTRAINT PersonID1 FOREIGN KEY (PersonID1)
-        REFERENCES Persons (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT PersonID2 FOREIGN KEY (PersonID2)
-        REFERENCES Persons (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT Relationship_TypeID FOREIGN KEY (Relationship)
-        REFERENCES Relationship_Types (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE Relationships
-    OWNER to postgres;
-
--- Table: Notes
-
--- DROP TABLE Notes;
-
-CREATE TABLE Notes
-(
-    RowID bigint NOT NULL DEFAULT nextval('Notes_RowID_seq'::regclass),
-    ClientID bigint NOT NULL,
-    CoachID bigint NOT NULL,
-    VisitID bigint NOT NULL,
-    PhotoID bigint,
-    Description text COLLATE pg_catalog.default NOT NULL,
-    Date_Added timestamp without time zone,
-    CONSTRAINT NoteID PRIMARY KEY (RowID),
-    CONSTRAINT ClientID FOREIGN KEY (ClientID)
-        REFERENCES Clients (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT CoachID FOREIGN KEY (CoachID)
-        REFERENCES Coaches (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT PhotoID FOREIGN KEY (PhotoID)
-        REFERENCES Photos (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT VisitID FOREIGN KEY (VisitID)
-        REFERENCES Visits (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE Notes
-    OWNER to postgres;
+    CONSTRAINT Relationship_TypeID PRIMARY KEY (Relationship_TypeID)
+);
 
 -- Table: Persons
 
@@ -198,7 +86,7 @@ ALTER TABLE Notes
 
 CREATE TABLE Persons
 (
-    RowID bigint NOT NULL DEFAULT nextval('People_RowID_seq'::regclass),
+    PersonID Serial NOT NULL,
     PhotoID bigint,
     Prefix character varying COLLATE pg_catalog.default,
     First_Name character varying COLLATE pg_catalog.default NOT NULL,
@@ -212,23 +100,31 @@ CREATE TABLE Persons
     Date_of_Birth date,
     Address bigint,
     Middle_Name character varying(250) COLLATE pg_catalog.default,
-    CONSTRAINT PeopleID PRIMARY KEY (RowID),
+    CONSTRAINT PersonID PRIMARY KEY (PersonID),
     CONSTRAINT AddressID FOREIGN KEY (Address)
-        REFERENCES Addresses (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+        REFERENCES Addresses (AddressID) MATCH SIMPLE,
     CONSTRAINT PhotoID FOREIGN KEY (PhotoID)
-        REFERENCES Photos (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
+        REFERENCES Photos (PhotoID) MATCH SIMPLE
+);
 
-ALTER TABLE Persons
-    OWNER to postgres;
+-- Table: Relationships
+
+-- DROP TABLE Relationships;
+
+CREATE TABLE Relationships
+(
+    RelationshipID Serial NOT NULL,
+    PersonID1 bigint NOT NULL,
+    Relationship bigint NOT NULL,
+    PersonID2 bigint NOT NULL,
+    CONSTRAINT RelationshipID PRIMARY KEY (RelationshipID),
+    CONSTRAINT PersonID1 FOREIGN KEY (PersonID1)
+        REFERENCES Persons (PersonID) MATCH SIMPLE,
+    CONSTRAINT PersonID2 FOREIGN KEY (PersonID2)
+        REFERENCES Persons (PersonID) MATCH SIMPLE,
+    CONSTRAINT Relationship_TypeID FOREIGN KEY (Relationship)
+        REFERENCES Relationship_Types (Relationship_TypeID) MATCH SIMPLE
+);
 
 -- Table: Coaches
 
@@ -236,29 +132,18 @@ ALTER TABLE Persons
 
 CREATE TABLE Coaches
 (
-    RowID bigint NOT NULL DEFAULT nextval('Coaches_RowID_seq'::regclass),
-    PersonsID bigint NOT NULL,
-    ClientsID bigint NOT NULL,
-    CompaniesID bigint NOT NULL,
+    CoachID Serial NOT NULL,
+    PersonID bigint NOT NULL,
+    ClientID bigint NOT NULL,
+    CompanyID bigint NOT NULL,
     Superviser boolean NOT NULL,
     Password character varying(150) COLLATE pg_catalog.default NOT NULL,
-    CONSTRAINT CoachesID PRIMARY KEY (RowID),
-    CONSTRAINT Companies ID FOREIGN KEY (CompaniesID)
-        REFERENCES Companies (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT PersonsID FOREIGN KEY (PersonsID)
-        REFERENCES Persons (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE Coaches
-    OWNER to postgres;
+    CONSTRAINT CoachID PRIMARY KEY (CoachID),
+    CONSTRAINT CompanyID FOREIGN KEY (CompanyID)
+        REFERENCES Companies (CompanyID) MATCH SIMPLE,
+    CONSTRAINT PersonID FOREIGN KEY (PersonID)
+        REFERENCES Persons (PersonID) MATCH SIMPLE
+);
 
 -- Table: Clients
 
@@ -266,10 +151,9 @@ ALTER TABLE Coaches
 
 CREATE TABLE Clients
 (
-    RowID bigint NOT NULL DEFAULT nextval('Clients_RowID_seq'::regclass),
-    PersonsID bigint NOT NULL,
-    CompaniesID bigint NOT NULL,
-    CoachesID bigint,
+    ClientID Serial NOT NULL,
+    PersonID bigint NOT NULL,
+    CompanyID bigint NOT NULL,
     Work_Company character varying(200) COLLATE pg_catalog.default,
     Work_Address bigint,
     Work_Title character varying(200) COLLATE pg_catalog.default,
@@ -282,31 +166,14 @@ CREATE TABLE Clients
     Call_Time_Preference_End time with time zone,
     Goals text COLLATE pg_catalog.default,
     Needs text COLLATE pg_catalog.default,
-    CONSTRAINT ClientsID PRIMARY KEY (RowID),
+    CONSTRAINT ClientsID PRIMARY KEY (ClientID),
     CONSTRAINT AddressID FOREIGN KEY (Work_Address)
-        REFERENCES Addresses (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT CoachesID FOREIGN KEY (CoachesID)
-        REFERENCES Coaches (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT CompaniesID FOREIGN KEY (CompaniesID)
-        REFERENCES Companies (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT PersonsID FOREIGN KEY (PersonsID)
-        REFERENCES Persons (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
-
-ALTER TABLE Clients
-    OWNER to postgres;
+        REFERENCES Addresses (AddressID) MATCH SIMPLE,
+    CONSTRAINT CompanyID FOREIGN KEY (CompanyID)
+        REFERENCES Companies (CompanyID) MATCH SIMPLE,
+    CONSTRAINT PersonID FOREIGN KEY (PersonID)
+        REFERENCES Persons (PersonID) MATCH SIMPLE
+);
 
 -- Table: Events
 
@@ -314,31 +181,44 @@ ALTER TABLE Clients
 
 CREATE TABLE Events
 (
-    RowIDs bigint NOT NULL DEFAULT nextval('Events_RowIDs_seq'::regclass),
-    ClientsID bigint NOT NULL,
+    EventID Serial NOT NULL,
+    ClientID bigint NOT NULL,
     PhotoID bigint,
-    CoachesID bigint NOT NULL,
+    CoachID bigint NOT NULL,
     Name character varying(250) COLLATE pg_catalog.default NOT NULL,
     Description text COLLATE pg_catalog.default NOT NULL,
     Date timestamp without time zone,
-    CONSTRAINT EventID PRIMARY KEY (RowIDs),
-    CONSTRAINT ClientID FOREIGN KEY (ClientsID)
-        REFERENCES Clients (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
-    CONSTRAINT CoachID FOREIGN KEY (CoachesID)
-        REFERENCES Coaches (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION,
+    CONSTRAINT EventID PRIMARY KEY (EventID),
+    CONSTRAINT ClientID FOREIGN KEY (ClientID)
+        REFERENCES Clients (ClientID) MATCH SIMPLE,
+    CONSTRAINT CoachID FOREIGN KEY (CoachID)
+        REFERENCES Coaches (CoachID) MATCH SIMPLE,
     CONSTRAINT PhotoID FOREIGN KEY (PhotoID)
-        REFERENCES Photos (RowID) MATCH SIMPLE
-        ON UPDATE NO ACTION
-        ON DELETE NO ACTION
-)
-WITH (
-    OIDS = FALSE
-)
-TABLESPACE pg_default;
+        REFERENCES Photos (PhotoID) MATCH SIMPLE
+);
 
-ALTER TABLE Events
-    OWNER to postgres;
+
+-- Table: Notes
+
+-- DROP TABLE Notes;
+
+CREATE TABLE Notes
+(
+    NoteID Serial NOT NULL,
+    ClientID bigint NOT NULL,
+    CoachID bigint NOT NULL,
+    VisitID bigint NOT NULL,
+    PhotoID bigint,
+    Description text COLLATE pg_catalog.default NOT NULL,
+    Date_Added timestamp without time zone,
+    CONSTRAINT NoteID PRIMARY KEY (NoteID),
+    CONSTRAINT ClientID FOREIGN KEY (ClientID)
+        REFERENCES Clients (ClientID) MATCH SIMPLE,
+    CONSTRAINT CoachID FOREIGN KEY (CoachID)
+        REFERENCES Coaches (CoachID) MATCH SIMPLE,
+    CONSTRAINT PhotoID FOREIGN KEY (PhotoID)
+        REFERENCES Photos (PhotoID) MATCH SIMPLE,
+    CONSTRAINT VisitID FOREIGN KEY (VisitID)
+        REFERENCES Visits (VisitID) MATCH SIMPLE
+);
+
