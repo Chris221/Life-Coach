@@ -1,6 +1,6 @@
 <?php
 	$connPage = $_SERVER['REQUEST_URI'];
-	$connString = "host=localhost port=PORT dbname=DB_NAME user=USERNAME pass=PASSWORD options='--application_name=$connPage'";
+	$connString = "host=localhost port=5432 dbname=Life_Coach user=webuser pass=Cappingteampablo2 options='--application_name=$connPage'";
 
 	$conn = pg_connect($connString);
 
