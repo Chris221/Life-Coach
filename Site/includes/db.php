@@ -9,4 +9,6 @@
 	//$result = pg_query($conn, "SQL GOES HERE");
 	//while ($row = pg_fetch_row($result)) 
 	//pg_fetch_all($result);
+	//pg_escape_string($conn, "STRING GOES HERE");
+	//pg_close($conn);
 ?>
