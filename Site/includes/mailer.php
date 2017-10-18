@@ -4,7 +4,7 @@
 		include('includes/db.php');
 		$sql = "SELECT domain FROM companies WHERE companyid='$companyid'";
 		$data = pg_query($conn, $sql);
-		$data = pg_fetch_all($data);
+		$data = pg_fetch_assoc($data);
 		pg_close($conn);
 		
 		$from = 'system@'.$data['domain'];

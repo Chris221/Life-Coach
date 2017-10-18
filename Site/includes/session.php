@@ -6,7 +6,7 @@
 		$personid = (int) decrypt($_COOKIE['Login']);
 		$sql = "SELECT * FROM accounts WHERE personid='$personid'";
 		$data = pg_query($conn, $sql);
-		$data = pg_fetch_all($data);
+		$data = pg_fetch_assoc($data);
 		
 		$_SESSION['personid'] = $data['personid'];
 		$_SESSION['coachid'] = $data['coachid'];
@@ -22,7 +22,7 @@
 		pg_close($conn);
 	}
 	if ($_SESSION['employeed']) {
-		include('page/db.php');
+		include('includes/db.php');
 		$date = date("Y-m-d H:i:s");
 		pg_query($conn, "UPDATE coaches SET last_active='$date' WHERE personid='$personid'");
 		pg_close($conn);
