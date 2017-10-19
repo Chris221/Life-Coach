@@ -3,7 +3,7 @@
 
 	$conn = pg_connect($connString);
 
-	if (true) {
+	if (false) {
 		$stat = pg_connection_status($conn);
 		if ($stat === PGSQL_CONNECTION_OK) {
 			echo 'Connection status ok';

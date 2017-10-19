@@ -18,5 +18,13 @@
 <?php
 	echo("Hello, ".$_SESSION['first_name'].' '.$_SESSION['last_name'].'!');
 ?>
+<br />
+<br />
+<br />
+<br />
+<a href="/NewCoach" >Add a New Coach</a>
+<br />
+<br />
+<a href="/Logout" >Logout</a>
 </body>
 </html>

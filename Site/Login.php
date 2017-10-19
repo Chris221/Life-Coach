@@ -6,7 +6,6 @@
 	$title = 'Login';
 
 	include('includes/db.php');
-	include('includes/protection.php');
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$email = strtolower($_POST['email']);
 		$pass = $_POST['pass'];
@@ -30,16 +29,13 @@
 		// Encrypt password
 		include('includes/password.php');
 		$email = pg_escape_string($conn,$email);
-		//$pass = encryptpass($pass);
+		$pass = encryptpass($pass);
 		
 		$sql = "SELECT * FROM accounts WHERE email = '$email' AND password = '$pass';";
 		
-		echo('<br />sql: '.$sql.'<br />');
 		$data = pg_query($conn, $sql);
-		echo('<br />query: '.$data.'<br />');
 		//$data = pg_fetch_array($data, 0, PGSQL_ASSOC);
 		$data = pg_fetch_assoc($data);
-		echo('fetch: '.$data.'<br />');
 		$error = pg_last_error($conn);
 		
 		if ($data['personid']) {
@@ -63,17 +59,24 @@
 				$_SESSION['clientid'] = $data['clientid'];
 				$_SESSION['employeed'] = $data['employeed'];
 				
-				$personid = $_SESSION['personid'];
 				//sets cookie if it was checked
 				if ($_POST['remember']) {
-					setcookie("Login", encrypt($_SESSION['personid']), time() + (86400 * 30), "/"); // 86400 = 1 day
+					include('includes/protection.php');
+					//BROKEN fix with Try catches
+					$pid = $_SESSION['personid'];
+					echo("pid: ".$pid.'<br />');
+					$epid = encrypt($pid);
+					echo("epid: ".$epid.'<br />');
+					setcookie("Login", $epid, time() + (86400 * 30), "/"); // 86400 = 1 day
 				}
 				
 				//LOGS
 				//include('includes/log.php');
 				//c_Log('Log in','User: '.$email);
 				$date = date("Y-m-d H:i:s");
+				//update last active time
 				pg_query($conn, "UPDATE coaches SET last_active='$date' WHERE personid='$personid'");
+				//redirects to home
 				header('Location: /');
 			}
 		} else {
@@ -102,9 +105,6 @@
 		<?php
 			echo($title.'<br />');
 			echo($text);
-			echo('<br />error: '.$error.'<br /><br />');
-			echo('<br />data: '.$data.'<br /><br />');
-			echo('<br />encrypted pass: '.$pass.'<br /><br />');
             echo('
 				<form action="#" method="post">
 					Email Address: <br />
