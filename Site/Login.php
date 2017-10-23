@@ -97,6 +97,12 @@
 <!-- For Mobile scaling -->
 <meta name="viewport" content="width=device-width, user-scalable=no" />
 <meta name="HandheldFriendly" content="true">
+<!-- Latest compiled and minified CSS -->
+<link rel="stylesheet" href="/bootstrap-3.3.7/css/bootstrap.min.css">
+<!-- jQuery library -->
+<script src="/js/jquery/jquery-3.2.1.min.js"></script>
+<!-- Latest compiled JavaScript -->
+<script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
 <title><?php echo($title); ?></title>
 </head>
 <body>
