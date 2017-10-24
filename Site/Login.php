@@ -118,7 +118,7 @@
 					<input type="text" name="email" value="'.$email.'" class="login_input" /><br />
 					Password: <br />
 					<input type="password" name="pass" class="login_input" /><br />
-					<input type="checkbox" name="remember" />Keep me logged in for 30 days<br />
+					<input type="checkbox" name="remember" class="login_checkbox" />Keep me logged in for 30 days<br />
 					<input type="submit" value="Submit" class="button" /><br />
 				</form>
 				<a href="/ForgotPassword" class="button">Forgot Password?</a>
