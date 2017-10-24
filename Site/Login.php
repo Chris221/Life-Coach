@@ -103,24 +103,25 @@
 <script src="/js/jquery/jquery-3.2.1.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<!-- Our CSS -->
+<link rel="stylesheet" href="/css/life-coach.css">
 <title><?php echo($title); ?></title>
 </head>
 <body>
-<div class="login_page page">
+<div class="login_page">
 	<div class="login">
 		<?php
-			echo($title.'<br />');
 			echo($text);
             echo('
 				<form action="#" method="post">
 					Email Address: <br />
-					<input type="text" name="email" value="'.$email.'" /><br />
+					<input type="text" name="email" value="'.$email.'" class="login_input" /><br />
 					Password: <br />
-					<input type="password" name="pass" /><br />
+					<input type="password" name="pass" class="login_input" /><br />
 					<input type="checkbox" name="remember" />Keep me logged in for 30 days<br />
-					<input type="submit" value="Submit" /><br /><br />
+					<input type="submit" value="Submit" class="button" /><br />
 				</form>
-				<a href="/ForgotPassword" class="register_link">Forgot Password?</a>
+				<a href="/ForgotPassword" class="button">Forgot Password?</a>
 			');
 		?>
 	</div>

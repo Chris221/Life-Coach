@@ -18,9 +18,16 @@
 <script src="/js/jquery/jquery-3.2.1.min.js"></script>
 <!-- Latest compiled JavaScript -->
 <script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<!-- Our CSS -->
+<link rel="stylesheet" href="/css/life-coach.css">
 <title><?php echo($title); ?></title>
 </head>
 <body>
+<div id="header">
+    <table id="headRow">
+        <ul> </ul>
+    </table>
+</div>
 <?php
 	echo("Hello, ".$_SESSION['first_name'].' '.$_SESSION['last_name'].'!');
 ?>
