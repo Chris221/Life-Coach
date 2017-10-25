@@ -3,17 +3,17 @@
 		include('includes/db.php');
 		$escapedTable = pg_escape_string($conn, $table);
 		if (strlen($where) > 1) {
-			$escapedWhere = pg_escape_string($conn, $where);
-			$fullWhere = ' WHERE '.$escapedWhere;
+			//$escapedWhere = pg_escape_string($conn, $where);
+			$fullWhere = ' WHERE '.$where;
 		} else {
 			$fullWhere = '';
 		}
-		$sql = 'SELET * FROM '.$escapedTable.$fullWhere.';';
+		$sql = 'SELECT * FROM '.$escapedTable.$fullWhere.';';
 		$result = pg_query($conn, $sql);
-		$data = pg_fetch_assoc($data);
+		$data = pg_fetch_assoc($result);
 		if ($debug) {
 			$error = pg_last_error($conn);
-			if ($error) {
+			if ($error && false) {
 				echo('<br />Error!<br />');
 				echo('Table trying to be viewed: '.$table.'<br />');
 				echo('Escaped Table: '.$escapedTable.'<br />');

@@ -51,3 +51,8 @@
 .login_input {
 	width: 210px;
 }
+
+.title {
+    text-align: center;
+    font-size: large;
+}
