@@ -14,7 +14,8 @@
 	margin-bottom: 5px;
 }
 .login_checkbox {
-	margin-right: 5px;
+	margin-right: 5px !important;
+	margin-bottom: 10px !important;
 }
 .login form {
     margin-left: auto;
