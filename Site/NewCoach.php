@@ -22,9 +22,9 @@
 		$pass1 = $_POST['pass1'];
 		$pass2 = $_POST['pass2'];
 		if(isset($_POST['superviser'])) {
-			$superviser = true;
+			$superviser = 'true';
 		} else {
-			$superviser = false;
+			$superviser = 'false';
 		}
 		
 		$work = true;
@@ -104,18 +104,20 @@
 		
 		if ($work) {
 			// Check for Email duplicates
-			view('accounts',"email='$email1'");
+			$data = view('accounts',"email='$email1'");
+			echo("email personID: ".$data['personid']."<br />");
 			if($data['personid']) {
 				$text = "The email address \"$email1\" already exists.<br />";
 				$work = false;
 			}
+			$work = false;
 		}
 		if ($work) {
 			$email1 = strtolower($email1);
 			$correctDOB = date("Y-m-d", strtotime($dob));
 			include('includes/password.php');
 			$pass = encryptpass($pass1);
-			$pid = addPerson($firstname,$lastname,$email1,$cell,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename);
+			$pid = addPerson($firstname,$lastname,$email1,$cell,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename,true);
 			$companyid = $_SESSION['companyid'];
 			$output = true;
 			if ($pid && $output) {
@@ -124,7 +126,7 @@
 			} else if ($output) {
 				echo("ERROR PERSON WAS NOT ADDED!<br />");
 			}
-			$cid = addCoach($pid,$clientid,$companyid,$superviser,$pass);
+			$cid = addCoach($pid,$clientid,$companyid,$superviser,$pass,true);
 			if ($cid && $output) {
 				echo("Coach was added succesfully!<br />");
 				echo("Coach ID:".$cid."<br />");
@@ -143,11 +145,11 @@
 <meta name="viewport" content="width=device-width, user-scalable=no" />
 <meta name="HandheldFriendly" content="true">
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="/bootstrap-3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/bootstrap/4.0.0/css/bootstrap.min.css">
 <!-- jQuery library -->
 <script src="/js/jquery/jquery-3.2.1.min.js"></script>
 <!-- Latest compiled JavaScript -->
-<script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script src="/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!-- Our CSS -->
 <link rel="stylesheet" href="/css/life-coach.css">
 <title><?php echo($title); ?></title>
@@ -191,8 +193,8 @@
 					<input type="password" name="pass1" /><br />
 					Confirm Password:* <br />
 					<input type="password" name="pass2" /><br />
-					<input type="reset" value="Reset" />&thinsp;
-					<input type="submit" value="Submit" /><br /><br />
+					<input type="submit" value="Submit" class="button" /><br /><br />
+					<input type="reset" value="Reset" class="button" />
 				</form>
 			');
 		?>

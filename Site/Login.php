@@ -98,11 +98,11 @@
 <meta name="viewport" content="width=device-width, user-scalable=no" />
 <meta name="HandheldFriendly" content="true">
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="/bootstrap-3.3.7/css/bootstrap.min.css">
+<link rel="stylesheet" href="/bootstrap/4.0.0/css/bootstrap.min.css">
 <!-- jQuery library -->
 <script src="/js/jquery/jquery-3.2.1.min.js"></script>
 <!-- Latest compiled JavaScript -->
-<script src="/bootstrap-3.3.7/js/bootstrap.min.js"></script>
+<script src="/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!-- Our CSS -->
 <link rel="stylesheet" href="/css/life-coach.css">
 <title><?php echo($title); ?></title>
@@ -119,9 +119,9 @@
 					Password: <br />
 					<input type="password" name="pass" class="login_input" /><br />
 					<input type="checkbox" name="remember" class="login_checkbox" />Keep me logged in for 30 days<br />
-					<input type="submit" value="Submit" class="button" /><br />
+					<input type="submit" value="Submit" class="button login_button" />
 				</form>
-				<a href="/ForgotPassword" class="button">Forgot Password?</a>
+				<a href="/ForgotPassword">Forgot Password?</a>
 			');
 		?>
 	</div>
