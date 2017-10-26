@@ -170,17 +170,20 @@
             <li class="nav-item">
                 <a class="nav-link" href="#">Clients</a>
             </li>
-            <li class="nav-item nav-item-right">
+        </ul>
+        <!--        I changed this to align the logout to the right-->
+        <ul class="nav navbar-nav navbar-right">
+            <li class="van-item">
                 <a class="nav-link" href="/Logout" >Logout</a>
             </li>
-<!--            <li class="nav-item">
-                <a class="nav-link disabled" href="#">Disabled</a>
-            </li>-->
+            <!--            <li class="nav-item">
+                            <a class="nav-link disabled" href="#">Disabled</a>
+                        </li>-->
         </ul>
-<!--        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>-->
+        <!--        <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>-->
     </div>
 </nav>
 <br />
