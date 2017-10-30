@@ -65,6 +65,11 @@
     vertical-align: middle;
 }
 
+.bg-blue {
+    background-color: #0000FF;
+}
+
+
 /*.nav-item-right {*/
     /*font-align: right;*/
 /*}*/
