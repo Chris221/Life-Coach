@@ -8,7 +8,8 @@
 	padding: 25px 0px;
 }
 .login {
-	margin: 0px 50px;
+	margin: auto;
+	width: 210px;
 }
 .login input {
 	margin-bottom: 5px;
@@ -63,6 +64,11 @@
     height: 100%;
     vertical-align: middle;
 }
+
+.bg-blue {
+    background-color: #0000FF;
+}
+
 
 /*.nav-item-right {*/
     /*font-align: right;*/
