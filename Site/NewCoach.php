@@ -1,19 +1,20 @@
 <?php
 	include('includes/session.php');
-	if (!$_SESSION['superviser']) {
+	if (!$_SESSION['supervisor']) {
 		header('Location: /');
 	}
 	$title = 'Add New Coach';
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		include('includes/api.php');
+		include('includes/db.php');
 		
-		$prefix = $_POST['prefix'];
-		$firstname = $_POST['firstname'];
-		$middlename = $_POST['middlename'];
-		$lastname = $_POST['lastname'];
-		$suffix = $_POST['suffix'];
-		$email1 = strtolower($_POST['email1']);
-		$email2 = strtolower($_POST['email2']);
+		$prefix = pg_escape_string($conn, $_POST['prefix']);
+		$firstname = pg_escape_string($conn, $_POST['firstname']);
+		$middlename = pg_escape_string($conn, $_POST['middlename']);
+		$lastname = pg_escape_string($conn, $_POST['lastname']);
+		$suffix = pg_escape_string($conn, $_POST['suffix']);
+		$email1 = pg_escape_string($conn, strtolower($_POST['email1']));
+		$email2 = pg_escape_string($conn, strtolower($_POST['email2']));
 		$cell = cleanPhoneNumber($_POST['cell']);
 		$home = cleanPhoneNumber($_POST['home']);
 		$worknumber = cleanPhoneNumber($_POST['work']);
@@ -21,10 +22,13 @@
 		$dob = $_POST['dob'];
 		$pass1 = $_POST['pass1'];
 		$pass2 = $_POST['pass2'];
-		if(isset($_POST['superviser'])) {
-			$superviser = 'true';
+		
+		pg_close($conn);
+		
+		if(isset($_POST['supervisor'])) {
+			$supervisor = 'true';
 		} else {
-			$superviser = 'false';
+			$supervisor = 'false';
 		}
 		
 		$work = true;
@@ -124,7 +128,7 @@
 			} else if ($output) {
 				echo("ERROR PERSON WAS NOT ADDED!<br />");
 			}
-			$cid = addCoach($pid,$clientid,$companyid,$superviser,$pass,true);
+			$cid = addCoach($pid,$clientid,$companyid,$supervisor,$pass,true);
 			if ($cid && $output) {
 				echo("Coach was added succesfully!<br />");
 				echo("Coach ID:".$cid."<br />");
@@ -193,8 +197,8 @@
             Add a New Coach
         </div>
         <div class="card-body">
-            <div class="login_page page">
-                <div class="login">
+            <div class="newcoach_page page">
+                <div class="newcoach">
                     <?php
                     echo($title.'<br />');
                     echo($text);
@@ -224,14 +228,14 @@
 					<input type="number" name="extension" /><br />
 					Date of Birth: <br />
 					<input type="date" name="dob" /><br />
-					superviser: <br />
-					<input type="checkbox" name="superviser" /><br />
+					supervisor:
+					<input type="checkbox" name="supervisor" /><br />
 					
 					Password:* (minimum 8 characters)<br />
 					<input type="password" name="pass1" /><br />
 					Confirm Password:* <br />
 					<input type="password" name="pass2" /><br />
-					<input type="submit" value="Submit" class="button" /><br /><br />
+					<input type="submit" value="Submit" class="button" /><br />
 					<input type="reset" value="Reset" class="button" />
 				</form>
 			');
