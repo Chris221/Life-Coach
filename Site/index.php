@@ -43,7 +43,7 @@
         </ul>
 <!--        I changed this to align the logout to the right-->
         <ul class="nav navbar-nav navbar-right">
-            <li class="van-item">
+            <li class="nav-item">
                 <a class="nav-link" href="/Logout" >Logout</a>
             </li>
 <!--            <li class="nav-item">
