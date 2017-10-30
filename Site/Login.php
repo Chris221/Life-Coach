@@ -55,7 +55,7 @@
 				$_SESSION['last_name'] = $data['last_name'];
 				$_SESSION['suffix'] = $data['suffix'];
 				$_SESSION['companyid'] = $data['companyid'];
-				$_SESSION['superviser'] = $data['superviser'];
+				$_SESSION['supervisor'] = $data['supervisor'];
 				$_SESSION['clientid'] = $data['clientid'];
 				$_SESSION['employeed'] = $data['employeed'];
 				
@@ -109,7 +109,7 @@
 </head>
 <body>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-blue">
     <a class="navbar-brand" href="/index">Logo</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
