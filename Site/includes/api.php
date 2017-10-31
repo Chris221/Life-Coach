@@ -74,7 +74,7 @@
 		include('includes/db.php');
 		$clientid = "'".$clientid."'";
 		$clientid = convertEmptyToNull($clientid);
-		$sql = "INSERT INTO coaches(personid,clientid,companyid,superviser,password) VALUES ('$personid',$clientid,'$companyid',$surperviser::boolean,'$pass');";
+		$sql = "INSERT INTO coaches(personid,clientid,companyid,supervisor,password) VALUES ('$personid',$clientid,'$companyid',$surperviser::boolean,'$pass');";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -94,6 +94,9 @@
 	}
 	
 	function cleanPhoneNumber($number) {
+		include('includes/db.php');
+		pg_escape_string($conn, $number);
+		pg_close($conn);
 		$number = str_replace(".","",$number);
 		$number = str_replace("-","",$number);
 		$number = str_replace("+","",$number);

@@ -16,7 +16,7 @@
 		$_SESSION['last_name'] = $data['last_name'];
 		$_SESSION['suffix'] = $data['suffix'];
 		$_SESSION['companyid'] = $data['companyid'];
-		$_SESSION['superviser'] = $data['superviser'];
+		$_SESSION['supervisor'] = $data['supervisor'];
 		$_SESSION['clientid'] = $data['clientid'];
 		$_SESSION['employeed'] = $data['employeed'];
 		pg_close($conn);
