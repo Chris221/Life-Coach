@@ -98,13 +98,13 @@
 <meta name="viewport" content="width=device-width, user-scalable=no" />
 <meta name="HandheldFriendly" content="true">
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="/bootstrap/4.0.0/css/bootstrap.min.css">
+<link rel="stylesheet" href="bootstrap/4.0.0/css/bootstrap.min.css">
 <!-- jQuery library -->
-<script src="/js/jquery/jquery-3.2.1.min.js"></script>
+<script src="js/jquery/jquery-3.2.1.min.js"></script>
 <!-- Latest compiled JavaScript -->
-<script src="/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script src="bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!-- Our CSS -->
-<link rel="stylesheet" href="/css/life-coach.css">
+<link rel="stylesheet" href="css/life-coach.css">
 <title><?php echo($title); ?></title>
 </head>
 <body>
