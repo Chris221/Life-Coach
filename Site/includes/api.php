@@ -132,6 +132,7 @@
 	
 	function cleanPhoneNumber($number) {
 		//cleans the phone number of extras
+		$number = str_replace("e","",$number);
 		$number = str_replace(".","",$number);
 		$number = str_replace("-","",$number);
 		$number = str_replace("+","",$number);
