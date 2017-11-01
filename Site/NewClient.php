@@ -7,7 +7,6 @@
 	}
 	o_log('Page Loaded');
 	$title = 'Add New Client';
-	$i = buildImageForm();
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		include('includes/api.php');
@@ -175,7 +174,7 @@
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
-    <a class="navbar-brand" href="/">Logo</a>
+    <a class="navbar-brand" href="/"><img src="/logo.png" width="50" height="50" alt="Logo" /></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
     </button>
@@ -218,54 +217,64 @@
 				<?php
 				echo($upload_image_text);
 				echo($text);
-				echo('
+				echo('<table>
 			<form action="#" method="post">
-				<h3>Photo</h3>
-				'.$i.'
-				<h3>Personal Information</h3>
-				Prefix:<input type="text" name="prefix" autocomplete="off" /><br />
-				First Name:*<input type="text" name="firstname" autocomplete="off" /><br />
-				Middle Name:<input type="text" name="middlename" autocomplete="off" /><br />
-				Last Name:*<input type="text" name="lastname" autocomplete="off" /><br />
-				Suffix:<input type="text" name="suffix" autocomplete="off" /><br />
-				Email:*<input type="email" name="email1" autocomplete="off" /><br />
-				Confirm Email:*<input type="email" name="email2" autocomplete="off" /><br />
-				Cell Number:*<input type="number" name="cell" autocomplete="off" /><br />
-				Home Number:<input type="number" name="home" autocomplete="off" /><br />
-				Date of Birth:<input type="date" name="dob" autocomplete="off" /><br />
-				Home address: *NOT IMPLEMENTED YET*<br /><br />
+				<tr><td><h3>Photo</h3></td><td>&thinsp;</td></tr>
+				<input type="hidden" name="MAX_FILE_SIZE" value="5120000">
+				<tr><td width="219px"><input name="image" type="file" accept="image/*"></td><td>&thinsp;</td></tr>
+				<tr><td width="219px">The photo can not be any larger then 5MB.</td><td>&thinsp;</td></tr>
+				<tr><td width="219px">The photo types supported are JPG, PNG, & GIF.</td><td>&thinsp;</td></tr>
+				<tr><td width="219px">May take up to 5 minutes as the server processes the image.</td><td>&thinsp;</td></tr>
 				
-				<h3>Work Information</h3>
-				Work Number:<input type="number" name="work" autocomplete="off" /><br />
-				Work extension:<input type="number" name="extension" autocomplete="off" /><br />
-				Place of work:<input type="text" name="workcompany" autocomplete="off" /><br />
-				Job title:<input type="text" name="worktitle" autocomplete="off" /><br />
-				Field of employment:<input type="text" name="workfield" autocomplete="off" /><br />
-				Work address: *NOT IMPLEMENTED YET*<br /><br />
+				<h3>Personal Information</h3></td><td>&thinsp;</td></tr>
+				<tr><td>Prefix:</td><td><input type="text" name="prefix" autocomplete="off" /></td></tr>
+				<tr><td>First Name:*</td><td><input type="text" name="firstname" autocomplete="off" /></td></tr>
+				<tr><td>Middle Name:</td><td><input type="text" name="middlename" autocomplete="off" /></td></tr>
+				<tr><td>Last Name:*</td><td><input type="text" name="lastname" autocomplete="off" /></td></tr>
+				<tr><td>Suffix:</td><td><input type="text" name="suffix" autocomplete="off" /></td></tr>
+				<tr><td>Email:*</td><td><input type="email" name="email1" autocomplete="off" /></td></tr>
+				<tr><td>Confirm Email:*</td><td><input type="email" name="email2" autocomplete="off" /></td></tr>
+				<tr><td>Cell Number:*</td><td><input type="number" name="cell" autocomplete="off" /></td></tr>
+				<tr><td>Home Number:</td><td><input type="number" name="home" autocomplete="off" /></td></tr>
+				<tr><td>Date of Birth:</td><td><input type="date" name="dob" autocomplete="off" /></td></tr>
+				<tr><td>Home address:</td><td>*NOT IMPLEMENTED YET*</td></tr>
 				
-				<h3>Time Preferences</h3>
-				Visit start:
-				<input type="time" name="visittimepreferencestart" autocomplete="off" /><br />
-				Visit end:
-				<input type="time" name="visittimepreferenceend" autocomplete="off" /><br />
-				Call start:
-				<input type="time" name="calltimepreferencestart" autocomplete="off" /><br />
-				Call end:
-				<input type="time" name="calltimepreferenceend" autocomplete="off" /><br /><br />
+				<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
 				
-				<h3>About</h3>
-				Favorite book:
-				<input type="text" name="favoritebook" autocomplete="off" /><br />
-				Favorite food:
-				<input type="text" name="favoritefood" autocomplete="off" /><br />
-				Goals:<br />
-				<textarea rows="4" cols="50" name="goals" autocomplete="off"></textarea><br />
-				Needs:<br />
-				<textarea rows="4" cols="50" name="needs" autocomplete="off"></textarea><br /><br />
+				<tr><td><h3>Work Information</h3></td><td>&thinsp;</td></tr>
+				<tr><td>Work Number:</td><td><input type="number" name="work" autocomplete="off" /></td></tr>
+				<tr><td>Work extension:</td><td><input type="number" name="extension" autocomplete="off" /></td></tr>
+				<tr><td>Place of work:</td><td><input type="text" name="workcompany" autocomplete="off" /></td></tr>
+				<tr><td>Job title:</td><td><input type="text" name="worktitle" autocomplete="off" /></td></tr>
+				<tr><td>Field of employment:</td><td><input type="text" name="workfield" autocomplete="off" /></td></tr>
+				<tr><td>Work address:</td><td>*NOT IMPLEMENTED YET*</td></tr>
 				
-				<input type="submit" value="Submit" class="button" /><br />
-				<input type="reset" value="Reset" class="button" />
-			</form>
+				<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
+				
+				<tr><td><h3>Time Preferences</h3></td><td>&thinsp;</td></tr>
+				<tr><td>Visit start:</td><td><input type="time" name="visittimepreferencestart" autocomplete="off" /></td></tr>
+				<tr><td>Visit end:</td><td><input type="time" name="visittimepreferenceend" autocomplete="off" /></td></tr>
+				<tr><td>Call start:</td><td><input type="time" name="calltimepreferencestart" autocomplete="off" /></td></tr>
+				<tr><td>Call end:</td><td><input type="time" name="calltimepreferenceend" autocomplete="off" /></td></tr>
+				
+				<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
+				
+				<tr><td><h3>About</h3></td><td>&thinsp;</td></tr>
+				<tr><td>Favorite book:</td><td><input type="text" name="favoritebook" autocomplete="off" /></td></tr>
+				<tr><td>Favorite food:</td><td><input type="text" name="favoritefood" autocomplete="off" /></td></tr>
+				</table>
+				<br />
+				<table>
+				<tr><td>Goals:</td><td>&thinsp;</td></tr>
+				<tr><td><textarea rows="4" cols="50" name="goals" autocomplete="off"></textarea></td></tr>
+				<tr><td>Needs:</td><td>&thinsp;</td></tr>
+				<tr><td><textarea rows="4" cols="50" name="needs" autocomplete="off"></textarea></td></tr>
+				
+				<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
+				
+				<tr><td><input type="submit" value="Submit" class="button" /></td></tr>
+				<tr><td><input type="reset" value="Reset" class="button" /></td></tr>
+			</form></table>
 		');
 				?>
 			</div>
