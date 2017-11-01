@@ -215,8 +215,7 @@
 				echo('
 			<form action="#" method="post">
 				<h3>Photo</h3>
-				'.$i.'<br /><br />
-				
+				'.$i.'
 				<h3>Personal Information</h3>
 				Prefix: 
 				<input type="text" name="prefix" autocomplete="off" /><br />
