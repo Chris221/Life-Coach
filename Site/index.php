@@ -72,8 +72,13 @@
         <a href="/NewCoach" class="btn btn-primary">Add a New Coach</a>
         <a href="/NewClient" class="btn btn-primary">Add a New Client</a>
     </div>
-    <div class="card-footer text-muted">
-        Footer Text
+    <div class="card-header title"> Calendar</div>
+        <div class="card-body">
+            <h4 class="card-title">There will be a calendar here</h4>
+        </div>
+        <div class="card-footer text-muted">
+            Footer Text
+        </div>
     </div>
 </div>
 
