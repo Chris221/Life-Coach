@@ -1,4 +1,4 @@
-.login_page, .newcoach_page, .newcoach_page {
+.login_page {
 	margin: auto;
 	width: 20%;
 	min-width: 305px;
@@ -7,9 +7,13 @@
 	margin-top: 50px;
 	padding: 25px 0px;
 }
-.login, .newclient, .newcoach {
+.login {
 	margin: auto;
 	width: 210px;
+}
+.newclient, .newcoach {
+	margin: 0 auto;
+	width: 500px;
 }
 .login input, .newclient input, .newcoach input {
 	margin-bottom: 5px;
@@ -18,10 +22,14 @@
 	margin-right: 5px !important;
 	margin-bottom: 10px !important;
 }
-.login form, .newclient form, .newcoach form {
+.login form {
     margin-left: auto;
     margin-right: auto;
 	width: 210px;
+}
+.newclient form, .newcoach form {
+    margin: 0 auto;
+	width: 500px;
 }
 .button {
     border-radius: 5px;
@@ -51,6 +59,9 @@
 }
 .login_input {
 	width: 210px;
+}
+.page-margin {
+	margin: 0 15%;
 }
 
 .title {

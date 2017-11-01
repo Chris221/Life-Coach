@@ -7,7 +7,6 @@
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		include('includes/api.php');
 		include('includes/db.php');
-		
 		$prefix = pg_escape_string($conn, $_POST['prefix']);
 		$firstname = pg_escape_string($conn, $_POST['firstname']);
 		$middlename = pg_escape_string($conn, $_POST['middlename']);
@@ -20,6 +19,56 @@
 		$worknumber = cleanPhoneNumber($_POST['work']);
 		$extension = cleanPhoneNumber($_POST['extension']);
 		$dob = $_POST['dob'];
+		
+		/*$workcompany = pg_escape_string($conn, $POST['workcompany']);
+		$worktitle = pg_escape_string($conn, $POST['worktitle']);
+		$workfield = pg_escape_string($conn, $POST['workfield']);
+		$visitpreferencestart = $POST['visittimepreferencestart'].':00';
+		$visitpreferenceend = $POST['visittimepreferenceend'].':00';
+		$callpreferencestart = $POST['calltimepreferencestart'].':00';
+		$callpreferenceend = $POST['calltimepreferenceend'].':00';
+		$favoritebook = pg_escape_string($conn, $POST['favoritebook']);
+		$favoritefood = pg_escape_string($conn, $POST['favoritefood']);
+		$goals = pg_escape_string($conn, $POST['goals']);
+		$needs = pg_escape_string($conn, $POST['needs']);*/
+		
+		$workcompany = $_POST['workcompany'];
+		$worktitle = $_POST['worktitle'];
+		$workfield = $_POST['workfield'];
+		$visitpreferencestart = checkTime($_POST['visittimepreferencestart'].':00');
+		$visitpreferenceend = checkTime($_POST['visittimepreferenceend'].':00');
+		$callpreferencestart = checkTime($_POST['calltimepreferencestart'].':00');
+		$callpreferenceend = checkTime($_POST['calltimepreferenceend'].':00');
+		$favoritebook = $_POST['favoritebook'];
+		$favoritefood = $_POST['favoritefood'];
+		$goals = $_POST['goals'];
+		$needs = $_POST['needs'];
+		
+		
+		echo ('prefix: '.$prefix.'. from post: '.$_POST['prefix'].'<br />');
+		echo ('firstname: '.$firstname.'. from post: '.$_POST['firstname'].'<br />');
+		echo ('middlename: '.$middlename.'. from post: '.$_POST['middlename'].'<br />');
+		echo ('lastname: '.$lastname.'. from post: '.$_POST['lastname'].'<br />');
+		echo ('suffix: '.$suffix.'. from post: '.$_POST['suffix'].'<br />');
+		echo ('email1: '.$email1.'. from post: '.$_POST['email1'].'<br />');
+		echo ('email2: '.$email2.'. from post: '.$_POST['email2'].'<br />');
+		echo ('cell: '.$cell.'. from post: '.$_POST['cell'].'<br />');
+		echo ('home: '.$home.'. from post: '.$_POST['home'].'<br />');
+		echo ('work: '.$worknumber.'. from post: '.$_POST['work'].'<br />');
+		echo ('extension: '.$extension.'. from post: '.$_POST['extension'].'<br />');
+		echo ('dob: '.$dob.'. from post: '.$_POST['dob'].'<br />');
+		
+		echo ('workcompany: '.$workcompany.'. from post: '.$_POST['workcompany'].'<br />');
+		echo ('worktitle: '.$worktitle.'. from post: '.$_POST['worktitle'].'<br />');
+		echo ('workfield: '.$workfield.'. from post: '.$_POST['workfield'].'<br />');
+		echo ('visittimepreferencestart: '.$visitpreferencestart.'. from post: '.$_POST['visittimepreferencestart'].'<br />');
+		echo ('visittimepreferenceend: '.$visitpreferenceend.'. from post: '.$_POST['visittimepreferenceend'].'<br />');
+		echo ('calltimepreferencestart: '.$callpreferencestart.'. from post: '.$_POST['calltimepreferencestart'].'<br />');
+		echo ('calltimepreferenceend: '.$callpreferenceend.'. from post: '.$_POST['calltimepreferenceend'].'<br />');
+		echo ('favoritebook: '.$favoritebook.'. from post: '.$_POST['favoritebook'].'<br />');
+		echo ('favoritefood: '.$favoritefood.'. from post: '.$_POST['favoritefood'].'<br />');
+		echo ('goals: '.$goals.'. from post: '.$_POST['goals'].'<br />');
+		echo ('needs: '.$needs.'. from post: '.$_POST['needs'].'<br />');
 		
 		pg_close($conn);
 		
@@ -94,9 +143,17 @@
 			if ($pid && $output) {
 				echo("Person was added succesfully!<br />");
 				echo("Person ID:".$pid."<br />");
-				header('Location: /');
 			} else if ($output) {
 				echo("ERROR PERSON WAS NOT ADDED!<br />");
+			}
+			
+			$cid = addClient($pid,$companyid,$workaddress,$workcompany,$worktitle,$workfield,$favoritebook,$favoritefood,$visitpreferencestart,$visitpreferenceend,$callpreferencestart,$callpreferenceend,$goals,$needs,true);
+			if ($cid && $output) {
+				echo("Client was added succesfully!<br />");
+				echo("Client ID:".$cid."<br />");
+				//header('Location: /');
+			} else if ($output) {
+				echo("ERROR CLIENT WAS NOT ADDED!<br />");
 			}
 		}
 	}
@@ -109,13 +166,13 @@
 <meta name="viewport" content="width=device-width, user-scalable=no" />
 <meta name="HandheldFriendly" content="true">
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="bootstrap/4.0.0/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" href="/bootstrap/4.0.0/css/bootstrap.min.css">
 <!-- jQuery library -->
-<script src="js/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery/jquery-3.2.1.min.js"></script>
 <!-- Latest compiled JavaScript -->
-<script src="bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!-- Our CSS -->
-<link rel="stylesheet" href="css/life-coach.css">
+<link type="text/css" rel="stylesheet" href="/css/life-coach.css">
 <title><?php echo($title); ?></title>
 </head>
 <body>
@@ -153,55 +210,69 @@
     </div>
 </nav>
 <br />
-<div>
-    <div class="card text-center">
-        <div class="card-header title">
-            Add a New Client
-        </div>
-        <div class="card-body">
-            <div class="newclient_page page">
-                <div class="newclient">
-                    <?php
-                    echo($title.'<br />');
-                    echo($text);
-                    echo('
-				<form action="#" method="post">
-					Prefix: <br />
-					<input type="text" name="prefix" /><br />
-					First Name:* <br />
-					<input type="text" name="firstname" /><br />
-					Middle Name: <br />
-					<input type="text" name="middlename" /><br />
-					Last Name:* <br />
-					<input type="text" name="lastname" /><br />
-					Suffix: <br />
-					<input type="text" name="suffix" /><br />
-					Email:* <br />
-					<input type="email" name="email1" /><br />
-					Confirm Email:* <br />
-					<input type="email" name="email2" /><br />
-					Cell Number:* <br />
-					<input type="number" name="cell" /><br />
-					Home Number: <br />
-					<input type="number" name="home" /><br />
-					Work Number: <br />
-					<input type="number" name="work" /><br />
-					Work extension: <br />
-					<input type="number" name="extension" /><br />
-					Date of Birth: <br />
-					<input type="date" name="dob" /><br />
-					<input type="submit" value="Submit" class="button" /><br />
-					<input type="reset" value="Reset" class="button" />
-				</form>
-			');
-                    ?>
-                </div>
-            </div>
-        </div>
-        <div class="card-footer text-muted">
-            Footer Text
-        </div>
-    </div>
+<div class="card text-center page-margin">
+	<div class="card-header title">
+		<?php echo($title); ?>
+	</div>
+	<div class="card-body">
+		<div class="newclient_page page">
+			<div class="newclient">
+				<?php
+				echo($text);
+				echo('
+			<form action="#" method="post">
+				<h3>Personal Information</h3>
+				Prefix:<input type="text" name="prefix" autocomplete="off" /><br />
+				First Name:*<input type="text" name="firstname" autocomplete="off" /><br />
+				Middle Name:<input type="text" name="middlename" autocomplete="off" /><br />
+				Last Name:*<input type="text" name="lastname" autocomplete="off" /><br />
+				Suffix:<input type="text" name="suffix" autocomplete="off" /><br />
+				Email:*<input type="email" name="email1" autocomplete="off" /><br />
+				Confirm Email:*<input type="email" name="email2" autocomplete="off" /><br />
+				Cell Number:*<input type="number" name="cell" autocomplete="off" /><br />
+				Home Number:<input type="number" name="home" autocomplete="off" /><br />
+				Date of Birth:<input type="date" name="dob" autocomplete="off" /><br />
+				Home address: *NOT IMPLEMENTED YET*<br /><br />
+				
+				<h3>Work Information</h3>
+				Work Number:<input type="number" name="work" autocomplete="off" /><br />
+				Work extension:<input type="number" name="extension" autocomplete="off" /><br />
+				Place of work:<input type="text" name="workcompany" autocomplete="off" /><br />
+				Job title:<input type="text" name="worktitle" autocomplete="off" /><br />
+				Field of employment:<input type="text" name="workfield" autocomplete="off" /><br />
+				Work address: *NOT IMPLEMENTED YET*<br /><br />
+				
+				<h3>Time Preferences</h3>
+				Visit start:
+				<input type="time" name="visittimepreferencestart" autocomplete="off" /><br />
+				Visit end:
+				<input type="time" name="visittimepreferenceend" autocomplete="off" /><br />
+				Call start:
+				<input type="time" name="calltimepreferencestart" autocomplete="off" /><br />
+				Call end:
+				<input type="time" name="calltimepreferenceend" autocomplete="off" /><br /><br />
+				
+				<h3>About</h3>
+				Favorite book:
+				<input type="text" name="favoritebook" autocomplete="off" /><br />
+				Favorite food:
+				<input type="text" name="favoritefood" autocomplete="off" /><br />
+				Goals:<br />
+				<textarea rows="4" cols="50" name="goals" autocomplete="off"></textarea><br />
+				Needs:<br />
+				<textarea rows="4" cols="50" name="needs" autocomplete="off"></textarea><br />
+				
+				<input type="submit" value="Submit" class="button" /><br />
+				<input type="reset" value="Reset" class="button" />
+			</form>
+		');
+				?>
+			</div>
+		</div>
+	</div>
+	<div class="card-footer text-muted">
+		Footer Text
+	</div>
 </div>
 
 </body>

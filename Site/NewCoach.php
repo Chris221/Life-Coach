@@ -147,13 +147,13 @@
 <meta name="viewport" content="width=device-width, user-scalable=no" />
 <meta name="HandheldFriendly" content="true">
 <!-- Latest compiled and minified CSS -->
-<link rel="stylesheet" href="bootstrap/4.0.0/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" href="/bootstrap/4.0.0/css/bootstrap.min.css">
 <!-- jQuery library -->
-<script src="js/jquery/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="/js/jquery/jquery-3.2.1.min.js"></script>
 <!-- Latest compiled JavaScript -->
-<script src="bootstrap/4.0.0/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!-- Our CSS -->
-<link rel="stylesheet" href="css/life-coach.css">
+<link type="text/css" rel="stylesheet" href="/css/life-coach.css">
 <title><?php echo($title); ?></title>
 </head>
 <body>
@@ -191,62 +191,60 @@
     </div>
 </nav>
 <br />
-<div>
-    <div class="card text-center">
-        <div class="card-header title">
-            Add a New Coach
-        </div>
-        <div class="card-body">
-            <div class="newcoach_page page">
-                <div class="newcoach">
-                    <?php
-                    echo($title.'<br />');
-                    echo($text);
-                    echo('
-				<form action="#" method="post">
-					Prefix: <br />
-					<input type="text" name="prefix" /><br />
-					First Name:* <br />
-					<input type="text" name="firstname" /><br />
-					Middle Name: <br />
-					<input type="text" name="middlename" /><br />
-					Last Name:* <br />
-					<input type="text" name="lastname" /><br />
-					Suffix: <br />
-					<input type="text" name="suffix" /><br />
-					Email:* <br />
-					<input type="email" name="email1" /><br />
-					Confirm Email:* <br />
-					<input type="email" name="email2" /><br />
-					Cell Number:* <br />
-					<input type="number" name="cell" /><br />
-					Home Number: <br />
-					<input type="number" name="home" /><br />
-					Work Number: <br />
-					<input type="number" name="work" /><br />
-					Work extension: <br />
-					<input type="number" name="extension" /><br />
-					Date of Birth: <br />
-					<input type="date" name="dob" /><br />
-					supervisor:
-					<input type="checkbox" name="supervisor" /><br />
-					
-					Password:* (minimum 8 characters)<br />
-					<input type="password" name="pass1" /><br />
-					Confirm Password:* <br />
-					<input type="password" name="pass2" /><br />
-					<input type="submit" value="Submit" class="button" /><br />
-					<input type="reset" value="Reset" class="button" />
-				</form>
-			');
-                    ?>
-                </div>
-            </div>
-        </div>
-        <div class="card-footer text-muted">
-            Footer Text
-        </div>
-    </div>
+<div class="card text-center page-margin">
+	<div class="card-header title">
+		Add a New Coach
+	</div>
+	<div class="card-body">
+		<div class="newcoach_page page">
+			<div class="newcoach">
+				<?php
+				echo($title.'<br />');
+				echo($text);
+				echo('
+			<form action="#" method="post">
+				Prefix: <br />
+				<input type="text" name="prefix" autocomplete="off" /><br />
+				First Name:* <br />
+				<input type="text" name="firstname" autocomplete="off" /><br />
+				Middle Name: <br />
+				<input type="text" name="middlename" autocomplete="off" /><br />
+				Last Name:* <br />
+				<input type="text" name="lastname" autocomplete="off" /><br />
+				Suffix: <br />
+				<input type="text" name="suffix" autocomplete="off" /><br />
+				Email:* <br />
+				<input type="email" name="email1" autocomplete="off" /><br />
+				Confirm Email:* <br />
+				<input type="email" name="email2" autocomplete="off" /><br />
+				Cell Number:* <br />
+				<input type="number" name="cell" autocomplete="off" /><br />
+				Home Number: <br />
+				<input type="number" name="home" autocomplete="off" /><br />
+				Work Number: <br />
+				<input type="number" name="work" autocomplete="off" /><br />
+				Work extension: <br />
+				<input type="number" name="extension" autocomplete="off" /><br />
+				Date of Birth: <br />
+				<input type="date" name="dob" autocomplete="off" /><br />
+				supervisor:
+				<input type="checkbox" name="supervisor" autocomplete="off" /><br />
+
+				Password:* (minimum 8 characters)<br />
+				<input type="password" name="pass1"  autocomplete="off" /><br />
+				Confirm Password:* <br />
+				<input type="password" name="pass2"  autocomplete="off" /><br />
+				<input type="submit" value="Submit" class="button" /><br />
+				<input type="reset" value="Reset" class="button" />
+			</form>
+		');
+				?>
+			</div>
+		</div>
+	</div>
+	<div class="card-footer text-muted">
+		Footer Text
+	</div>
 </div>
 
 </body>
