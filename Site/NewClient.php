@@ -1,9 +1,14 @@
 <?php
+	include('includes/log.php');
 	include('includes/session.php');
+	include('includes/uploadPhoto.php');
 	if (!$_SESSION['employeed']) {
 		header('Location: /');
 	}
+	o_log('Page Loaded');
 	$title = 'Add New Client';
+	$i = buildImageForm();
+
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		include('includes/api.php');
 		include('includes/db.php');
@@ -20,18 +25,6 @@
 		$extension = cleanPhoneNumber($_POST['extension']);
 		$dob = $_POST['dob'];
 		
-		/*$workcompany = pg_escape_string($conn, $POST['workcompany']);
-		$worktitle = pg_escape_string($conn, $POST['worktitle']);
-		$workfield = pg_escape_string($conn, $POST['workfield']);
-		$visitpreferencestart = $POST['visittimepreferencestart'].':00';
-		$visitpreferenceend = $POST['visittimepreferenceend'].':00';
-		$callpreferencestart = $POST['calltimepreferencestart'].':00';
-		$callpreferenceend = $POST['calltimepreferenceend'].':00';
-		$favoritebook = pg_escape_string($conn, $POST['favoritebook']);
-		$favoritefood = pg_escape_string($conn, $POST['favoritefood']);
-		$goals = pg_escape_string($conn, $POST['goals']);
-		$needs = pg_escape_string($conn, $POST['needs']);*/
-		
 		$workcompany = $_POST['workcompany'];
 		$worktitle = $_POST['worktitle'];
 		$workfield = $_POST['workfield'];
@@ -44,7 +37,7 @@
 		$goals = $_POST['goals'];
 		$needs = $_POST['needs'];
 		
-		
+		/*
 		echo ('prefix: '.$prefix.'. from post: '.$_POST['prefix'].'<br />');
 		echo ('firstname: '.$firstname.'. from post: '.$_POST['firstname'].'<br />');
 		echo ('middlename: '.$middlename.'. from post: '.$_POST['middlename'].'<br />');
@@ -68,7 +61,7 @@
 		echo ('favoritebook: '.$favoritebook.'. from post: '.$_POST['favoritebook'].'<br />');
 		echo ('favoritefood: '.$favoritefood.'. from post: '.$_POST['favoritefood'].'<br />');
 		echo ('goals: '.$goals.'. from post: '.$_POST['goals'].'<br />');
-		echo ('needs: '.$needs.'. from post: '.$_POST['needs'].'<br />');
+		echo ('needs: '.$needs.'. from post: '.$_POST['needs'].'<br />');*/
 		
 		pg_close($conn);
 		
@@ -135,25 +128,30 @@
 			}
 		}
 		if ($work) {
+			$photoid = uploadImage();
 			$email1 = strtolower($email1);
 			$correctDOB = date("Y-m-d", strtotime($dob));
-			$pid = addPerson($firstname,$lastname,$email1,$cell,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename,true);
+			$pid = addPerson($firstname,$lastname,$email1,$cell,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename,false);
 			$companyid = $_SESSION['companyid'];
 			$output = true;
 			if ($pid && $output) {
 				echo("Person was added succesfully!<br />");
 				echo("Person ID:".$pid."<br />");
+				o_log('Person Add Successful', 'ID: '.$pid);
 			} else if ($output) {
 				echo("ERROR PERSON WAS NOT ADDED!<br />");
+				o_log('Person Add failed');
 			}
 			
-			$cid = addClient($pid,$companyid,$workaddress,$workcompany,$worktitle,$workfield,$favoritebook,$favoritefood,$visitpreferencestart,$visitpreferenceend,$callpreferencestart,$callpreferenceend,$goals,$needs,true);
+			$cid = addClient($pid,$companyid,$workaddress,$workcompany,$worktitle,$workfield,$favoritebook,$favoritefood,$visitpreferencestart,$visitpreferenceend,$callpreferencestart,$callpreferenceend,$goals,$needs,false);
 			if ($cid && $output) {
 				echo("Client was added succesfully!<br />");
 				echo("Client ID:".$cid."<br />");
-				//header('Location: /');
+				o_log('Client Add Successful', 'ID: '.$cid);
+				header('Location: /');
 			} else if ($output) {
 				echo("ERROR CLIENT WAS NOT ADDED!<br />");
+				o_log('Client Add failed');
 			}
 		}
 	}
@@ -176,7 +174,7 @@
 <title><?php echo($title); ?></title>
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+<nav class="navbar navbar-expand-lg navbar-dark bg-blue">
     <a class="navbar-brand" href="/">Logo</a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
         <span class="navbar-toggler-icon"></span>
@@ -260,7 +258,7 @@
 				Goals:<br />
 				<textarea rows="4" cols="50" name="goals" autocomplete="off"></textarea><br />
 				Needs:<br />
-				<textarea rows="4" cols="50" name="needs" autocomplete="off"></textarea><br />
+				<textarea rows="4" cols="50" name="needs" autocomplete="off"></textarea><br /><br />
 				
 				<input type="submit" value="Submit" class="button" /><br />
 				<input type="reset" value="Reset" class="button" />

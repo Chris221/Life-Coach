@@ -1,9 +1,15 @@
 <?php
+	include('includes/log.php');
 	include('includes/session.php');
+	include('includes/uploadPhoto.php');
 	if (!$_SESSION['supervisor']) {
 		header('Location: /');
 	}
+	o_log('Page Loaded');
 	$title = 'Add New Coach';
+	$i = buildImageForm();
+
+
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		include('includes/api.php');
 		include('includes/db.php');
@@ -115,26 +121,31 @@
 			}
 		}
 		if ($work) {
+			$photoid = uploadImage();
 			$email1 = strtolower($email1);
 			$correctDOB = date("Y-m-d", strtotime($dob));
 			include('includes/password.php');
 			$pass = encryptpass($pass1);
-			$pid = addPerson($firstname,$lastname,$email1,$cell,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename,true);
+			$pid = addPerson($firstname,$lastname,$email1,$cell,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename,false);
 			$companyid = $_SESSION['companyid'];
 			$output = true;
 			if ($pid && $output) {
 				echo("Person was added succesfully!<br />");
 				echo("Person ID:".$pid."<br />");
+				o_log('Person Add Successful', 'ID: '.$pid);
 			} else if ($output) {
 				echo("ERROR PERSON WAS NOT ADDED!<br />");
+				o_log('Person Add Failed');
 			}
-			$cid = addCoach($pid,$clientid,$companyid,$supervisor,$pass,true);
+			$cid = addCoach($pid,$clientid,$companyid,$supervisor,$pass,false);
 			if ($cid && $output) {
 				echo("Coach was added succesfully!<br />");
 				echo("Coach ID:".$cid."<br />");
+				o_log('Coach Add Successful', 'ID: '.$cid);
 				header('Location: /');
 			} else if ($output) {
 				echo("ERROR COACH WAS NOT ADDED!<br />");
+				o_log('Coach Add Failed');
 			}
 		}
 	}
