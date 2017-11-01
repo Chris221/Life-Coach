@@ -1,8 +1,10 @@
 <?php
+	include('includes/log.php');
 	include('includes/session.php');
 	if (!$_SESSION['personid']) {
 		header('Location: /Login');
-	}	
+	}
+	o_log('Page Loaded');
 	$title = 'Home';
 ?>
 <!doctype html>

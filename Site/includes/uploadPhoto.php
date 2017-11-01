@@ -62,6 +62,7 @@
 		include('includes/db.php');
 		include('includes/protection.php');
 		include('includes/mailer.php');
+		include('includes/log.php');
 		
 		global $upload_image_text;
 		global $debug;
@@ -142,6 +143,7 @@
 					$imageID = $insert_row[0];
 					
 					$upload_image_text = "Image uploaded!<br />";
+					o_log('Image Uploaded','Image ID: '.$imageID);
 					};
 			}
 			$upload_image_text .= "<br />";

@@ -20,6 +20,8 @@
 		$_SESSION['clientid'] = $data['clientid'];
 		$_SESSION['employeed'] = $data['employeed'];
 		pg_close($conn);
+		include('includes/log.php');
+		o_log('Logged in', 'From the cookie');
 	}
 	if ($_SESSION['employeed']) {
 		include('includes/db.php');

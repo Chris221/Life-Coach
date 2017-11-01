@@ -1,8 +1,10 @@
 <?php
+	include('includes/log.php');
 	include('includes/session.php');
 	if ($_SESSION['personid']) {
 		header('Location: /');
-	}	
+	}
+	o_log('Page Loaded');
 	$title = 'Login';
 
 	include('includes/db.php');
@@ -67,6 +69,7 @@
 					echo("pid: ".$pid.'<br />');
 					$epid = encrypt($pid);
 					echo("epid: ".$epid.'<br />');
+					o_log('Logged in', 'From the log in page');
 					setcookie("Login", $epid, time() + (86400 * 30), "/"); // 86400 = 1 day
 				}
 				
@@ -82,6 +85,7 @@
 		} else {
 			if (strlen($text) == 0){
 				$text = "Email and password do not match.<br />";
+				o_log('Logged in failed', 'Email: '.$email.' Encrypted pass: '.$pass);
 			}
 		}
 		if(strlen($text) > 0) {
