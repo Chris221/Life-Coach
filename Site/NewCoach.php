@@ -121,7 +121,7 @@
 			}
 		}
 		if ($work) {
-			$photoid = uploadImage();
+			//$photoid = uploadImage();
 			$email1 = strtolower($email1);
 			$correctDOB = date("Y-m-d", strtotime($dob));
 			include('includes/password.php');
@@ -204,46 +204,47 @@
 <br />
 <div class="card text-center page-margin">
 	<div class="card-header title">
-		Add a New Coach
+		<?php echo($title.'<br />'); ?>
 	</div>
 	<div class="card-body">
 		<div class="newcoach_page page">
 			<div class="newcoach">
 				<?php
-				echo($title.'<br />');
+				echo($upload_image_text);
 				echo($text);
 				echo('
 			<form action="#" method="post">
-				Prefix: <br />
+				<h3>Photo</h3>
+				'.$i.'<br /><br />
+				
+				<h3>Personal Information</h3>
+				Prefix: 
 				<input type="text" name="prefix" autocomplete="off" /><br />
-				First Name:* <br />
+				First Name:* 
 				<input type="text" name="firstname" autocomplete="off" /><br />
-				Middle Name: <br />
+				Middle Name:
 				<input type="text" name="middlename" autocomplete="off" /><br />
-				Last Name:* <br />
+				Last Name:* 
 				<input type="text" name="lastname" autocomplete="off" /><br />
-				Suffix: <br />
+				Suffix:
 				<input type="text" name="suffix" autocomplete="off" /><br />
-				Email:* <br />
+				Email:*
 				<input type="email" name="email1" autocomplete="off" /><br />
-				Confirm Email:* <br />
+				Confirm Email:*
 				<input type="email" name="email2" autocomplete="off" /><br />
-				Cell Number:* <br />
+				Cell Number:*
 				<input type="number" name="cell" autocomplete="off" /><br />
-				Home Number: <br />
+				Home Number:
 				<input type="number" name="home" autocomplete="off" /><br />
-				Work Number: <br />
-				<input type="number" name="work" autocomplete="off" /><br />
-				Work extension: <br />
-				<input type="number" name="extension" autocomplete="off" /><br />
-				Date of Birth: <br />
+				Date of Birth:
 				<input type="date" name="dob" autocomplete="off" /><br />
+				
+				<h3>Coach Information</h3>
 				supervisor:
 				<input type="checkbox" name="supervisor" autocomplete="off" /><br />
-
-				Password:* (minimum 8 characters)<br />
+				Password:* (minimum 8 characters)
 				<input type="password" name="pass1"  autocomplete="off" /><br />
-				Confirm Password:* <br />
+				Confirm Password:*
 				<input type="password" name="pass2"  autocomplete="off" /><br />
 				<input type="submit" value="Submit" class="button" /><br />
 				<input type="reset" value="Reset" class="button" />

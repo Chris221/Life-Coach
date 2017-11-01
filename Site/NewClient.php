@@ -128,7 +128,7 @@
 			}
 		}
 		if ($work) {
-			$photoid = uploadImage();
+			//$photoid = uploadImage();
 			$email1 = strtolower($email1);
 			$correctDOB = date("Y-m-d", strtotime($dob));
 			$pid = addPerson($firstname,$lastname,$email1,$cell,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename,false);
@@ -216,9 +216,12 @@
 		<div class="newclient_page page">
 			<div class="newclient">
 				<?php
+				echo($upload_image_text);
 				echo($text);
 				echo('
 			<form action="#" method="post">
+				<h3>Photo</h3>
+				'.$i.'<br /><br />
 				<h3>Personal Information</h3>
 				Prefix:<input type="text" name="prefix" autocomplete="off" /><br />
 				First Name:*<input type="text" name="firstname" autocomplete="off" /><br />

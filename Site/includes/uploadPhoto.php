@@ -1,6 +1,6 @@
 <?php
 	$upload_image_text;
-	function resizeImage($w,$h) {
+	function resizeImage($w,$h, $conn) {
 		$tmpName  = $_FILES['image']['tmp_name'];
 		$fileType = $_FILES['image']['type'];
 		switch(strtolower($fileType)) {
@@ -55,17 +55,16 @@
 		// Destroy resources
 		imagedestroy($image);
 		imagedestroy($new);
-		return (addslashes($data));
+		return (pg_escape_bytea($conn, $data));
 	}
 
-	function uploadImage() {
+	function uploadImage($debug = true) {
 		include('includes/db.php');
 		include('includes/protection.php');
 		include('includes/mailer.php');
 		include('includes/log.php');
 		
 		global $upload_image_text;
-		global $debug;
 		
 		if($_FILES['image']['size'] > 0) {
 			$date = date("Y-m-d H:i:s");
@@ -79,11 +78,11 @@
 
 			$fp      = fopen($tmpName, 'r');
 			$content = fread($fp, filesize($tmpName));
-			$content = addslashes($content);
+			$content = pg_escape_bytea($conn, $content);
 			fclose($fp);
 
 			if(!get_magic_quotes_gpc()) {
-				$fileName = addslashes($fileName);
+				$fileName = pg_escape_string($fileName);
 			}
 			
 			$uploadOk = 1;
@@ -92,7 +91,7 @@
 				$upload_image_text .= "An error occured while processing the file. Try again.<br />";
 				$uploadOk = 0;
 			}
-			if ($uploadOk && $fileSize > 2048000) {
+			if ($uploadOk && $fileSize > 5120000) {
 				$upload_image_text .= "Sorry, your file is too large.<br />";
 				$uploadOk = 0;
 			}
@@ -114,11 +113,11 @@
 				}
 			}
 			if ($uploadOk) {
-				$image160 = resizeImage(160,160);
-				$image240 = resizeImage(240,240);
+				$image160 = resizeImage(160,160,$conn);
+				$image240 = resizeImage(240,240,$conn);
 				//$image160 = 0;
 				//$image240 = 0;
-				$sql = "INSERT INTO photos (uploader_personid, uploaddate, mimetype, file, thumbnail160, thumbnail240) VALUES ('$personid', '$date', '$fileType', '$content', '$image160', '$image240')";
+				$sql = "INSERT INTO photos (uploader_personid, uploaddate, mimetype, file, thumbnail160, thumbnail240) VALUES ('$personid', '$date', '$fileType', '$content'::bytea, '$image160'::bytea, '$image240'::bytea)";
 				if (!pg_query($conn,$sql)) {
 					$readdate = date("Y-m-d H:i:s A");
 					$b = '<br />';
