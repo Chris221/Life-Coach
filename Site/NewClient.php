@@ -219,14 +219,16 @@
 				echo($text);
 				echo('<table>
 			<form action="#" method="post">
-				<tr><td><h3>Photo</h3></td><td>&thinsp;</td></tr>
+				<tr><td><h3 class="image_header">Photo</h3></td><td>&thinsp;</td></tr>
 				<input type="hidden" name="MAX_FILE_SIZE" value="5120000">
-				<tr><td width="219px"><input name="image" type="file" accept="image/*"></td><td>&thinsp;</td></tr>
-				<tr><td width="219px">The photo can not be any larger then 5MB.</td><td>&thinsp;</td></tr>
-				<tr><td width="219px">The photo types supported are JPG, PNG, & GIF.</td><td>&thinsp;</td></tr>
-				<tr><td width="219px">May take up to 5 minutes as the server processes the image.</td><td>&thinsp;</td></tr>
+				<tr><td><input name="image" type="file" accept="image/*"></td><td>&thinsp;</td></tr>
+				<tr><td>The photo can not be any larger then 5MB.</td><td>&thinsp;</td></tr>
+				<tr><td>The photo types supported are JPG, PNG, & GIF.</td><td>&thinsp;</td></tr>
+				<tr><td>May take up to 5 minutes as the server processes the image.</td><td>&thinsp;</td></tr>
 				
-				<h3>Personal Information</h3></td><td>&thinsp;</td></tr>
+				</table><table>
+				
+				<tr><td><h3>Personal Information</h3></td><td>&thinsp;</td></tr>
 				<tr><td>Prefix:</td><td><input type="text" name="prefix" autocomplete="off" /></td></tr>
 				<tr><td>First Name:*</td><td><input type="text" name="firstname" autocomplete="off" /></td></tr>
 				<tr><td>Middle Name:</td><td><input type="text" name="middlename" autocomplete="off" /></td></tr>
@@ -263,17 +265,16 @@
 				<tr><td>Favorite book:</td><td><input type="text" name="favoritebook" autocomplete="off" /></td></tr>
 				<tr><td>Favorite food:</td><td><input type="text" name="favoritefood" autocomplete="off" /></td></tr>
 				</table>
-				<br />
 				<table>
-				<tr><td>Goals:</td><td>&thinsp;</td></tr>
-				<tr><td><textarea rows="4" cols="50" name="goals" autocomplete="off"></textarea></td></tr>
-				<tr><td>Needs:</td><td>&thinsp;</td></tr>
-				<tr><td><textarea rows="4" cols="50" name="needs" autocomplete="off"></textarea></td></tr>
+				<tr><td class="client_about">Goals:</td></tr>
+				<tr><td class="client_about"><textarea rows="4" cols="50" name="goals" autocomplete="off"></textarea></td></tr>
+				<tr><td class="client_about">Needs:</td></tr>
+				<tr><td class="client_about"><textarea rows="4" cols="50" name="needs" autocomplete="off"></textarea></td></tr>
 				
-				<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
+				<tr><td class="client_about">&thinsp;</td></tr>
 				
-				<tr><td><input type="submit" value="Submit" class="button" /></td></tr>
-				<tr><td><input type="reset" value="Reset" class="button" /></td></tr>
+				<tr><td class="client_about"><input type="submit" value="Submit" class="button" /></td></tr>
+				<tr><td class="client_about"><input type="reset" value="Reset" class="button" /></td></tr>
 			</form></table>
 		');
 				?>
