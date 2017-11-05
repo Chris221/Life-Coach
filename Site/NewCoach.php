@@ -75,8 +75,8 @@
 			$text .= "The Last name cannot is to long.<br />";
 			$work = false;
 		}
-		if (strlen($cell)<9) {
-			$text .= "Cell number cannot be less then 9 digets.<br />";
+		if (strlen($cell)<8) {
+			$text .= "Cell number cannot be less then 8 digets.<br />";
 			$work = false;
 		}
 		if (strlen($cell)>15) {
@@ -214,37 +214,36 @@
 				echo($text);
 				echo('
 			<form action="#" method="post">
-				<h3>Photo</h3>
-				'.$i.'
-				<h3>Personal Information</h3>
-				Prefix: 
-				<input type="text" name="prefix" autocomplete="off" /><br />
-				First Name:* 
-				<input type="text" name="firstname" autocomplete="off" /><br />
-				Middle Name:
-				<input type="text" name="middlename" autocomplete="off" /><br />
-				Last Name:* 
-				<input type="text" name="lastname" autocomplete="off" /><br />
-				Suffix:
-				<input type="text" name="suffix" autocomplete="off" /><br />
-				Email:*
-				<input type="email" name="email1" autocomplete="off" /><br />
-				Confirm Email:*
-				<input type="email" name="email2" autocomplete="off" /><br />
-				Cell Number:*
-				<input type="number" name="cell" autocomplete="off" /><br />
-				Home Number:
-				<input type="number" name="home" autocomplete="off" /><br />
-				Date of Birth:
-				<input type="date" name="dob" autocomplete="off" /><br />
+				<table>
+				<tr><td><h3 class="image_header">Photo</h3></td><td>&thinsp;</td></tr>
+				<input type="hidden" name="MAX_FILE_SIZE" value="5120000">
+				<tr><td><input name="image" type="file" accept="image/*"></td><td>&thinsp;</td></tr>
+				<tr><td>The photo can not be any larger then 5MB.</td><td>&thinsp;</td></tr>
+				<tr><td>The photo types supported are JPG, PNG, & GIF.</td><td>&thinsp;</td></tr>
+				<tr><td>May take up to 5 minutes as the server processes the image.</td><td>&thinsp;</td></tr>
 				
-				<h3>Coach Information</h3>
-				supervisor:
-				<input type="checkbox" name="supervisor" autocomplete="off" /><br />
-				Password:* (minimum 8 characters)
-				<input type="password" name="pass1"  autocomplete="off" /><br />
-				Confirm Password:*
-				<input type="password" name="pass2"  autocomplete="off" /><br />
+				</table><table>
+				
+				<tr><td><h3>Personal Information</h3></td><td>&thinsp;</td></tr>
+				<tr><td>Prefix:</td><td><input type="text" name="prefix" autocomplete="off" /></td></tr>
+				<tr><td>First Name:*</td><td><input type="text" name="firstname" autocomplete="off" /></td></tr>
+				<tr><td>Middle Name:</td><td><input type="text" name="middlename" autocomplete="off" /></td></tr>
+				<tr><td>Last Name:*</td><td><input type="text" name="lastname" autocomplete="off" /></td></tr>
+				<tr><td>Suffix:</td><td><input type="text" name="suffix" autocomplete="off" /></td></tr>
+				<tr><td>Email:*</td><td><input type="email" name="email1" autocomplete="off" /></td></tr>
+				<tr><td>Confirm Email:*</td><td><input type="email" name="email2" autocomplete="off" /></td></tr>
+				<tr><td>Cell Number:*</td><td><input type="number" name="cell" autocomplete="off" /></td></tr>
+				<tr><td>Home Number:</td><td><input type="number" name="home" autocomplete="off" /></td></tr>
+				<tr><td>Date of Birth:</td><td><input type="date" name="dob" autocomplete="off" /></td></tr>
+				
+				<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
+				
+				<tr><td><h3>Coach Information</h3></td><td>&thinsp;</td></tr>
+				<tr><td>supervisor:</td><td><input type="checkbox" name="supervisor" autocomplete="off" /></td></tr>
+				<tr><td>Password:* <span class="password_info">(minimum 8 characters)</span></td><td><input type="password" name="pass1"  autocomplete="off" /></td></tr>
+				<tr><td>Confirm Password:*</td><td><input type="password" name="pass2"  autocomplete="off" /></td></tr>
+				<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
+				</table>
 				<input type="submit" value="Submit" class="button" /><br />
 				<input type="reset" value="Reset" class="button" />
 			</form>

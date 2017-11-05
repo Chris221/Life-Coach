@@ -63,6 +63,17 @@
 .page-margin {
 	margin: 0 15%;
 }
+.image_header {
+	width: 257px;
+}
+.client_about {
+	width: 465px;
+}
+.password_info {
+	color: #848484;
+	font-size: 12px;
+	font-style: italic;
+}
 
 .title {
     text-align: center;
