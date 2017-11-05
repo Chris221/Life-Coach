@@ -76,11 +76,11 @@
 			$work = false;
 		}
 		if (strlen($cell)<8) {
-			$text .= "Cell number cannot be less then 8 digets.<br />";
+			$text .= "Cell number cannot be less then 8 digits.<br />";
 			$work = false;
 		}
 		if (strlen($cell)>15) {
-			$text .= "Cell number cannot be longer then 15 digets.<br />";
+			$text .= "Cell number cannot be longer then 15 digits.<br />";
 			$work = false;
 		}
 		
