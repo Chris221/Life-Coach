@@ -60,28 +60,36 @@
 </nav>
 <br />
 
-<div class="card text-center page-margin">
-    <div class="card-header title">
-        <?php
-        echo("Hello, ".$_SESSION['first_name'].' '.$_SESSION['last_name'].'!');
-        ?>
-    </div>
-    <div class="card-body">
-        <h4 class="card-title">There will be info here</h4>
-        <p class="card-text">lead into other stuff</p>
-        <a href="/NewCoach" class="btn btn-primary">Add a New Coach</a>
-        <a href="/NewClient" class="btn btn-primary">Add a New Client</a>
-    </div>
-    <div class="card-header title"> Calendar</div>
-        <div class="card-body">
-            <h4 class="card-title">There will be a calendar here</h4>
+<div class = "row">
+    <div class="col-sm-7">
+        <div class="card text-center page-margin">
+            <div class="card-header title">
+                <?php
+                echo("Hello, ".$_SESSION['first_name'].' '.$_SESSION['last_name'].'!');
+                ?>
+            </div>
+            <div class="card-body">
+                <h4 class="card-title">There will be info here</h4>
+                <p class="card-text">lead into other stuff</p>
+                <a href="/NewCoach" class="btn btn-primary">Add a New Coach</a>
+                <a href="/NewClient" class="btn btn-primary">Add a New Client</a>
+            </div>
         </div>
-        <div class="card-footer text-muted">
-            Footer Text
+    </div>
+    <div class="col-sm-5">
+        <div class="card text-center page-margin">
+            <div class="card-header title"> Calendar</div>
+            <div class="card-body">
+                <h4 class="card-title">There will be a calendar here</h4>
+            </div>
+<!--            <div class="card-footer text-muted">-->
+<!--                Footer Text-->
+<!--            </div>-->
+        </div>
+
         </div>
     </div>
 </div>
-
 
 </body>
 </html>
