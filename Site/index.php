@@ -34,10 +34,10 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/index">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Schedule</a>
+                <a class="nav-link" href="/schedule">Schedule</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="#">Clients</a>
@@ -58,9 +58,7 @@
         </form>-->
     </div>
 </nav>
-
 <br />
-
     <div class="container">
     <div class ="row">
         <div class="col-sm-12">
@@ -87,6 +85,7 @@
                     <a href="/NewClient" class="btn btn-primary">Add a New Client</a>
                 </div>
             </div>
+
             <div class="card text-center page-margin5 left">
                 <div class="card-header title">Daily Tasks</div>
                 <div class="card-body">
