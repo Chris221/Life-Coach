@@ -86,18 +86,19 @@
                 </div>
             </div>
 
-            <div class="card text-center page-margin5 left">
-                <div class="card-header title">Daily Tasks</div>
-                <div class="card-body">
-                    <h5 class="card-title">Daily tasks, reminders, and calendar events appear here.</h5>
-                </div>
-            </div>
 
             <div class="card text-center page-margin5 left">
                 <div class="card-header title"> Recent Contact</div>
                 <div class="card-body">
                     <h5 class="card-title">Information regarding the most recent client contact will appear here.</h5>
                 </div>
+            </div>
+        </div>
+        
+        <div class="card text-center page-margin5 left">
+            <div class="card-header title">Daily Tasks</div>
+            <div class="card-body">
+                <h5 class="card-title">Daily tasks, reminders, and calendar events appear here.</h5>
             </div>
         </div>
 
