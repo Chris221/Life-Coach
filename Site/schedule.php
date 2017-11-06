@@ -171,14 +171,7 @@ $title = 'Schedule';
         </div>
     </div>
     </div>
-
 </div>
-</div>
-
-<div class="navbar navbar-default navbar-fixed-bottom">
-    <div class="container">
-        <p> Copyright Abroad Squad + Chris 2017 </p>
-    </div>
 </div>
 </body>
 </html>
