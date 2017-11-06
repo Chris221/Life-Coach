@@ -9,6 +9,7 @@
 ?>
 <!doctype html>
 <html>
+<body>
 <head>
 <meta charset="UTF-8">
 <!-- For Mobile scaling -->
@@ -45,6 +46,9 @@
         </ul>
 <!--        I changed this to align the logout to the right-->
         <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">Profile</a>
+            </li>
             <li class="nav-item">
                 <a class="nav-link" href="/Logout" >Logout</a>
             </li>
