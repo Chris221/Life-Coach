@@ -66,7 +66,7 @@
                 <div class="card-header title">
                     <?php
                     //no idea why this works without the closing tag, but it does
-                    echo ("<h4>Hello, ".$_SESSION['first_name'].' '.$_SESSION['last_name'].'!</h4');
+                    echo ("<h4>Hello, ".$_SESSION['first_name'].' '.$_SESSION['last_name'].'!</h5');
                     ?>
                 </div>
             </div>
@@ -79,7 +79,7 @@
             <div class="card text-center page-margin5 left">
                 <div class="card-header title"> Welcome! </div>
                 <div class="card-body">
-                    <h4 class="card-title">There will be info here</h4>
+                    <h5 class="card-title">There will be info here</h5>
                     <p class="card-text">lead into other stuff</p>
                     <a href="/NewCoach" class="btn btn-primary">Add a New Coach</a>
                     <a href="/NewClient" class="btn btn-primary">Add a New Client</a>
@@ -87,9 +87,16 @@
             </div>
 
             <div class="card text-center page-margin5 left">
+                <div class="card-header title">Daily Tasks</div>
+                <div class="card-body">
+                    <h5 class="card-title">Daily tasks, reminders, and calendar events appear here.</h5>
+                </div>
+            </div>
+
+            <div class="card text-center page-margin5 left">
                 <div class="card-header title"> Recent Contact</div>
                 <div class="card-body">
-                    <h4 class="card-title">Information regarding the most recent client contact will appear here.</h4>
+                    <h5 class="card-title">Information regarding the most recent client contact will appear here.</h5>
                 </div>
             </div>
         </div>
@@ -98,14 +105,14 @@
             <div class="card text-center page-margin5 right">
                 <div class="card-header title"> Calendar</div>
                 <div class="card-body">
-                    <h4 class="card-title">A calendar will appear here.</h4>
+                    <h5 class="card-title">A calendar will appear here.</h5>
                 </div>
             </div>
 
             <div class="card text-center page-margin5 right">
                 <div class="card-header title"> Upcoming events</div>
                 <div class="card-body">
-                    <h4 class="card-title">Upcoming events and reminders will appear here.</h4>
+                    <h5 class="card-title">Upcoming events and reminders will appear here.</h5>
                 </div>
             </div>
         </div>
