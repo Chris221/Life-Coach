@@ -65,6 +65,7 @@
             <div class="card text-center page-margin0 left right">
                 <div class="card-header title">
                     <?php
+                    //no idea why this works without the closing tag, but it does
                     echo ("<h4>Hello, ".$_SESSION['first_name'].' '.$_SESSION['last_name'].'!</h4');
                     ?>
                 </div>
