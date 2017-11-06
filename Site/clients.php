@@ -105,7 +105,7 @@
             <div class="card text-center page-margin5 left">
                 <div class="card-header title"> Client List </div>
                     <div class="card-body">
-
+                        <h4>The list of clients will appear here.</h4>
                     </div>
             </div>
         </div>
