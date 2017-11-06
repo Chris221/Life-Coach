@@ -24,7 +24,7 @@
 <link type="text/css" rel="stylesheet" href="/css/life-coach.css">
 <title><?php echo($title); ?></title>
 </head>
-<body>
+<div>
 <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
     <a class="navbar-brand" href="/"><img src="/logo.png" width="50" height="50" alt="Logo" /></a>
     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
@@ -59,36 +59,57 @@
     </div>
 </nav>
 <br />
-
-<div class = "row">
-    <div class="col-sm-7">
-        <div class="card text-center page-margin">
-            <div class="card-header title">
-                <?php
-                echo("Hello, ".$_SESSION['first_name'].' '.$_SESSION['last_name'].'!');
-                ?>
-            </div>
-            <div class="card-body">
-                <h4 class="card-title">There will be info here</h4>
-                <p class="card-text">lead into other stuff</p>
-                <a href="/NewCoach" class="btn btn-primary">Add a New Coach</a>
-                <a href="/NewClient" class="btn btn-primary">Add a New Client</a>
+    <div class="container">
+    <div class ="row">
+        <div class="col-sm-12">
+            <div class="card text-center page-margin0 left right">
+                <div class="card-header title">
+                    <?php
+                    echo ("<h4>Hello, ".$_SESSION['first_name'].' '.$_SESSION['last_name'].'!</h4');
+                    ?>
+                </div>
             </div>
         </div>
     </div>
-    <div class="col-sm-5">
-        <div class="card text-center page-margin">
-            <div class="card-header title"> Calendar</div>
-            <div class="card-body">
-                <h4 class="card-title">There will be a calendar here</h4>
+    </div>
+
+    <div class = "row">
+        <div class="col-sm-7">
+            <div class="card text-center page-margin5 left">
+                <div class="card-header title"> Welcome! </div>
+                <div class="card-body">
+                    <h4 class="card-title">There will be info here</h4>
+                    <p class="card-text">lead into other stuff</p>
+                    <a href="/NewCoach" class="btn btn-primary">Add a New Coach</a>
+                    <a href="/NewClient" class="btn btn-primary">Add a New Client</a>
+                </div>
             </div>
-<!--            <div class="card-footer text-muted">-->
-<!--                Footer Text-->
-<!--            </div>-->
+
+            <div class="card text-center page-margin5 left">
+                <div class="card-header title"> Recent Contact</div>
+                <div class="card-body">
+                    <h4 class="card-title">Information regarding the most recent client contact will appear here.</h4>
+                </div>
+            </div>
         </div>
 
+        <div class="col-sm-5">
+            <div class="card text-center page-margin5 right">
+                <div class="card-header title"> Calendar</div>
+                <div class="card-body">
+                    <h4 class="card-title">A calendar will appear here.</h4>
+                </div>
+            </div>
+
+            <div class="card text-center page-margin5 right">
+                <div class="card-header title"> Upcoming events</div>
+                <div class="card-body">
+                    <h4 class="card-title">Upcoming events and reminders will appear here.</h4>
+                </div>
+            </div>
         </div>
     </div>
+</div>
 </div>
 
 </body>
