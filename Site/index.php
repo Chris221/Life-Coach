@@ -58,7 +58,9 @@
         </form>-->
     </div>
 </nav>
+
 <br />
+
     <div class="container">
     <div class ="row">
         <div class="col-sm-12">
@@ -85,6 +87,12 @@
                     <a href="/NewClient" class="btn btn-primary">Add a New Client</a>
                 </div>
             </div>
+            <div class="card text-center page-margin5 left">
+                <div class="card-header title">Daily Tasks</div>
+                <div class="card-body">
+                    <h5 class="card-title">Daily tasks, reminders, and calendar events appear here.</h5>
+                </div>
+            </div>
 
             <div class="card text-center page-margin5 left">
                 <div class="card-header title"> Recent Contact</div>
@@ -92,13 +100,6 @@
                     <h5 class="card-title">Information regarding the most recent client contact will appear here.</h5>
                 </div>
             </div>
-
-        <div class="card text-center page-margin5 left">
-            <div class="card-header title">Daily Tasks</div>
-            <div class="card-body">
-                <h5 class="card-title">Daily tasks, reminders, and calendar events appear here.</h5>
-            </div>
-        </div>
         </div>
 
         <div class="col-sm-5">
@@ -176,5 +177,10 @@
 </div>
 </div>
 
+<div class="navbar navbar-default navbar-fixed-bottom">
+    <div class="container">
+        <p> Copyright Abroad Squad + Chris 2017 </p>
+    </div>
+</div>
 </body>
 </html>
