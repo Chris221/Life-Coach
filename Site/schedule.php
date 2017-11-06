@@ -97,7 +97,7 @@ $title = 'Schedule';
                             </li>
                         </ul>
                     </div>
-                    <ul class="weekdays">
+                    <ul class="weekdays weekdaysLg">
                         <li>Mo</li>
                         <li>Tu</li>
                         <li>We</li>
@@ -107,7 +107,7 @@ $title = 'Schedule';
                         <li>Su</li>
                     </ul>
 
-                    <ul class="days roundCornerBottom">
+                    <ul class="days daysLg roundCornerBottom">
                         <li>  </li>
                         <li>  </li>
                         <li>  </li>
@@ -141,6 +141,8 @@ $title = 'Schedule';
                         <li>28</li>
                         <li>29</li>
                         <li>30</li>
+                        <li>  </li>
+                        <li>  </li>
                     </ul>
                 </div>
             </div>

@@ -120,7 +120,7 @@
                         </ul>
                     </div>
                     <div class="calendar">
-                        <ul class="weekdays">
+                        <ul class="weekdays weekdaysSm">
                             <li>Mo</li>
                             <li>Tu</li>
                             <li>We</li>
@@ -130,7 +130,7 @@
                             <li>Su</li>
                         </ul>
 
-                        <ul class="days roundCornerBottom">
+                        <ul class="days daysSm roundCornerBottom">
                             <li>  </li>
                             <li>  </li>
                             <li>  </li>
@@ -164,6 +164,8 @@
                             <li>28</li>
                             <li>29</li>
                             <li>30</li>
+                            <li>  </li>
+                            <li>  </li>
                         </ul>
                     </div>
                 </div>

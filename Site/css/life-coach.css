@@ -151,9 +151,16 @@ ul {
     background-color:#ddd;
 }
 
-.weekdays li {
+.weekdaysLg li {
     display: inline-block;
     width: 13.6%;
+    color: #666;
+    text-align: center;
+}
+
+.weekdaysSm li {
+    display: inline-block;
+    width: 12%;
     color: #666;
     text-align: center;
 }
@@ -165,10 +172,20 @@ ul {
     margin: 0;
 }
 
-.days li {
+.daysLg li {
     list-style-type: none;
     display: inline-block;
     width: 13.6%;
+    text-align: center;
+    margin-bottom: 5px;
+    font-size:12px;
+    color:#777;
+}
+
+.daysSm li {
+    list-style-type: none;
+    display: inline-block;
+    width: 12%;
     text-align: center;
     margin-bottom: 5px;
     font-size:12px;
