@@ -1,23 +1,14 @@
-<!--/**
- * Created by PhpStorm.
- * User: Marisa.Proscia1
- * Date: 11/5/2017
- * Time: 9:09 PM
- */-->
-<!--/* not sure if this is right */-->
-
 <?php
-include('includes/log.php');
-include('includes/session.php');
-if (!$_SESSION['personid']) {
-    header('Location: /Login');
-}
-o_log('Page Loaded');
-$title = 'Schedule';
+	include('includes/log.php');
+	include('includes/session.php');
+	if (!$_SESSION['personid']) {
+		header('Location: /Login');
+	}
+	o_log('Page Loaded');
+	$title = 'Schedule';
 ?>
 <!doctype html>
 <html>
-
     <head>
         <meta charset="UTF-8">
         <!-- For Mobile scaling -->
@@ -33,10 +24,9 @@ $title = 'Schedule';
         <link type="text/css" rel="stylesheet" href="/css/life-coach.css">
         <title><?php echo($title); ?></title>
     </head>
-
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
-            <a class="navbar-brand" href="/index"><img src="/logo.png" width="50" height="50" alt="Logo" /></a>
+            <a class="navbar-brand" href="/"><img src="/logo.png" width="50" height="50" alt="Logo" /></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -44,19 +34,19 @@ $title = 'Schedule';
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/index">Home</a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/schedule">Schedule <span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/Schedule">Schedule <span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/clients">Clients</a>
+                        <a class="nav-link" href="/Clients">Clients</a>
                     </li>
                 </ul>
                 <!--        I changed this to align the logout to the right-->
                 <ul class="nav navbar-nav navbar-right">
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile">Profile</a>
+                        <a class="nav-link" href="/Profile">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Logout" >Logout</a>
@@ -71,9 +61,7 @@ $title = 'Schedule';
                         </form>-->
             </div>
         </nav>
-
         <br />
-
         <div class="container">
             <div class ="row">
                 <div class="col-sm-12">

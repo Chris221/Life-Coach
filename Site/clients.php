@@ -1,11 +1,3 @@
-
-<!--/**-->
-<!-- * Created by PhpStorm.-->
-<!-- * User: Brad-->
-<!-- * Date: 11/5/17-->
-<!-- * Time: 9:21 PM-->
-<!-- */-->
-
 <?php
 	include('includes/log.php');
 	include('includes/session.php');
@@ -34,7 +26,7 @@
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
-            <a class="navbar-brand" href="/index"><img src="/logo.png" width="50" height="50" alt="Logo" /></a>
+            <a class="navbar-brand" href="/"><img src="/logo.png" width="50" height="50" alt="Logo" /></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -45,7 +37,7 @@
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/schedule">Schedule</a>
+                        <a class="nav-link" href="/Schedule">Schedule</a>
                     </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="#">Clients<span class="sr-only">(current)</span></a>
@@ -54,7 +46,7 @@
                 <!--        I changed this to align the logout to the right-->
                 <ul class="nav navbar-nav navbar-right">
                     <li class="nav-item">
-                        <a class="nav-link" href="/profile">Profile</a>
+                        <a class="nav-link" href="/Profile">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Logout" >Logout</a>

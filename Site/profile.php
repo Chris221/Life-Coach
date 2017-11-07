@@ -1,18 +1,11 @@
-<!--/**-->
-<!-- * Created by PhpStorm.-->
-<!-- * User: Brad-->
-<!-- * Date: 11/6/17-->
-<!-- * Time: 12:48 PM-->
-<!-- */-->
-
 <?php
-include('includes/log.php');
-include('includes/session.php');
-if (!$_SESSION['personid']) {
-    header('Location: /Login');
-}
-o_log('Page Loaded');
-$title = 'Profile';
+	include('includes/log.php');
+	include('includes/session.php');
+	if (!$_SESSION['personid']) {
+		header('Location: /Login');
+	}
+	o_log('Page Loaded');
+	$title = 'Profile';
 ?>
 <!doctype html>
 <html>
@@ -33,7 +26,7 @@ $title = 'Profile';
     </head>
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
-            <a class="navbar-brand" href="/index"><img src="/logo.png" width="50" height="50" alt="Logo" /></a>
+            <a class="navbar-brand" href="/"><img src="/logo.png" width="50" height="50" alt="Logo" /></a>
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
@@ -41,13 +34,13 @@ $title = 'Profile';
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item">
-                        <a class="nav-link" href="/index">Home</a>
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/schedule">Schedule</a>
+                        <a class="nav-link" href="/Schedule">Schedule</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/clients">Clients</a>
+                        <a class="nav-link" href="/Clients">Clients</a>
                     </li>
                 </ul>
                 <!--        I changed this to align the logout to the right-->
