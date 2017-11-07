@@ -177,17 +177,20 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/index">Home <span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Schedule</a>
+                <a class="nav-link" href="/schedule">Schedule</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="#">Clients</a>
+                <a class="nav-link" href="/clients">Clients</a>
             </li>
         </ul>
         <!--        I changed this to align the logout to the right-->
         <ul class="nav navbar-nav navbar-right">
+            <li class="nav-item">
+                <a class="nav-link" href="/profile">Profile</a>
+            </li>
             <li class="van-item">
                 <a class="nav-link" href="/Logout" >Logout</a>
             </li>
@@ -202,59 +205,58 @@
     </div>
 </nav>
 <br />
-<div class="card text-center page-margin">
-	<div class="card-header title">
-		<?php echo($title.'<br />'); ?>
-	</div>
-	<div class="card-body">
-		<div class="newcoach_page page">
-			<div class="newcoach">
-				<?php
-				echo($upload_image_text);
-				echo($text);
-				echo('
-			<form action="#" method="post">
-				<table>
-				<tr><td><h3 class="image_header">Photo</h3></td><td>&thinsp;</td></tr>
-				<input type="hidden" name="MAX_FILE_SIZE" value="5120000">
-				<tr><td><input name="image" type="file" accept="image/*"></td><td>&thinsp;</td></tr>
-				<tr><td>The photo can not be any larger then 5MB.</td><td>&thinsp;</td></tr>
-				<tr><td>The photo types supported are JPG, PNG, & GIF.</td><td>&thinsp;</td></tr>
-				<tr><td>May take up to 5 minutes as the server processes the image.</td><td>&thinsp;</td></tr>
-				
-				</table><table>
-				
-				<tr><td><h3>Personal Information</h3></td><td>&thinsp;</td></tr>
-				<tr><td>Prefix:</td><td><input type="text" name="prefix" autocomplete="off" /></td></tr>
-				<tr><td>First Name:*</td><td><input type="text" name="firstname" autocomplete="off" /></td></tr>
-				<tr><td>Middle Name:</td><td><input type="text" name="middlename" autocomplete="off" /></td></tr>
-				<tr><td>Last Name:*</td><td><input type="text" name="lastname" autocomplete="off" /></td></tr>
-				<tr><td>Suffix:</td><td><input type="text" name="suffix" autocomplete="off" /></td></tr>
-				<tr><td>Email:*</td><td><input type="email" name="email1" autocomplete="off" /></td></tr>
-				<tr><td>Confirm Email:*</td><td><input type="email" name="email2" autocomplete="off" /></td></tr>
-				<tr><td>Cell Number:*</td><td><input type="number" name="cell" autocomplete="off" /></td></tr>
-				<tr><td>Home Number:</td><td><input type="number" name="home" autocomplete="off" /></td></tr>
-				<tr><td>Date of Birth:</td><td><input type="date" name="dob" autocomplete="off" /></td></tr>
-				
-				<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
-				
-				<tr><td><h3>Coach Information</h3></td><td>&thinsp;</td></tr>
-				<tr><td>supervisor:</td><td><input type="checkbox" name="supervisor" autocomplete="off" /></td></tr>
-				<tr><td>Password:* <span class="password_info">(minimum 8 characters)</span></td><td><input type="password" name="pass1"  autocomplete="off" /></td></tr>
-				<tr><td>Confirm Password:*</td><td><input type="password" name="pass2"  autocomplete="off" /></td></tr>
-				<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
-				</table>
-				<input type="submit" value="Submit" class="button" /><br />
-				<input type="reset" value="Reset" class="button" />
-			</form>
-		');
-				?>
-			</div>
-		</div>
-	</div>
-	<div class="card-footer text-muted">
-		Footer Text
-	</div>
+<div class="container">
+    <div class="card text-center page-margin">
+        <div class="card-header title">
+            <?php echo($title.'<br />'); ?>
+        </div>
+        <div class="card-body">
+            <div class="newcoach_page page">
+                <div class="newcoach">
+                    <?php
+                    echo($upload_image_text);
+                    echo($text);
+                    echo('
+                <form action="#" method="post">
+                    <table>
+                    <tr><td><h3 class="image_header">Photo</h3></td><td>&thinsp;</td></tr>
+                    <input type="hidden" name="MAX_FILE_SIZE" value="5120000">
+                    <tr><td><input name="image" type="file" accept="image/*"></td><td>&thinsp;</td></tr>
+                    <tr><td>The photo can not be any larger then 5MB.</td><td>&thinsp;</td></tr>
+                    <tr><td>The photo types supported are JPG, PNG, & GIF.</td><td>&thinsp;</td></tr>
+                    <tr><td>May take up to 5 minutes as the server processes the image.</td><td>&thinsp;</td></tr>
+                    
+                    </table><table>
+                    
+                    <tr><td><h3>Personal Information</h3></td><td>&thinsp;</td></tr>
+                    <tr><td>Prefix:</td><td><input type="text" name="prefix" autocomplete="off" /></td></tr>
+                    <tr><td>First Name:*</td><td><input type="text" name="firstname" autocomplete="off" /></td></tr>
+                    <tr><td>Middle Name:</td><td><input type="text" name="middlename" autocomplete="off" /></td></tr>
+                    <tr><td>Last Name:*</td><td><input type="text" name="lastname" autocomplete="off" /></td></tr>
+                    <tr><td>Suffix:</td><td><input type="text" name="suffix" autocomplete="off" /></td></tr>
+                    <tr><td>Email:*</td><td><input type="email" name="email1" autocomplete="off" /></td></tr>
+                    <tr><td>Confirm Email:*</td><td><input type="email" name="email2" autocomplete="off" /></td></tr>
+                    <tr><td>Cell Number:*</td><td><input type="number" name="cell" autocomplete="off" /></td></tr>
+                    <tr><td>Home Number:</td><td><input type="number" name="home" autocomplete="off" /></td></tr>
+                    <tr><td>Date of Birth:</td><td><input type="date" name="dob" autocomplete="off" /></td></tr>
+                    
+                    <tr><td>&thinsp;</td><td>&thinsp;</td></tr>
+                    
+                    <tr><td><h3>Coach Information</h3></td><td>&thinsp;</td></tr>
+                    <tr><td>supervisor:</td><td><input type="checkbox" name="supervisor" autocomplete="off" /></td></tr>
+                    <tr><td>Password:* <span class="password_info">(minimum 8 characters)</span></td><td><input type="password" name="pass1"  autocomplete="off" /></td></tr>
+                    <tr><td>Confirm Password:*</td><td><input type="password" name="pass2"  autocomplete="off" /></td></tr>
+                    <tr><td>&thinsp;</td><td>&thinsp;</td></tr>
+                    </table>
+                    <input type="submit" value="Submit" class="button" /><br />
+                    <input type="reset" value="Reset" class="button" />
+                </form>
+            ');
+                    ?>
+                </div>
+            </div>
+        </div>
+    </div>
 </div>
 
 </body>

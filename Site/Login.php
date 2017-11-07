@@ -127,7 +127,7 @@
             <div class="login">
                 <?php
                     echo($text);
-                    echo('s
+                    echo('
                         <form action="#" method="post">
                             Email Address: <br />
                             <input type="text" name="email" value="'.$email.'" class="login_input" /><br />
