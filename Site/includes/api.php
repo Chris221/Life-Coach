@@ -38,8 +38,9 @@
 			$where = 'WHERE companyid='.$_SESSION['companyid'].' AND coachid='.$_SESSION['coachid'];
 		} else if ($type == 'default') {
 			$where = 'WHERE companyid='.$_SESSION['companyid'].' AND coachid='.$_SESSION['coachid'];
+			$limit = ' LIMIT 30';
 		}
-		$sql = 'SELECT * FROM clients_view '.$where.';';
+		$sql = 'SELECT * FROM clients_view '.$where.' ORDER BY last_name ASC, first_name ASC'.$limit.';';
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -191,22 +192,34 @@
 		return $last_insert_id;
 	}
 
-	function getNote($clientid,$debug = false) {
+	function viewNote($clientid,$debug = false) {
 		include('includes/db.php');
-		$goals = pg_escape_string($conn,$postedNotes);
-		
-		$date = date("Y-m-d H:i:s");
-		
-		$sql = "INSERT INTO notes(clientid, coachid, visitid, photoid, description, date_added) VALUES ($clientid,$postedNotes,$date);";
+		$sql = 'SELECT * FROM notes WHERE clientid='.$clientid.';';
 		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
 			if ($error) {
+				echo('<br />Error! (View Notes)<br />');
+				echo('Client ID: '.$clientid.'<br />');
 				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
 				echo('Error: '.$error.'<br />');
 			}
 		}
-		
 		pg_close($conn);
-		return $last_insert_id;
+		
+		while ($row = pg_fetch_assoc($result)) {
+			if (strlen($notes) > 0) {
+				$notes .= '<br /><br />';
+			}
+			$nid = $row['noteid'];
+			$description = $row['description'];
+			$vid = $row['visitid'];
+			
+			$notes .= '<div class="inline-block" id="'.$nid.'">'.$description.'</div>';
+		}
+		
+		return $notes;
 	}
 	
 	function cleanPhoneNumber($number) {
