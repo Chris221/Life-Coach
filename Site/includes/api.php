@@ -163,6 +163,31 @@
 		pg_close($conn);
 		return $last_insert_id;
 	}
+
+	function addNote($postedNotes,$clientid,$personid,$visitID = null,$debug = false) {
+		include('includes/db.php');
+		$goals = pg_escape_string($conn,$postedNotes);
+		
+		$date = date("Y-m-d H:i:s");
+		
+		$sql = "INSERT INTO notes(clientid, coachid, visitid, photoid, description, date_added) VALUES ($clientid,$postedNotes,$date);";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		
+		//Get row
+		$insert_query = pg_query($conn,"SELECT lastval();");
+		$insert_row = pg_fetch_row($insert_query);
+		$last_insert_id = $insert_row[0];
+		
+		pg_close($conn);
+		return $last_insert_id;
+	}
 	
 	function cleanPhoneNumber($number) {
 		//cleans the phone number of extras

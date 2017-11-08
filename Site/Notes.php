@@ -6,7 +6,6 @@
 	if (!$_SESSION['personid']) {
 		header('Location: /Login');
 	}
-	$title = 'Notes';
 
 	if (isset($_GET['p'])) {
 		$pid = base64url_decode($_GET['p']);
@@ -43,6 +42,14 @@
 		$itext = 'This client is not apart of your company';
 		$ptext = $itext;
 	}
+
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		$postedNotes = $_POST['Notes'];
+		
+		addNote($postedNotes,$visitID,true);
+	}
+
+	$title = 'Notes - '.$clientName;
 ?>
 <!doctype html>
 <html>
@@ -109,7 +116,7 @@
                             <?php echo($title); ?>
                         </div>
                         <div class="card-body">
-                        	<span class="marginAuto inline-block"><?php echo($text); ?></span>
+                        	<span class="marginAuto inline-block"><?php echo($notes); ?></span>
                         </div>
                     </div>
                 </div>
