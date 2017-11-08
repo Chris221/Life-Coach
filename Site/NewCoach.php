@@ -142,10 +142,20 @@
 				echo("Coach was added succesfully!<br />");
 				echo("Coach ID:".$cid."<br />");
 				o_log('Coach Add Successful', 'ID: '.$cid);
-				header('Location: /');
 			} else if ($output) {
 				echo("ERROR COACH WAS NOT ADDED!<br />");
 				o_log('Coach Add Failed');
+			}
+			$time = date("H:i:s", strtotime('12:00:00'));
+			$clientID = addClient($pid,$workaddress,$workcompany,$worktitle,$workfield,$favoritebook,$favoritefood,$time,$time,$time,$time,$goals,$needs,$cid);
+			if ($clientID && $output) {
+				echo("Client was added succesfully!<br />");
+				echo("Client ID:".$clientID."<br />");
+				o_log('Client Add Successful', 'ID: '.$clientID);
+				header('Location: /');
+			} else if ($output) {
+				echo("ERROR CLIENT WAS NOT ADDED!<br />");
+				o_log('Client Add Failed');
 			}
 		}
 	}
