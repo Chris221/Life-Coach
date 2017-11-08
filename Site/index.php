@@ -181,6 +181,7 @@
                 </div>
             </div>
 
+    <br/>
     <p class="footerText">
         Copyright &copy; 2017 No Rights Reserved.
         <br>
