@@ -142,10 +142,10 @@
                     <div class="card text-center page-margin5 left right">
                         <div class="card-header title">
                             <div class="row">
-                            <div class="col-sm-6">
+                            <div class="col-sm-5">
                                 <a href="#" class="btn btn-primary">Today</a>
                             </div>
-                            <div class="col-sm-6">
+                            <div class="col-sm-7">
                                 <a href="#" class="btn btn-primary">New Event</a>
                             </div>
                             </div>
