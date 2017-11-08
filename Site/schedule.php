@@ -30,7 +30,6 @@
             <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
                 <span class="navbar-toggler-icon"></span>
             </button>
-
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
                     <li class="nav-item">
@@ -72,7 +71,6 @@
                     </div>
                 </div>
             </div>
-
             <div class = "row">
                 <div class="col-sm-9">
                     <div class="card text-center page-margin5 left right">
@@ -96,7 +94,6 @@
                                 <li>Fr</li>
                                 <li>Sa</li>
                             </ul>
-
                             <ul class="days daysLg roundCornerBottom">
                                 <li>  </li>
                                 <li>  </li>
@@ -137,7 +134,6 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-sm-3">
                     <div class="card text-center page-margin5 left right">
                         <div class="card-header title">
@@ -149,8 +145,6 @@
                                 <a href="#" class="btn btn-primary">New Event</a>
                             </div>
                             </div>
-
-
                         </div>
                         <div class="card-body">
                             <h4> Calendar Events will Appear Here in Chronological Order. </h4>
