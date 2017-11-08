@@ -19,7 +19,6 @@
 
 	$personResult = view('persons','personid='.$pid);
 	$clientResult = view('clients','personid='.$pid);
-	$coachResult  = view('coaches','personid='.$pid);
 
 	$name = addStrTogether($personResult['prefix'],$personResult['first_name']);
 	$name = addStrTogether($name,$personResult['middle_name']);
@@ -31,7 +30,7 @@
 	$cid = $clientResult['coachid'];
 
 	$text = '<form action="#" method="post">
-				<textarea rows="8" cols="100" name="notes" autocomplete="off"></textarea><br /><br />
+				<textarea rows="6" cols="50" name="notes" autocomplete="off"></textarea><br /><br />
 				<input type="submit" value="Submit" class="button" /><br /><br />
 				<input type="reset" value="Reset" class="button" />
              </form></table>';
@@ -48,6 +47,8 @@
 		
 		addNote($postedNotes,$visitID,true);
 	}
+
+	$notes = getNotes($cid);
 
 	$title = 'Notes - '.$clientName;
 ?>
@@ -121,12 +122,18 @@
                     </div>
                 </div>
             </div>
-            <!--<div class = "row">
+            <div class = "row">
                 <div class="col-sm-12">
                     <div class="card text-center page-margin0 left right">
+                    	<div class="card-header title">
+                            Add Note
+                        </div>
+                        <div class="card-body">
+                        	<span class="marginAuto inline-block"><?php echo($text); ?></span>
+                        </div>
                     </div>
                 </div>
-            </div>-->
+            </div>
         </div>
     </body>
 </html>
