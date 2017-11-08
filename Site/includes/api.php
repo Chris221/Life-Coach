@@ -167,18 +167,29 @@
 		return $last_insert_id;
 	}
 
-	function addNote($postedNotes,$clientid,$coachid,$photoid,$visitID = null,$debug = false) {
+	function addNote($postedNote,$clientid,$coachid,$photoid = null,$visitID = null,$debug = false) {
 		include('includes/db.php');
-		$goals = pg_escape_string($conn,$postedNotes);
+		$cleanedNote = pg_escape_string($conn,$postedNote);
+		$photoid = "'".$photoid."'";
+		$visitID = "'".$visitID."'";
+		
+		$photoid = convertEmptyToNull($photoid);
+		$visitID = convertEmptyToNull($visitID);
 		
 		$date = date("Y-m-d H:i:s");
 		
-		$sql = "INSERT INTO notes(clientid, coachid, visitid, photoid, description, date_added) VALUES ($clientid,$coachid,$visitID,$photoid,$postedNotes,$date);";
+		$sql = "INSERT INTO notes(clientid, coachid, visitid, photoid, description, date_added) VALUES ('$clientid','$coachid',$visitID,$photoid,'$cleanedNote','$date');";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
 			if ($error) {
 				echo('SQL: '.$sql.'<br />');
+				echo('Posted Note: '.$postedNote.'<br />');
+				echo('Cleaned Note: '.$cleanedNote.'<br />');
+				echo('Client ID: '.$clientid.'<br />');
+				echo('Coach ID: '.$coachid.'<br />');
+				echo('Photo ID: '.$photoid.'<br />');
+				echo('Visit ID: '.$visitID.'<br />');
 				echo('Error: '.$error.'<br />');
 			}
 		}
