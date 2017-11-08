@@ -10,10 +10,12 @@
 
 	if (isset($_GET['p'])) {
 		$pid = base64url_decode($_GET['p']);
-		o_log('Page Loaded','Notes ID: '.$pid);
+		o_log('Page Loaded','Notes Person ID: '.$pid);
+		$tTitle = "Client's Notes";
 	} else {
 		$pid = $_SESSION['personid'];
 		o_log('Page Loaded','Own Notes');
+		$tTitle = 'Your Notes';
 	}
 
 	$personResult = view('persons','personid='.$pid);
@@ -30,8 +32,7 @@
 	$cid = $clientResult['coachid'];
 
 	$text = '<form action="#" method="post">
-				Needs:<br />
-				<textarea rows="4" cols="50" name="needs" autocomplete="off"></textarea><br /><br />
+				<textarea rows="8" cols="100" name="notes" autocomplete="off"></textarea><br /><br />
 				<input type="submit" value="Submit" class="button" /><br /><br />
 				<input type="reset" value="Reset" class="button" />
              </form></table>';
@@ -107,19 +108,18 @@
                         <div class="card-header title">
                             <?php echo($title); ?>
                         </div>
-                    </div>
-                </div>
-            </div>
-            <div class = "row">
-                <div class="col-sm-12">
-                    <div class="card text-center page-margin0 left right">
-                        <div class="card-header title"><?php echo($iTitle); ?></div>
                         <div class="card-body">
-                        	<span class="marginAuto inline-block"><?php echo($itext); ?></span>
+                        	<span class="marginAuto inline-block"><?php echo($text); ?></span>
                         </div>
                     </div>
                 </div>
             </div>
+            <!--<div class = "row">
+                <div class="col-sm-12">
+                    <div class="card text-center page-margin0 left right">
+                    </div>
+                </div>
+            </div>-->
         </div>
     </body>
 </html>
