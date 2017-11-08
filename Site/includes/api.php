@@ -36,6 +36,8 @@
 			$where = 'WHERE companyid='.$_SESSION['companyid'];
 		} else if ($type == 'mine') {
 			$where = 'WHERE companyid='.$_SESSION['companyid'].' AND coachid='.$_SESSION['coachid'];
+		} else if ($type == 'default') {
+			$where = 'WHERE companyid='.$_SESSION['companyid'].' AND coachid='.$_SESSION['coachid'];
 		}
 		$sql = 'SELECT * FROM clients_view '.$where.';';
 		$result = pg_query($conn, $sql);

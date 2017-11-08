@@ -14,7 +14,7 @@
 	} else if ($_GET['c'] == 'mine') {
 		$clientList = viewClients('mine');
 	} else {
-		$clientList = viewClients('mine');
+		$clientList = viewClients('default');
 	}
 	
 ?>

@@ -20,10 +20,10 @@
 	$personResult = view('persons','personid='.$pid);
 	$clientResult = view('clients','personid='.$pid);
 
-	$name = addStrTogether($personResult['prefix'],$personResult['first_name']);
-	$name = addStrTogether($name,$personResult['middle_name']);
-	$name = addStrTogether($name,$personResult['last_name']);
-	$name = addStrTogether($name,$personResult['suffix']);
+	$clientName = addStrTogether($personResult['prefix'],$personResult['first_name']);
+	$clientName = addStrTogether($clientName,$personResult['middle_name']);
+	$clientName = addStrTogether($clientName,$personResult['last_name']);
+	$clientName = addStrTogether($clientName,$personResult['suffix']);
 
 	$companyID = $personResult['companyid'];
 
@@ -50,7 +50,7 @@
 		addNote($postedNotes,$clientid,$coachid,$photoid,$visitID,true);
 	}
 
-	$notes = getNotes($clientid);
+	$notes = viewNote($clientid,true);
 
 	$title = 'Notes - '.$clientName;
 ?>
@@ -113,7 +113,7 @@
 
         <div class="container">
             <div class ="row">
-                <div class="col-sm-12">
+                <div class="col-sm-6">
                     <div class="card text-center page-margin0 left right">
                         <div class="card-header title">
                             <?php echo($title); ?>
@@ -123,9 +123,7 @@
                         </div>
                     </div>
                 </div>
-            </div>
-            <div class = "row">
-                <div class="col-sm-12">
+                <div class="col-sm-6">
                     <div class="card text-center page-margin0 left right">
                     	<div class="card-header title">
                             Add Note
