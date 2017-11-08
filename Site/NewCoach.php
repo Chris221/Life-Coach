@@ -201,7 +201,7 @@
                 	<?php
 						if ($_SESSION['supervisor']) {
 							echo('<li class="nav-item right-marigin50p active">
-								<a class="nav-link" href="/NewCloach">Add New Coach</a>
+								<a class="nav-link" href="/NewCoach">Add New Coach</a>
 							</li>');
 						}
 					?>
@@ -228,6 +228,13 @@
             <?php echo($title.'<br />'); ?>
         </div>
         <div class="card-body">
+                   <div class="row">
+                    <div class="col-md-2">
+                        <a href="/" class="btn btn-primary">Back</a>
+                    </div>
+                </div>
+            <div class="row">
+            <div class="col-md-12">
             <div class="newcoach_page page">
                 <div class="newcoach">
                     <?php
@@ -271,6 +278,8 @@
             ');
                     ?>
                 </div>
+            </div>
+            </div>
             </div>
         </div>
     </div>

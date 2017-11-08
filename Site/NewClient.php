@@ -173,7 +173,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 	<?php
 						if ($_SESSION['supervisor']) {
 							echo('<li class="nav-item right-marigin50p">
-								<a class="nav-link" href="/NewCloach">Add New Coach</a>
+								<a class="nav-link" href="/NewCoach">Add New Coach</a>
 							</li>');
 						}
 					?>
