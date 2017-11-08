@@ -80,7 +80,7 @@
 		$coachText = '
 		<tr><td><h3>Coach Information</h3></td></tr>
 		<tr><td>Supervisor:</td><td>'.$supervisor.'</td></tr>
-		<tr><td>Employeed:</td><td>'.$employeed.'</td></tr>
+		<tr><td>Employed:</td><td>'.$employeed.'</td></tr>
 		<tr><td>Last Active on:</td><td>'.$lastActive.'</td></tr>
 		<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
 		';
@@ -236,5 +236,11 @@
                 </div>
             </div>
         </div>
+
+        <p class="footerText">
+            Copyright &copy; 2017 No Rights Reserved.
+            <br>
+            Abroad Squad + Chris
+        </p>
     </body>
 </html>

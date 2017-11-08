@@ -217,3 +217,18 @@ ul {
     border-bottom-right-radius: 10px;
     border-bottom-left-radius: 10px;
 }
+
+.scrollBox{
+    height: 350px;
+    overflow-y: scroll;
+
+}
+
+.footerText {
+    color: black;
+    font-size: 8pt;
+    text-align: center;
+    clear: both;
+    width: 100%;
+    background-color: rgba(0,0,0,.03);
+}

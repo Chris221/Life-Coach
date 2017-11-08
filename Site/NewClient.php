@@ -263,5 +263,11 @@
                 </div>
             </div>
         </div>
+
+        <p class="footerText">
+            Copyright &copy; 2017 No Rights Reserved.
+            <br>
+            Abroad Squad + Chris
+        </p>
     </body>
 </html>

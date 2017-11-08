@@ -173,12 +173,19 @@
                     </div>
 
                     <div class="card text-center page-margin5 right">
-                        <div class="card-header title"> Upcoming events</div>
+                        <div class="card-header title"> Upcoming Events</div>
                         <div class="card-body">
                             <h5 class="card-title">Upcoming events and reminders will appear here.</h5>
                         </div>
                     </div>
                 </div>
             </div>
+
+    <p class="footerText">
+        Copyright &copy; 2017 No Rights Reserved.
+        <br>
+        Abroad Squad + Chris
+    </p>
+
     </body>
 </html>

@@ -4,19 +4,44 @@
 	include('includes/api.php');
 	include('includes/protection.php');
 	if (!$_SESSION['personid']) {
-        header('Location: /Login');
-    }
-	o_log('Page Loaded');
-	$title = 'Clients';
-
-	if ($_GET['c'] == 'all') {
-		$clientList = viewClients('all');
-	} else if ($_GET['c'] == 'mine') {
-		$clientList = viewClients('mine');
-	} else {
-		$clientList = viewClients('mine');
+		header('Location: /Login');
 	}
-	
+	$title = 'Notes';
+
+	if (isset($_GET['p'])) {
+		$pid = base64url_decode($_GET['p']);
+		o_log('Page Loaded','Notes ID: '.$pid);
+	} else {
+		$pid = $_SESSION['personid'];
+		o_log('Page Loaded','Own Notes');
+	}
+
+	$personResult = view('persons','personid='.$pid);
+	$clientResult = view('clients','personid='.$pid);
+	$coachResult  = view('coaches','personid='.$pid);
+
+	$name = addStrTogether($personResult['prefix'],$personResult['first_name']);
+	$name = addStrTogether($name,$personResult['middle_name']);
+	$name = addStrTogether($name,$personResult['last_name']);
+	$name = addStrTogether($name,$personResult['suffix']);
+
+	$companyID = $personResult['companyid'];
+
+	$cid = $clientResult['coachid'];
+
+	$text = '<form action="#" method="post">
+				Needs:<br />
+				<textarea rows="4" cols="50" name="needs" autocomplete="off"></textarea><br /><br />
+				<input type="submit" value="Submit" class="button" /><br /><br />
+				<input type="reset" value="Reset" class="button" />
+             </form></table>';
+
+	if ($companyID <> $_SESSION['companyid']) {
+		echo('CompanyID: '.$companyID.'<br />');
+		echo('Session CompanyID: '.$_SESSION['companyid'].'<br />');
+		$itext = 'This client is not apart of your company';
+		$ptext = $itext;
+	}
 ?>
 <!doctype html>
 <html>
@@ -50,14 +75,14 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/Schedule">Schedule</a>
                     </li>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/Clients">Clients<span class="sr-only">(current)</span></a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Clients">Clients</a>
                     </li>
                 </ul>
                 <!--        I changed this to align the logout to the right-->
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Profile">Profile</a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Profile">Profile<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Logout" >Logout</a>
@@ -80,46 +105,17 @@
                 <div class="col-sm-12">
                     <div class="card text-center page-margin0 left right">
                         <div class="card-header title">
-                            Client Portal
+                            <?php echo($title); ?>
                         </div>
                     </div>
                 </div>
             </div>
             <div class = "row">
-                <div class="col-sm-7">
-                    <div class="card text-center page-margin5 left">
-                        <div class="card-header title">
-                            <div class = "row">
-                                <div class = "col-sm-2 right-marigin5p">
-                                    <a href="/Clients/?c=mine" class="btn btn-primary">My Clients</a>
-                                </div>
-                                <div class = "col-sm-2 right-marigin5p">
-                                    <a href="/Clients/?c=all" class="btn btn-primary">All Clients</a>
-                                </div>
-                                <div class = "col-sm-7">
-                                    <form class="form-inline my-2 my-lg-0">
-                                        <input class="form-control mr-sm-2" type="search" placeholder="Search">
-                                        <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-                                    </form>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-
-                    <div class="card text-center page-margin5 left">
-                        <div class="card-header title"> Client List </div>
+                <div class="col-sm-12">
+                    <div class="card text-center page-margin0 left right">
+                        <div class="card-header title"><?php echo($iTitle); ?></div>
                         <div class="card-body">
-                           <?php echo($clientList); ?>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-5">
-                    <div class="card text-center page-margin5 right">
-                        <div class="card-header title">Client </div>
-                        <div class="card-body">
-                            I don't know if this is worth it since the others are links.<br />
-                            <-----------------
+                        	<span class="marginAuto inline-block"><?php echo($itext); ?></span>
                         </div>
                     </div>
                 </div>
