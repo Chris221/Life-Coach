@@ -36,32 +36,6 @@
 		$goals = $_POST['goals'];
 		$needs = $_POST['needs'];
 		
-		/*
-		echo ('prefix: '.$prefix.'. from post: '.$_POST['prefix'].'<br />');
-		echo ('firstname: '.$firstname.'. from post: '.$_POST['firstname'].'<br />');
-		echo ('middlename: '.$middlename.'. from post: '.$_POST['middlename'].'<br />');
-		echo ('lastname: '.$lastname.'. from post: '.$_POST['lastname'].'<br />');
-		echo ('suffix: '.$suffix.'. from post: '.$_POST['suffix'].'<br />');
-		echo ('email1: '.$email1.'. from post: '.$_POST['email1'].'<br />');
-		echo ('email2: '.$email2.'. from post: '.$_POST['email2'].'<br />');
-		echo ('cell: '.$cell.'. from post: '.$_POST['cell'].'<br />');
-		echo ('home: '.$home.'. from post: '.$_POST['home'].'<br />');
-		echo ('work: '.$worknumber.'. from post: '.$_POST['work'].'<br />');
-		echo ('extension: '.$extension.'. from post: '.$_POST['extension'].'<br />');
-		echo ('dob: '.$dob.'. from post: '.$_POST['dob'].'<br />');
-		
-		echo ('workcompany: '.$workcompany.'. from post: '.$_POST['workcompany'].'<br />');
-		echo ('worktitle: '.$worktitle.'. from post: '.$_POST['worktitle'].'<br />');
-		echo ('workfield: '.$workfield.'. from post: '.$_POST['workfield'].'<br />');
-		echo ('visittimepreferencestart: '.$visitpreferencestart.'. from post: '.$_POST['visittimepreferencestart'].'<br />');
-		echo ('visittimepreferenceend: '.$visitpreferenceend.'. from post: '.$_POST['visittimepreferenceend'].'<br />');
-		echo ('calltimepreferencestart: '.$callpreferencestart.'. from post: '.$_POST['calltimepreferencestart'].'<br />');
-		echo ('calltimepreferenceend: '.$callpreferenceend.'. from post: '.$_POST['calltimepreferenceend'].'<br />');
-		echo ('favoritebook: '.$favoritebook.'. from post: '.$_POST['favoritebook'].'<br />');
-		echo ('favoritefood: '.$favoritefood.'. from post: '.$_POST['favoritefood'].'<br />');
-		echo ('goals: '.$goals.'. from post: '.$_POST['goals'].'<br />');
-		echo ('needs: '.$needs.'. from post: '.$_POST['needs'].'<br />');*/
-		
 		pg_close($conn);
 		
 		$work = true;
@@ -129,9 +103,9 @@
 		if ($work) {
 			//$photoid = uploadImage();
 			$email1 = strtolower($email1);
-			$correctDOB = date("Y-m-d", strtotime($dob));
-			$pid = addPerson($firstname,$lastname,$email1,$cell,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename,false);
+			$correctDOB = date("Y-m-d", strtotime($dob)); 
 			$companyid = $_SESSION['companyid'];
+			$pid = addPerson($firstname,$lastname,$email1,$cell,$companyid,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename,false);
 			$output = true;
 			if ($pid && $output) {
 				echo("Person was added succesfully!<br />");
@@ -142,7 +116,9 @@
 				o_log('Person Add failed');
 			}
 			
-			$cid = addClient($pid,$companyid,$workaddress,$workcompany,$worktitle,$workfield,$favoritebook,$favoritefood,$visitpreferencestart,$visitpreferenceend,$callpreferencestart,$callpreferenceend,$goals,$needs,false);
+			$coachid = $_SESSION['coachid'];
+			
+			$cid = addClient($pid,$workaddress,$workcompany,$worktitle,$workfield,$favoritebook,$favoritefood,$visitpreferencestart,$visitpreferenceend,$callpreferencestart,$callpreferenceend,$goals,$needs,$coachid,false);
 			if ($cid && $output) {
 				echo("Client was added succesfully!<br />");
 				echo("Client ID:".$cid."<br />");
@@ -181,14 +157,14 @@
 
             <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
                 <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Schedule">Schedule</a>
                     </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="/Clients">Clients</a>
+                    <li class="nav-item active">
+                        <a class="nav-link" href="/Clients">Clients <span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
                 <!--        I changed this to align the logout to the right-->

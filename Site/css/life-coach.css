@@ -68,11 +68,20 @@
     margin: 0 5%;
     margin-bottom: 5%;
 }
+.marginAuto {
+    margin: 0 auto;
+}
+.inline-block {
+	display: inline-block;
+}
 .left {
     margin-left: 0%;
 }
 .right {
     margin-right: 0%;
+}
+.right-marigin5p {
+    margin-right: 10px;
 }
 .image_header {
 	width: 257px;

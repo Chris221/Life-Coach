@@ -126,8 +126,8 @@
 			$correctDOB = date("Y-m-d", strtotime($dob));
 			include('includes/password.php');
 			$pass = encryptpass($pass1);
-			$pid = addPerson($firstname,$lastname,$email1,$cell,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename,false);
 			$companyid = $_SESSION['companyid'];
+			$pid = addPerson($firstname,$lastname,$email1,$cell,$companyid,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename,false);
 			$output = true;
 			if ($pid && $output) {
 				echo("Person was added succesfully!<br />");
@@ -137,7 +137,7 @@
 				echo("ERROR PERSON WAS NOT ADDED!<br />");
 				o_log('Person Add Failed');
 			}
-			$cid = addCoach($pid,$clientid,$companyid,$supervisor,$pass,false);
+			$cid = addCoach($pid,$clientid,$supervisor,$pass,false);
 			if ($cid && $output) {
 				echo("Coach was added succesfully!<br />");
 				echo("Coach ID:".$cid."<br />");
@@ -177,7 +177,7 @@
     <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
         <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
             <li class="nav-item active">
-                <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/">Home</a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/Schedule">Schedule</a>

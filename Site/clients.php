@@ -1,11 +1,22 @@
 <?php
 	include('includes/log.php');
 	include('includes/session.php');
+	include('includes/api.php');
+	include('includes/protection.php');
 	if (!$_SESSION['personid']) {
         header('Location: /Login');
     }
 	o_log('Page Loaded');
 	$title = 'Clients';
+
+	if ($_GET['c'] == 'all') {
+		$clientList = viewClients('all');
+	} else if ($_GET['c'] == 'mine') {
+		$clientList = viewClients('mine');
+	} else {
+		$clientList = viewClients('mine');
+	}
+	
 ?>
 <!doctype html>
 <html>
@@ -40,7 +51,7 @@
                         <a class="nav-link" href="/Schedule">Schedule</a>
                     </li>
                     <li class="nav-item active">
-                        <a class="nav-link" href="#">Clients<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/Clients">Clients<span class="sr-only">(current)</span></a>
                     </li>
                 </ul>
                 <!--        I changed this to align the logout to the right-->
@@ -79,13 +90,13 @@
                     <div class="card text-center page-margin5 left">
                         <div class="card-header title">
                             <div class = "row">
-                                <div class = "col-sm-2">
-                                    <a href="#" class="btn btn-primary">My Clients</a>
+                                <div class = "col-sm-2 right-marigin5p">
+                                    <a href="/Clients/?c=mine" class="btn btn-primary">My Clients</a>
                                 </div>
-                                <div class = "col-sm-2">
-                                    <a href="#" class="btn btn-primary">All Clients</a>
+                                <div class = "col-sm-2 right-marigin5p">
+                                    <a href="/Clients/?c=all" class="btn btn-primary">All Clients</a>
                                 </div>
-                                <div class = "col-sm-8">
+                                <div class = "col-sm-7">
                                     <form class="form-inline my-2 my-lg-0">
                                         <input class="form-control mr-sm-2" type="search" placeholder="Search">
                                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
@@ -97,9 +108,9 @@
 
                     <div class="card text-center page-margin5 left">
                         <div class="card-header title"> Client List </div>
-                            <div class="card-body">
-                                <h4>The list of clients will appear here.</h4>
-                            </div>
+                        <div class="card-body">
+                           <?php echo($clientList); ?>
+                        </div>
                     </div>
                 </div>
 
@@ -107,7 +118,8 @@
                     <div class="card text-center page-margin5 right">
                         <div class="card-header title">Client </div>
                         <div class="card-body">
-                            <h5 class="card-title">Client details will appear here.</h5>
+                            I don't know if this is worth it since the others are links.<br />
+                            <-----------------
                         </div>
                     </div>
                 </div>

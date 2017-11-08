@@ -13,8 +13,8 @@
 		$data = pg_fetch_assoc($result);
 		if ($debug) {
 			$error = pg_last_error($conn);
-			if ($error && false) {
-				echo('<br />Error!<br />');
+			if ($error) {
+				echo('<br />Error! (View)<br />');
 				echo('Table trying to be viewed: '.$table.'<br />');
 				echo('Escaped Table: '.$escapedTable.'<br />');
 				echo('Where statement: '.$where.'<br />');
@@ -30,7 +30,43 @@
 		return $data;
 	}
 
-	function addPerson($firstName, $lastName, $email, $cell, $photoid = null, $prefix = null, $suffix = null, $home = null, $work = null, $extension = null, $dob = null, $address = null, $middleName = null, $debug = false){
+	function viewClients($type,$debug = false){
+		include('includes/db.php');
+		if ($type == 'all') {
+			$where = 'WHERE companyid='.$_SESSION['companyid'];
+		} else if ($type == 'mine') {
+			$where = 'WHERE companyid='.$_SESSION['companyid'].' AND coachid='.$_SESSION['coachid'];
+		}
+		$sql = 'SELECT * FROM clients_view '.$where.';';
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('<br />Error! (View Clients)<br />');
+				echo('Type: '.$type.'<br />');
+				echo('Where: '.$where.'<br />');
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+		
+		while ($row = pg_fetch_assoc($result)) {
+			$pid = $row['personid'];
+			$rData = view('persons','personid='.$pid,true);
+			if ($rData['middle_name']) {
+				$middleName = ' '.$rData['middle_name'];
+			}
+			$clientName = $rData['last_name'].', '.$rData['first_name'].$middleName;
+			$encryptedPID = base64url_encode($pid);
+			$clientList .= '<a href="/Profile/?p='.$encryptedPID.'">'.$clientName.'</a><br />';
+		}
+		
+		return $clientList;
+	}
+
+	function addPerson($firstName, $lastName, $email, $cell, $companyid, $photoid = null, $prefix = null, $suffix = null, $home = null, $work = null, $extension = null, $dob = null, $address = null, $middleName = null, $debug = false){
 		include('includes/db.php');
 		$eFirstName = pg_escape_string($conn, $firstName);
 		$eLastName = pg_escape_string($conn, $lastName);
@@ -51,7 +87,7 @@
 		$address = convertEmptyToNull($address);
 		$photoid = convertEmptyToNull($photoid);
 		
-		$sql = "INSERT INTO persons (photoid, prefix, first_name, last_name, suffix, email, cell, home, work, extension, date_of_birth, address, middle_name) VALUES ($photoid, '$ePrefix', '$eFirstName', '$eLastName', '$eSuffix', '$eEmail', '$eCell', $eHome, $eWork, $eExtension, '$dob', $address, '$eMiddleName');";
+		$sql = "INSERT INTO persons (photoid, prefix, first_name, last_name, suffix, email, cell, home, work, extension, date_of_birth, address, middle_name, companyid) VALUES ($photoid, '$ePrefix', '$eFirstName', '$eLastName', '$eSuffix', '$eEmail', '$eCell', $eHome, $eWork, $eExtension, '$dob', $address, '$eMiddleName','$companyid');";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -70,11 +106,11 @@
 		return $last_insert_id;
 	}
 
-	function addCoach($personid,$clientid,$companyid,$surperviser,$pass,$debug = false){
+	function addCoach($personid,$clientid,$surperviser,$pass,$debug = false){
 		include('includes/db.php');
 		$clientid = "'".$clientid."'";
 		$clientid = convertEmptyToNull($clientid);
-		$sql = "INSERT INTO coaches(personid,clientid,companyid,supervisor,password) VALUES ('$personid',$clientid,'$companyid',$surperviser::boolean,'$pass');";
+		$sql = "INSERT INTO coaches(personid,clientid,supervisor,password) VALUES ('$personid',$clientid,$surperviser::boolean,'$pass');";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -93,7 +129,7 @@
 		return $last_insert_id;
 	}
 
-	function addClient($personid,$companyid,$workaddress,$workcompany = null,$worktitle = null,$workfield = null,$favoritebook = null,$favoritefood = null,$visitpreferencestart = null, $visitpreferenceend = null,$callpreferencestart = null,$callpreferenceend = null,$goals = null,$needs = null,$debug = false) {
+	function addClient($personid,$workaddress,$workcompany = null,$worktitle = null,$workfield = null,$favoritebook = null,$favoritefood = null,$visitpreferencestart = null, $visitpreferenceend = null,$callpreferencestart = null,$callpreferenceend = null,$goals = null,$needs = null,$coachid = null,$debug = false) {
 		include('includes/db.php');
 		
 		$workaddress = "'".$workaddress."'";
@@ -111,7 +147,7 @@
 		
 		$workaddress = convertEmptyToNull($workaddress);
 		
-		$sql = "INSERT INTO clients(personid, companyid, work_company, work_address, work_title, work_field, favorite_book, favorite_food, visit_time_preference_start, visit_time_preference_end, call_time_preference_start, call_time_preference_end, goals, needs) VALUES ('$personid','$companyid','$workcompany',$workaddress,'$worktitle','$workfield','$favoritebook','$favoritefood',$visitpreferencestart,$visitpreferenceend,$callpreferencestart,$callpreferenceend,'$goals','$needs');";
+		$sql = "INSERT INTO clients(personid, work_company, work_address, work_title, work_field, favorite_book, favorite_food, visit_time_preference_start, visit_time_preference_end, call_time_preference_start, call_time_preference_end, goals, needs, coachid) VALUES ('$personid','$workcompany',$workaddress,'$worktitle','$workfield','$favoritebook','$favoritefood',$visitpreferencestart,$visitpreferenceend,$callpreferencestart,$callpreferenceend,'$goals','$needs','$coachid');";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -167,6 +203,54 @@
 			$t = '00:00:00';
 		}
 		return $t;
+	}
+
+	function addStrTogether($s1,$s2) {
+		if (strlen($s1) > 0) {
+			$r = $s1;
+		}
+		if (strlen($r) > 0 && strlen($s2) > 0) {
+			$r = $r.' '.$s2;
+		} else if (strlen($s2) > 0) {
+			$r = $s2;
+		}
+		return $r;
+	}
+
+	function addExtToNumber($n,$e) {
+		if (strlen($s1) > 0) {
+			$r = $s1;
+		}
+		if (strlen($r) > 0 && strlen($s2) > 0) {
+			$r = $r.'p'.$s2;
+		}
+		return $r;
+	}
+
+	function addExtToNumberWithEXT($n,$e) {
+		if (strlen($s1) > 0) {
+			$r = $s1;
+		}
+		if (strlen($r) > 0 && strlen($s2) > 0) {
+			$r = $r.' ext. '.$s2;
+		}
+		return $r;
+	}
+
+	function getAddress($aid) {
+		$address = view('addresses','addressid='.$aid);
+		if ($address['addressid']) {
+			$returnAddress = $address['adressline1'].'<br />';
+			if (strlen($address['adressline2']) > 0) {
+				$returnAddress .= $address['adressline2'].'<br />';
+			}
+			if (strlen($address['subdivision']) > 0) {
+				$city = $address['subdivision'].' ';
+			}
+			$returnAddress .= $address['city'].', '.$city.$address['zip'].', '.$address['country'];
+		}
+		
+		return $returnAddress;
 	}
 
 ?>
