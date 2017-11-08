@@ -164,13 +164,13 @@
 		return $last_insert_id;
 	}
 
-	function addNote($postedNotes,$clientid,$personid,$visitID = null,$debug = false) {
+	function addNote($postedNotes,$clientid,$coachid,$photoid,$visitID = null,$debug = false) {
 		include('includes/db.php');
 		$goals = pg_escape_string($conn,$postedNotes);
 		
 		$date = date("Y-m-d H:i:s");
 		
-		$sql = "INSERT INTO notes(clientid, coachid, visitid, photoid, description, date_added) VALUES ($clientid,$postedNotes,$date);";
+		$sql = "INSERT INTO notes(clientid, coachid, visitid, photoid, description, date_added) VALUES ($clientid,$coachid,$visitID,$photoid,$postedNotes,$date);";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -184,6 +184,24 @@
 		$insert_query = pg_query($conn,"SELECT lastval();");
 		$insert_row = pg_fetch_row($insert_query);
 		$last_insert_id = $insert_row[0];
+		
+		pg_close($conn);
+		return $last_insert_id;
+	}
+
+	function getNote($clientid,$debug = false) {
+		include('includes/db.php');
+		$goals = pg_escape_string($conn,$postedNotes);
+		
+		$date = date("Y-m-d H:i:s");
+		
+		$sql = "INSERT INTO notes(clientid, coachid, visitid, photoid, description, date_added) VALUES ($clientid,$postedNotes,$date);";
+		$result = pg_query($conn, $sql);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
 		
 		pg_close($conn);
 		return $last_insert_id;

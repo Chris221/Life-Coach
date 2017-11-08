@@ -27,7 +27,8 @@
 
 	$companyID = $personResult['companyid'];
 
-	$cid = $clientResult['coachid'];
+	$clientid = $clientResult['clientid'];
+	$coachid = $clientResult['coachid'];
 
 	$text = '<form action="#" method="post">
 				<textarea rows="6" cols="50" name="notes" autocomplete="off"></textarea><br /><br />
@@ -44,11 +45,12 @@
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$postedNotes = $_POST['Notes'];
+		$photoid;
 		
-		addNote($postedNotes,$visitID,true);
+		addNote($postedNotes,$clientid,$coachid,$photoid,$visitID,true);
 	}
 
-	$notes = getNotes($cid);
+	$notes = getNotes($clientid);
 
 	$title = 'Notes - '.$clientName;
 ?>
