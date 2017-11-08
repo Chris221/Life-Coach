@@ -31,7 +31,7 @@
 	$coachid = $clientResult['coachid'];
 
 	$text = '<form action="#" method="post">
-				<textarea rows="6" cols="50" name="notes" autocomplete="off"></textarea><br /><br />
+				<textarea rows="6" cols="50" name="note" autocomplete="off"></textarea><br /><br />
 				<input type="submit" value="Submit" class="button" /><br /><br />
 				<input type="reset" value="Reset" class="button" />
              </form></table>';
@@ -44,13 +44,13 @@
 	}
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		$postedNotes = $_POST['Notes'];
+		$postedNote = $_POST['note'];
 		$photoid;
 		
-		addNote($postedNotes,$clientid,$coachid,$photoid,$visitID,true);
+		addNote($postedNote,$clientid,$coachid,$photoid,$visitID,true);
 	}
 
-	$notes = viewNote($clientid,true);
+	$notes = viewNote($clientid);
 
 	$title = 'Notes - '.$clientName;
 ?>
@@ -92,6 +92,9 @@
                 </ul>
                 <!--        I changed this to align the logout to the right-->
                 <ul class="nav navbar-nav navbar-right">
+					<li class="nav-item right-marigin50p">
+						<a class="nav-link" href="/NewClient">Add New Client</a>
+					</li>
                     <li class="nav-item active">
                         <a class="nav-link" href="/Profile">Profile<span class="sr-only">(current)</span></a>
                     </li>

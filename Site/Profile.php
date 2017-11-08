@@ -14,12 +14,16 @@
 		$pTitle =  'Client Photo';
 		$iTitle = 'Client Info';
 		$proTitle = 'Client Profile';
+		$nTitle = "Client Notes";
+		$notelink = '/Notes/?p='.base64url_encode($pid);
 	} else {
 		$pid = $_SESSION['personid'];
 		o_log('Page Loaded','Own Profile');
 		$pTitle =  'Your Photo';
 		$iTitle = 'Your Info';
 		$proTitle = 'Your Profile';
+		$nTitle = "Your Notes";
+		$notelink = '/Notes';
 	}
 
 	$personResult = view('persons','personid='.$pid);
@@ -44,6 +48,7 @@
 	$companyID = $personResult['companyid'];
 
 	$workCompany = $clientResult['work_company'];
+	$clientid = $clientResult['clientid'];
 	$cid = $clientResult['coachid'];
 	$workAddress = getAddress($clientResult['work_address']);
 	$workTitle = $clientResult['work_title'];
@@ -142,11 +147,16 @@
 		</table>
 		';
 
+	if (!$notes = viewNote($clientid)) {
+		$notes = "Currently No Notes";
+	}
+
 	if ($companyID <> $_SESSION['companyid']) {
 		echo('CompanyID: '.$companyID.'<br />');
 		echo('Session CompanyID: '.$_SESSION['companyid'].'<br />');
 		$itext = 'This client is not apart of your company';
 		$ptext = $itext;
+		$notes = $itext;
 	}
 ?>
 <!doctype html>
@@ -187,6 +197,9 @@
                 </ul>
                 <!--        I changed this to align the logout to the right-->
                 <ul class="nav navbar-nav navbar-right">
+                    <li class="nav-item right-marigin50p">
+                        <a class="nav-link" href="/NewClient">Add New Client</a>
+                    </li>
                     <li class="nav-item active">
                         <a class="nav-link" href="/Profile">Profile<span class="sr-only">(current)</span></a>
                     </li>
@@ -215,7 +228,13 @@
                         </div>
                     </div>
                 </div>
-            </div>
+            </div><!--
+            <div class = "row">
+                <div class="col-sm-4 text-center">
+                    <a href="/NewClient" class="btn btn-primary">Add New Coach</a>
+                </div>
+            </div>-->
+            <br />
             <div class = "row">
                 <div class="col-sm-4">
                     <div class="card text-center page-margin5 left">
@@ -231,6 +250,19 @@
                         <div class="card-header title"><?php echo($iTitle); ?></div>
                         <div class="card-body">
                         	<span class="marginAuto inline-block"><?php echo($itext); ?></span>
+                        </div>
+                    </div>
+                    <div class="card text-center page-margin5 right">
+                        <div class="card-header title">
+							<span class="col-sm-1.75">
+							   <a href="<?php echo($notelink); ?>" class="btn btn-primary">Add a Note</a>
+							</span>
+							<span class="col-sm-4">
+								<?php echo($nTitle); ?>
+                       		</span>
+                        </div>
+                        <div class="card-body">
+                        	<span class="marginAuto inline-block"><?php echo($notes); ?></span>
                         </div>
                     </div>
                 </div>
