@@ -77,6 +77,8 @@
 				//include('includes/log.php');
 				//c_Log('Log in','User: '.$email);
 				$date = date("Y-m-d H:i:s");
+				//Sets $personid
+				$personid = $_SESSION['personid'];
 				//update last active time
 				pg_query($conn, "UPDATE coaches SET last_active='$date' WHERE personid='$personid'");
 				//redirects to home

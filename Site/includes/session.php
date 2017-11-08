@@ -26,6 +26,7 @@
 	if ($_SESSION['employeed']) {
 		include('includes/db.php');
 		$date = date("Y-m-d H:i:s");
+		$personid = $_SESSION['personid'];
 		pg_query($conn, "UPDATE coaches SET last_active='$date' WHERE personid='$personid'");
 		pg_close($conn);
 	} else {
