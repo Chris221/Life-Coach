@@ -105,7 +105,7 @@
 			$email1 = strtolower($email1);
 			$correctDOB = date("Y-m-d", strtotime($dob)); 
 			$companyid = $_SESSION['companyid'];
-			$pid = addPerson($firstname,$lastname,$email1,$cell,$companyid,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename,false);
+			$pid = addPerson($firstname,$lastname,$email1,$cell,$companyid,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename);
 			$output = true;
 			if ($pid && $output) {
 				echo("Person was added succesfully!<br />");
@@ -118,7 +118,7 @@
 			
 			$coachid = $_SESSION['coachid'];
 			
-			$cid = addClient($pid,$workaddress,$workcompany,$worktitle,$workfield,$favoritebook,$favoritefood,$visitpreferencestart,$visitpreferenceend,$callpreferencestart,$callpreferenceend,$goals,$needs,$coachid,false);
+			$cid = addClient($pid,$workaddress,$workcompany,$worktitle,$workfield,$favoritebook,$favoritefood,$visitpreferencestart,$visitpreferenceend,$callpreferencestart,$callpreferenceend,$goals,$needs,$coachid);
 			if ($cid && $output) {
 				echo("Client was added succesfully!<br />");
 				echo("Client ID:".$cid."<br />");

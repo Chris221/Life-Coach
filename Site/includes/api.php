@@ -54,7 +54,7 @@
 		
 		while ($row = pg_fetch_assoc($result)) {
 			$pid = $row['personid'];
-			$rData = view('persons','personid='.$pid,true);
+			$rData = view('persons','personid='.$pid);
 			if ($rData['middle_name']) {
 				$middleName = ' '.$rData['middle_name'];
 			}
@@ -106,11 +106,9 @@
 		return $last_insert_id;
 	}
 
-	function addCoach($personid,$clientid,$surperviser,$pass,$debug = false){
+	function addCoach($personid,$surperviser,$pass,$debug = false){
 		include('includes/db.php');
-		$clientid = "'".$clientid."'";
-		$clientid = convertEmptyToNull($clientid);
-		$sql = "INSERT INTO coaches(personid,clientid,supervisor,password) VALUES ('$personid',$clientid,$surperviser::boolean,'$pass');";
+		$sql = "INSERT INTO coaches(personid,supervisor,password) VALUES ('$personid',$surperviser::boolean,'$pass');";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);

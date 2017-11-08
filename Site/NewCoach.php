@@ -127,7 +127,7 @@
 			include('includes/password.php');
 			$pass = encryptpass($pass1);
 			$companyid = $_SESSION['companyid'];
-			$pid = addPerson($firstname,$lastname,$email1,$cell,$companyid,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename,false);
+			$pid = addPerson($firstname,$lastname,$email1,$cell,$companyid,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename);
 			$output = true;
 			if ($pid && $output) {
 				echo("Person was added succesfully!<br />");
@@ -137,7 +137,7 @@
 				echo("ERROR PERSON WAS NOT ADDED!<br />");
 				o_log('Person Add Failed');
 			}
-			$cid = addCoach($pid,$clientid,$supervisor,$pass,false);
+			$cid = addCoach($pid,$supervisor,$pass);
 			if ($cid && $output) {
 				echo("Coach was added succesfully!<br />");
 				echo("Coach ID:".$cid."<br />");
