@@ -44,6 +44,7 @@
 	$companyID = $personResult['companyid'];
 
 	$workCompany = $clientResult['work_company'];
+	$cid = $clientResult['coachid'];
 	$workAddress = getAddress($clientResult['work_address']);
 	$workTitle = $clientResult['work_title'];
 	$workField = $clientResult['work_field'];
@@ -81,6 +82,27 @@
 		<tr><td>Supervisor:</td><td>'.$supervisor.'</td></tr>
 		<tr><td>Employeed:</td><td>'.$employeed.'</td></tr>
 		<tr><td>Last Active on:</td><td>'.$lastActive.'</td></tr>
+		<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
+		';
+	} else {
+		$myCoachResult  = view('accounts','coachid='.$cid);
+		$cName = addStrTogether($myCoachResult['prefix'],$myCoachResult['first_name']);
+		$cName = addStrTogether($cName,$myCoachResult['middle_name']);
+		$cName = addStrTogether($cName,$myCoachResult['last_name']);
+		$cName = addStrTogether($cName,$myCoachResult['suffix']);
+		
+		$eCoachPID = base64url_encode($myCoachResult['personid']);
+		
+		$cName = '<a href="/Profile/?p='.$eCoachPID.'">'.$cName.'</a>';
+		
+		$lastAppointment = '*Needs to be built*';
+		$nextAppointment = $lastAppointment;
+		
+		$coachText = '
+		<tr><td><h3>Coach Information</h3></td></tr>
+		<tr><td>Coach:</td><td>'.$cName.'</td></tr>
+		<tr><td>Last Appointment:</td><td>'.$lastAppointment.'</td></tr>
+		<tr><td>Upcomming Appointment:</td><td>'.$nextAppointment.'</td></tr>
 		<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
 		';
 	}
