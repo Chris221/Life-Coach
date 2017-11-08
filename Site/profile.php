@@ -22,9 +22,9 @@
 		$proTitle = 'Your Profile';
 	}
 
-	$personResult = view('persons','personid='.$pid,true);
-	$clientResult = view('clients','personid='.$pid,true);
-	$coachResult  = view('coaches','personid='.$pid,true);
+	$personResult = view('persons','personid='.$pid);
+	$clientResult = view('clients','personid='.$pid);
+	$coachResult  = view('coaches','personid='.$pid);
 
 	$name = addStrTogether($personResult['prefix'],$personResult['first_name']);
 	$name = addStrTogether($name,$personResult['middle_name']);
