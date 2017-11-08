@@ -164,15 +164,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <li class="nav-item">
                 <a class="nav-link" href="/Schedule">Schedule</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/Clients">Clients <span class="sr-only">(current)</span></a>
             </li>
         </ul>
         <!--        I changed this to align the logout to the right-->
         <ul class="nav navbar-nav navbar-right">
-			<li class="nav-item right-marigin50p active">
-				<a class="nav-link" href="/NewClient">Add New Client</a>
-			</li>
+                	<?php
+						if ($_SESSION['supervisor']) {
+							echo('<li class="nav-item right-marigin50p">
+								<a class="nav-link" href="/NewCloach">Add New Coach</a>
+							</li>');
+						}
+					?>
             <li class="nav-item">
                 <a class="nav-link" href="/Profile">Profile</a>
             </li>

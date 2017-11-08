@@ -44,9 +44,13 @@
                 </ul>
                 <!--        I changed this to align the logout to the right-->
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="nav-item right-marigin50p">
-                        <a class="nav-link" href="/NewClient">Add New Client</a>
-                    </li>
+                	<?php
+						if ($_SESSION['supervisor']) {
+							echo('<li class="nav-item right-marigin50p">
+								<a class="nav-link" href="/NewCoach">Add New Coach</a>
+							</li>');
+						}
+					?>
                     <li class="nav-item">
                         <a class="nav-link" href="/Profile">Profile</a>
                     </li>
