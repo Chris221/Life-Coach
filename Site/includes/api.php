@@ -40,7 +40,7 @@
 			$where = 'WHERE companyid='.$_SESSION['companyid'].' AND coachid='.$_SESSION['coachid'];
 			$limit = ' LIMIT 30';
 		}
-		$sql = 'SELECT * FROM clients_view '.$where.' ORDER BY last_name ASC, first_name ASC'.$limit.';';
+		$sql = 'SELECT personid FROM clients_view '.$where.' ORDER BY last_name ASC, first_name ASC'.$limit.';';
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -53,11 +53,26 @@
 				echo('Error: '.$error.'<br />');
 			}
 		}
-		pg_close($conn);
 		
 		while ($row = pg_fetch_assoc($result)) {
 			$pid = $row['personid'];
-			$rData = view('persons','personid='.$pid);
+			$middleName = '';
+			/*$rData = view('persons','personid='.$pid);*/
+			
+			$sql2 = "SELECT first_name, middle_name, last_name FROM persons WHERE personid='".$pid."';";
+			$result2 = pg_query($conn, $sql2);
+			$rData = pg_fetch_assoc($result2);
+			if ($debug) {
+				$error2 = pg_last_error($conn);
+				if ($error2 || true) {
+					echo('<br />Error! (View Clients)<br />');
+					echo('Person ID: '.$pid.'<br />');
+					echo('SQL: '.$sql2.'<br />');
+					echo('Result: '.$result2.'<br />');
+					echo('Data: '.$rData.'<br />');
+					echo('Error: '.$error2.'<br />');
+				}
+			}
 			if ($rData['middle_name']) {
 				$middleName = ' '.$rData['middle_name'];
 			}
@@ -65,6 +80,7 @@
 			$encryptedPID = base64url_encode($pid);
 			$clientList .= '<a href="/Profile/?p='.$encryptedPID.'">'.$clientName.'</a><br />';
 		}
+		pg_close($conn);
 		
 		return $clientList;
 	}
