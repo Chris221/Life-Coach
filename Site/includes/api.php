@@ -30,10 +30,13 @@
 		return $data;
 	}
 
-	function viewClients($type,$debug = false){
+	function viewClients($type,$sText,$debug = false){
 		include('includes/db.php');
 		if ($type == 'all') {
 			$where = 'WHERE companyid='.$_SESSION['companyid'];
+		} else if ($type == 'search') {
+			$cleanSearch = pg_escape_string($sText);
+			$where = "WHERE companyid='".$_SESSION['companyid']."' AND (last_name ILIKE '%$cleanSearch%' OR first_name ILIKE '%$cleanSearch%')";
 		} else if ($type == 'mine') {
 			$where = 'WHERE companyid='.$_SESSION['companyid'].' AND coachid='.$_SESSION['coachid'];
 		} else if ($type == 'default') {
@@ -64,7 +67,7 @@
 			$rData = pg_fetch_assoc($result2);
 			if ($debug) {
 				$error2 = pg_last_error($conn);
-				if ($error2 || true) {
+				if ($error2) {
 					echo('<br />Error! (View Clients)<br />');
 					echo('Person ID: '.$pid.'<br />');
 					echo('SQL: '.$sql2.'<br />');

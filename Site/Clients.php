@@ -9,12 +9,15 @@
 	o_log('Page Loaded');
 	$title = 'Clients';
 
-	if ($_GET['c'] == 'all') {
-		$clientList = viewClients('all');
+	if ($_GET['s']) {
+		$search = $_GET['s'];
+		$clientList = viewClients('search',$search);
+	} else if ($_GET['c'] == 'all') {
+		$clientList = viewClients('all','');
 	} else if ($_GET['c'] == 'mine') {
-		$clientList = viewClients('mine');
+		$clientList = viewClients('mine','');
 	} else {
-		$clientList = viewClients('default');
+		$clientList = viewClients('default','');
 	}
 	
 ?>
@@ -104,8 +107,8 @@
                                     <a href="/Clients/?c=all" class="btn btn-primary">All Clients</a>
                                 </div>
                                 <div class = "col-sm-5">
-                                    <form class="form-inline my-2 my-lg-0">
-                                        <input class="form-control mr-sm-2" type="search" placeholder="Search">
+                                    <form class="form-inline my-2 my-lg-0" method="get" action="#">
+                                        <input class="form-control mr-sm-2" type="search" placeholder="Search all clients" name="s">
                                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                                     </form>
                                 </div>
