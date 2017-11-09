@@ -196,18 +196,24 @@
 </nav>
 <br/>
 <div class="container">
-    <div class="card text-center page-margin">
-        <div class="card-header title">
-            <?php echo($title); ?>
-        </div>
-        <div class="card-body">
-            <a href="/Clients" class="btn btn-primary alignLeft"><span class="glyphicon glyphicon-chevron-left"></span>Back</a>
-            <div class="newclient_page page">
-                <div class="newclient">
-                    <?php
-                    echo($upload_image_text);
-                    echo($text);
-                    echo('<table>
+        <div class="card text-center page-margin">
+            <div class="card-header title">
+                <?php echo($title); ?>
+            </div>
+            <div class="card-body">
+                <div class="row">
+                    <div class="col-md-2">
+                        <a href="/Clients" class="btn btn-primary">Back</a>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="newclient_page page">
+                            <div class="newclient">
+                                <?php
+                                echo($upload_image_text);
+                                echo($text);
+                                echo('<table>
                         <form action="#" method="post">
                             <tr><td><h3 class="image_header">Photo</h3></td><td>&thinsp;</td></tr>
                             <input type="hidden" name="MAX_FILE_SIZE" value="5120000">
@@ -268,7 +274,9 @@
                         </form>
                         </table>
                     ');
-                    ?>
+                                ?>
+                            </div>
+                    </div>
                 </div>
             </div>
         </div>
