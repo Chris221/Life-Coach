@@ -243,11 +243,17 @@
                 <div class="col-sm-4">
                     <div class="card text-center page-margin5 left">
                         <div class="card-header title"><?php echo($pTitle); ?></div>
-                             <div clas="card-body">
+                             <div class="card-body">
                                  <?php echo($ptext); ?>
                              </div>
+                    </div>
+                    <div class="card text-center page-margin5 left">
+                        <div class="card-header title">Family Tree </div>
+                        <div class="card-body">
+                            This is where the Family Tree will go...
                         </div>
                     </div>
+                </div>
 
                 <div class="col-sm-8">
                     <div class="card text-center page-margin5 right">
