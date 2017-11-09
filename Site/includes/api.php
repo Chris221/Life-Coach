@@ -336,4 +336,9 @@
 		return $returnAddress;
 	}
 
+	function backButton() {
+		$previousPage = $_SERVER['HTTP_REFERER'];
+		return $previousPage;
+	}
+
 ?>

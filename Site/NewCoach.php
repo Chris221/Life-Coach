@@ -2,6 +2,7 @@
 	include('includes/log.php');
 	include('includes/session.php');
 	include('includes/uploadPhoto.php');
+		include('includes/api.php');
 	if (!$_SESSION['supervisor']) {
 		header('Location: /');
 	}
@@ -9,9 +10,10 @@
 	$title = 'Add New Coach';
 	$i = buildImageForm();
 
+	$back = backButton();
+
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		include('includes/api.php');
 		include('includes/db.php');
 		
 		$prefix = pg_escape_string($conn, $_POST['prefix']);
@@ -230,7 +232,7 @@
         <div class="card-body">
                    <div class="row">
                     <div class="col-md-2">
-                        <a href="/" class="btn btn-primary">Back</a>
+                        <a href="<?php echo($back); ?>" class="btn btn-primary">Back</a>
                     </div>
                 </div>
             <div class="row">

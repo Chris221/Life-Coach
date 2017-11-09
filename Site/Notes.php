@@ -6,6 +6,8 @@
 	if (!$_SESSION['personid']) {
 		header('Location: /Login');
 	}
+	
+	$back = backButton();
 
 	if (isset($_GET['p'])) {
 		$pid = base64url_decode($_GET['p']);
@@ -32,7 +34,7 @@
 
 	$text = '<form action="#" method="post">
 				<textarea rows="6" cols="50" name="note" autocomplete="off"></textarea><br /><br />
-				<input type="submit" value="Submit" class="button" /><br /><br />
+				<input type="submit" value="Submit" class="button" /><br />
 				<input type="reset" value="Reset" class="button" />
              </form></table>';
 
@@ -119,6 +121,13 @@
         <br />
 
         <div class="container">
+                <div class="row">
+                    <div class="col-md-2">
+                        <a href="<?php echo($back); ?>" class="btn btn-primary">Back</a>
+                        <br />
+                        <br />
+                    </div>
+                </div>
             <div class ="row">
                 <div class="col-sm-6">
                     <div class="card text-center page-margin0 left right">
