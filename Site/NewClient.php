@@ -24,6 +24,7 @@
 		$worknumber = cleanPhoneNumber($_POST['work']);
 		$extension = cleanPhoneNumber($_POST['extension']);
 		$dob = $_POST['dob'];
+		$gender = $_POST['gender'];
 
 		$workcompany = $_POST['workcompany'];
 		$worktitle = $_POST['worktitle'];
@@ -106,7 +107,7 @@
 			$email1 = strtolower($email1);
 			$correctDOB = date("Y-m-d", strtotime($dob));
 			$companyid = $_SESSION['companyid'];
-			$pid = addPerson($firstname, $lastname, $email1, $cell, $companyid, $photoid, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $address, $middlename);
+			$pid = addPerson($firstname, $lastname, $email1, $cell, $gender, $companyid, $photoid, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $address, $middlename);
 			$output = true;
 			if ($pid && $output) {
 				echo("Person was added succesfully!<br />");
@@ -230,12 +231,18 @@
                             <tr><td>Middle Name:</td><td><input type="text" name="middlename" autocomplete="off" /></td></tr>
                             <tr><td>Last Name:*</td><td><input type="text" name="lastname" autocomplete="off" /></td></tr>
                             <tr><td>Suffix:</td><td><input type="text" name="suffix" autocomplete="off" /></td></tr>
+							<tr><td>Gender:*</td><td><select name="gender">
+								<option value="male">Male</option>
+								<option value="female">Female</option>
+								<option value="other">Other</option>
+								</select></td></tr>
                             <tr><td>Email:*</td><td><input type="email" name="email1" autocomplete="off" /></td></tr>
                             <tr><td>Confirm Email:*</td><td><input type="email" name="email2" autocomplete="off" /></td></tr>
                             <tr><td>Cell Number:*</td><td><input type="number" name="cell" autocomplete="off" /></td></tr>
                             <tr><td>Home Number:</td><td><input type="number" name="home" autocomplete="off" /></td></tr>
                             <tr><td>Date of Birth:</td><td><input type="date" name="dob" autocomplete="off" /></td></tr>
                             <tr><td>Home address:</td><td>*NOT IMPLEMENTED YET*</td></tr>
+							
                             
                             <tr><td>&thinsp;</td><td>&thinsp;</td></tr>
                             

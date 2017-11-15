@@ -88,7 +88,7 @@
 		return $clientList;
 	}
 
-	function addPerson($firstName, $lastName, $email, $cell, $companyid, $photoid = null, $prefix = null, $suffix = null, $home = null, $work = null, $extension = null, $dob = null, $address = null, $middleName = null, $debug = false){
+	function addPerson($firstName, $lastName, $email, $cell, $gender, $companyid, $photoid = null, $prefix = null, $suffix = null, $home = null, $work = null, $extension = null, $dob = null, $address = null, $middleName = null, $debug = false){
 		include('includes/db.php');
 		$eFirstName = pg_escape_string($conn, $firstName);
 		$eLastName = pg_escape_string($conn, $lastName);
@@ -96,6 +96,7 @@
 		$eCell = pg_escape_string($conn, $cell);
 		$ePrefix = pg_escape_string($conn, $prefix);
 		$eSuffix = pg_escape_string($conn, $suffix);
+		$eGender = pg_escape_string($conn, strtolower($gender));
 		$eHome = "'".pg_escape_string($conn, $home)."'";
 		$eWork = "'".pg_escape_string($conn, $work)."'";
 		$eExtension = "'".pg_escape_string($conn, $extension)."'";
@@ -109,7 +110,7 @@
 		$address = convertEmptyToNull($address);
 		$photoid = convertEmptyToNull($photoid);
 		
-		$sql = "INSERT INTO persons (photoid, prefix, first_name, last_name, suffix, email, cell, home, work, extension, date_of_birth, address, middle_name, companyid) VALUES ($photoid, '$ePrefix', '$eFirstName', '$eLastName', '$eSuffix', '$eEmail', '$eCell', $eHome, $eWork, $eExtension, '$dob', $address, '$eMiddleName','$companyid');";
+		$sql = "INSERT INTO persons (photoid, prefix, first_name, last_name, suffix, email, cell, home, work, extension, date_of_birth, address, middle_name, companyid, gender) VALUES ($photoid, '$ePrefix', '$eFirstName', '$eLastName', '$eSuffix', '$eEmail', '$eCell', $eHome, $eWork, $eExtension, '$dob', $address, '$eMiddleName','$companyid','$eGender');";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);

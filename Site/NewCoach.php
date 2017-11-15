@@ -30,6 +30,7 @@
 		$dob = $_POST['dob'];
 		$pass1 = $_POST['pass1'];
 		$pass2 = $_POST['pass2'];
+		$gender = $_POST['gender'];
 		
 		pg_close($conn);
 		
@@ -129,7 +130,7 @@
 			include('includes/password.php');
 			$pass = encryptpass($pass1);
 			$companyid = $_SESSION['companyid'];
-			$pid = addPerson($firstname,$lastname,$email1,$cell,$companyid,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename);
+			$pid = addPerson($firstname,$lastname,$email1,$cell,$gender,$companyid,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename);
 			$output = true;
 			if ($pid && $output) {
 				echo("Person was added succesfully!<br />");
@@ -260,6 +261,11 @@
                     <tr><td>Middle Name:</td><td><input type="text" name="middlename" autocomplete="off" /></td></tr>
                     <tr><td>Last Name:*</td><td><input type="text" name="lastname" autocomplete="off" /></td></tr>
                     <tr><td>Suffix:</td><td><input type="text" name="suffix" autocomplete="off" /></td></tr>
+					<tr><td>Gender:*</td><td><select name="gender">
+								<option value="male">Male</option>
+								<option value="female">Female</option>
+								<option value="other">Other</option>
+								</select></td></tr>
                     <tr><td>Email:*</td><td><input type="email" name="email1" autocomplete="off" /></td></tr>
                     <tr><td>Confirm Email:*</td><td><input type="email" name="email2" autocomplete="off" /></td></tr>
                     <tr><td>Cell Number:*</td><td><input type="number" name="cell" autocomplete="off" /></td></tr>
