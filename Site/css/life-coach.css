@@ -123,23 +123,19 @@
 }
 .man {
 	background-color: lightblue;
-	border-style: solid;
-	border-width: 1px;
+	border-radius: calc(.25rem - 1px);
 }
 .woman {
 	background-color: pink;
-	border-style: solid;
-	border-width: 1px;
+	border-radius: calc(.25rem - 1px);
 }
 .unknown {
 	background-color: gray;
-	border-style: solid;
-	border-width: 1px;
+	border-radius: calc(.25rem - 1px);
 }
 .other {
 	background-color: lightgreen;
-	border-style: solid;
-	border-width: 1px;
+	border-radius: calc(.25rem - 1px);
 }
 .emphasis {
 	font-style: italic;
