@@ -250,7 +250,7 @@
                     <div class="card text-center page-margin5 left">
                         <div class="card-header title">Family Tree </div>
                         <div class="card-body">
-                            This is where the Family Tree will go...
+                            <?php include('includes/treeBuilder.php'); buildTree($pid); ?>
                         </div>
                     </div>
                 </div>
