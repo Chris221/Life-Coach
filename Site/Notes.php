@@ -10,7 +10,7 @@
 	$back = backButton();
 
 	if (isset($_GET['p'])) {
-		$pid = base64url_decode($_GET['p']);
+		$pid = decrypt($_GET['p']);
 		o_log('Page Loaded','Notes Person ID: '.$pid);
 		$tTitle = "Client's Notes";
 	} else {

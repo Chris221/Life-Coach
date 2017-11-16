@@ -139,9 +139,10 @@
 }
 .emphasis {
 	font-style: italic;
+	font-weight: bold;
 }
 p {
-	padding: 0;
+	padding: 5px;
 	margin: 0;
 }
 

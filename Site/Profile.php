@@ -9,13 +9,13 @@
 	$title = 'Profile';
 
 	if (isset($_GET['p'])) {
-		$pid = base64url_decode($_GET['p']);
+		$pid = decrypt($_GET['p']);
 		o_log('Page Loaded','Profile ID: '.$pid);
 		$pTitle =  'Client Photo';
 		$iTitle = 'Client Info';
 		$proTitle = 'Client Profile';
 		$nTitle = "Client Notes";
-		$notelink = '/Notes/?p='.base64url_encode($pid);
+		$notelink = '/Notes/?p='.encrypt($pid);
 	} else {
 		$pid = $_SESSION['personid'];
 		o_log('Page Loaded','Own Profile');
@@ -63,7 +63,7 @@
 	$needs = $clientResult['needs'];
 
 	if ($photoID) {
-		$imagelink = '\includes\viewPhoto?a='.base64url_encode($photoID);
+		$imagelink = '\includes\viewPhoto?a='.encrypt($photoID);
 		$ptext = '<img src="'.$imagelink.'" width="50" height="50" alt="Profile Photo" />';
 	} else {
 		$ptext = 'No Image Currently';
@@ -96,7 +96,7 @@
 		$cName = addStrTogether($cName,$myCoachResult['last_name']);
 		$cName = addStrTogether($cName,$myCoachResult['suffix']);
 		
-		$eCoachPID = base64url_encode($myCoachResult['personid']);
+		$eCoachPID = encrypt($myCoachResult['personid']);
 		
 		$cName = '<a href="/Profile/?p='.$eCoachPID.'">'.$cName.'</a>';
 		

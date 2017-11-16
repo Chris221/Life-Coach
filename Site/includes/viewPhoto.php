@@ -2,7 +2,7 @@
 	include('includes/db.php');
 	include('includes/protection.php');
 	include('includes/view.php');
-	$id = base64url_decode($_REQUEST['a']);
+	$id = decrypt($_REQUEST['a']);
 	$data = view('photos','photoid='.$id);
 	$picture = $data['file'];
 	$MIMEtype = $data['mimetype'];

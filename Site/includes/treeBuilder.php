@@ -38,7 +38,7 @@
 		}
 		pg_close($conn);
 		
-		$link = '"name": "<a href=\"/Profile/?p='.base64url_encode($pid).'\">'.$name.'</a>",'.
+		$link = '"name": "<a href=\"/Profile/?p='.encrypt($pid).'\">'.$name.'</a>",'.
 			'"class": "'.$gender.'"';
 		if ($c) {
 			$link .= ',
@@ -114,7 +114,7 @@
 
 			$link = '"marriages": [{
 					"spouse": {
-						"name": "<a href=\"/Profile/?p='.base64url_encode($pid).'\">'.$name.'</a>",'.
+						"name": "<a href=\"/Profile/?p='.encrypt($pid).'\">'.$name.'</a>",'.
 						'"class": "'.$gender.'"}';
 		} else {
 			$link = '"marriages": [{

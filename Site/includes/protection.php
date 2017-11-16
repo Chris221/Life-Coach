@@ -2,26 +2,27 @@
 	//echo('Protection loaded.<br />');
 	// Encrypt
 	function encrypt($string) {
+		$output = false;
+		$encrypt_method = "AES-256-CBC";
 		$key = crypt("LifeCoaching",LC);
-		$string = rtrim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $string, MCRYPT_MODE_ECB)));
-		return $string;
-	};
+		$secret_iv = 'I V Life Coaching';
+
+		// iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+		$iv = substr(hash('sha256', $secret_iv), 0, 16);
+		$output = base64_encode(openssl_encrypt($string, $encrypt_method, $key, 0, $iv));
+		return $output;
+	}
 	// Decrypt
 	function decrypt($string) {
+		$output = false;
+		$encrypt_method = "AES-256-CBC";
 		$key = crypt("LifeCoaching",LC);
-		$string = rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, base64_decode($string), MCRYPT_MODE_ECB));
-		return $string;
-	};
-	// Url Dncode
-	function base64url_encode($data) {
-		$key = crypt("LifeCoaching",LC);
-		$data = rtrim(base64_encode(mcrypt_encrypt(MCRYPT_RIJNDAEL_256, $key, $data, MCRYPT_MODE_ECB)));
-		return rtrim(strtr(base64_encode($data), '+/', '-_'), '='); 
-	}; 
-	// Url Decode
-	function base64url_decode($data) {
-		$data = base64_decode(str_pad(strtr($data, '-_', '+/'), strlen($data) % 4, '=', STR_PAD_RIGHT));
-		$key = crypt("LifeCoaching",LC);
-		return rtrim(mcrypt_decrypt(MCRYPT_RIJNDAEL_256, $key, base64_decode($data), MCRYPT_MODE_ECB));
-	};
+		$secret_iv = 'I V Life Coaching';
+
+		// iv - encrypt method AES-256-CBC expects 16 bytes - else you will get a warning
+		$iv = substr(hash('sha256', $secret_iv), 0, 16);
+		$output = openssl_decrypt(base64_decode($string), $encrypt_method, $key, 0, $iv);
+		return $output;
+	}
+
 ?>

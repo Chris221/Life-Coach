@@ -80,7 +80,7 @@
 				$middleName = ' '.$rData['middle_name'];
 			}
 			$clientName = $rData['last_name'].', '.$rData['first_name'].$middleName;
-			$encryptedPID = base64url_encode($pid);
+			$encryptedPID = encrypt($pid);
 			$clientList .= '<a href="/Profile/?p='.$encryptedPID.'">'.$clientName.'</a><br />';
 		}
 		pg_close($conn);
