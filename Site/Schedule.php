@@ -95,7 +95,6 @@
                                     <a href="#" class="btn btn-primary">New Event</a>
                                 </div>
                             </div>
-                            <!--trying a new new calendar-->
                             <div class="wrapper">
                                 <div id="calendarContainer"></div>
                                 <div id="organizerContainer" style="margin-left: 8px;"></div>
@@ -103,6 +102,8 @@
                         </div>
                     </div>
                 </div>
+
+               <!-- keeping this here until we decide on UI design for calendar-->
                 <!--<div class="col-sm-3">
                     <div class="card text-center page-margin5 left right">
                         <div class="card-header title">
