@@ -29,6 +29,7 @@ var vanillacalendar = {
     activeDates: null,
     date: new Date(),
     todaysDate: new Date(),
+    todayDiv: '',
 
     init: function () {
         this.date.setDate(1)
@@ -76,6 +77,7 @@ var vanillacalendar = {
 
         if (this.date.toString() === this.todaysDate.toString()) {
             newDay.classList.add('cal__date--today')
+            newDay.id = 'calToday';
         }
 
         newDay.appendChild(dateEl)
@@ -83,11 +85,20 @@ var vanillacalendar = {
     },
 
     dateClicked: function () {
+        console.log(this)
         var _this = this
         this.activeDates = document.querySelectorAll('[data-calendar-status="active"]')
+
+        for (var i = 0; i <this.activeDates.length; i++){
+            if (this.activeDates[i].id == "calToday"){
+                this.todayDiv = this.activeDates[i];
+            }
+        }
+        console.log(this.todayDiv);
         for (var i = 0; i < this.activeDates.length; i++) {
             this.activeDates[i].addEventListener('click', function (event) {
                 var picked = document.querySelectorAll('[data-calendar-label="picked"]')[0]
+                console.log(this.dataset.calendarDate)
                 picked.innerHTML = this.dataset.calendarDate
                 _this.removeActiveClass()
                 this.classList.add('cal__date--selected')
@@ -134,5 +145,10 @@ var vanillacalendar = {
         for (var i = 0; i < this.activeDates.length; i++) {
             this.activeDates[i].classList.remove('cal__date--selected')
         }
+    },
+
+    todayClicked: function () {
+        console.log('todayclicked')
+        document.getElementById('calToday').click()
     }
 }
