@@ -71,7 +71,6 @@
         </nav>
         <br />
 
-
         <div class="container">
             <div class ="row">
                 <div class="col-sm-12">
@@ -83,53 +82,65 @@
                 </div>
             </div>
             <div class = "row">
-                <div class="col-sm-12">
+                <div class="col-sm-9">
                     <div class="card text-center page-margin5 left right">
                         <div class="card-body">
-                            <div class="row margin-bottom">
-                                <div class="col-sm-9"> </div>
-                                <div class="col-sm-1 text-right">
-                                    <a href="#" class="btn btn-primary" id="today">Today</a>
+                            <div class="cal">
+                                <div class="cal__header">
+                                    <button class="btn btn-action btn-link btn-lg" data-calendar-toggle="previous"><svg height="24" version="1.1" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg></button>
+                                    <div class="cal__header__label" data-calendar-label="month">
+                                        March 2017
+                                    </div><button class="btn btn-action btn-link btn-lg" data-calendar-toggle="next"> <svg height="24" version="1.1" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
+                                            <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path></svg></button>
                                 </div>
-                                <div class="col-sm-2 text-right">
-                                    <a href="#" class="btn btn-primary">New Event</a>
+                                <div class="cal__week">
+                                    <span>Mon</span> <span>Tue</span><span>Wed</span> <span>Thu</span> <span>Fri</span> <span>Sat</span> <span>Sun</span>
                                 </div>
+                                <div class="cal__body" data-calendar-area="month"></div>
                             </div>
-                            <div class="wrapper">
-                                <div id="calendarContainer"></div>
-                                <div id="organizerContainer" style="margin-left: 8px;"></div>
-                            </div>
+
+                            <p class="demo-picked">
+                                Date picked: <span data-calendar-label="picked"></span>
+                            </p>
                         </div>
                     </div>
                 </div>
 
-               <!-- keeping this here until we decide on UI design for calendar-->
-                <!--<div class="col-sm-3">
+                <div class="col-sm-3">
                     <div class="card text-center page-margin5 left right">
                         <div class="card-header title">
                             <div class="row">
-                            <div class="col-sm-5">
-                                <a href="#" class="btn btn-primary">Today</a>
-                            </div>
-                            <div class="col-sm-7">
-                                <a href="#" class="btn btn-primary">New Event</a>
-                            </div>
+                                <div class="col-sm-5">
+                                    <a href="#" class="btn btn-primary">Today</a>
+                                </div>
+                                <div class="col-sm-7">
+                                    <a href="#" class="btn btn-primary">New Event</a>
+                                </div>
                             </div>
                         </div>
                         <div class="card-body">
-
                             <h4> Calendar Events will Appear Here in Chronological Order. </h4>
                             <br />
                             Today will bring user back to events for current date. New Event will allow user to add something to their calendar.
                         </div>
                     </div>
-                </div>-->
+                </div>
             </div>
         </div>
-        <!-- Calendar JavaScript if it's not at the bottom it doesn't work -->
-        <script type="text/javascript" src="/js/calendar/calendar.js"></script>
+
 
         <br/>
+
+        <!-- initiate the calendar -->
+        <!-- Calendar JavaScript if it's not at the bottom it doesn't work -->
+        <script type="text/javascript" src="/js/calendar/calendar.js"></script>
+        <script>
+            window.addEventListener('load', function () {
+                vanillacalendar.init();
+            })
+        </script>
+
         <p class="footerText">
             Copyright &copy; 2017 No Rights Reserved.
             <br>
