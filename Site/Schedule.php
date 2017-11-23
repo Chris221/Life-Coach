@@ -104,7 +104,7 @@
                                 <div class="cal__body" data-calendar-area="month"></div>
                             </div>
 
-                            <p class="demo-picked">
+                            <p class="demo-picked hidden">
                                 Date picked: <span data-calendar-label="picked"></span>
                             </p>
                         </div>
