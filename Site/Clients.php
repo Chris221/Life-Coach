@@ -34,6 +34,8 @@
         <script type="text/javascript" src="/js/jquery/jquery-3.2.1.min.js"></script>
         <!-- Latest compiled JavaScript -->
         <script type="text/javascript" src="/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+        <!-- Popper -->
+        <script type="text/javascript" src="/js/popper.min.js"></script>
         <!-- Our CSS -->
         <link type="text/css" rel="stylesheet" href="/css/life-coach.css">
         <title><?php echo($title); ?></title>
