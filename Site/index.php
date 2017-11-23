@@ -20,10 +20,12 @@
         <link type="text/css" rel="stylesheet" href="/bootstrap/4.0.0/css/bootstrap.min.css">
         <!-- jQuery library -->
         <script type="text/javascript" src="/js/jquery/jquery-3.2.1.min.js"></script>
+        <!-- bootstrap bundle -->
+        <script type="text/javascript" src="/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
+        <!-- popper -->
+        <script type="text/javascript" src="https://unpkg.com/popper.js@1.12.9/dist/umd/popper.js"></script>
         <!-- Latest compiled JavaScript -->
         <script type="text/javascript" src="/bootstrap/4.0.0/js/bootstrap.min.js"></script>
-        <!-- Popper -->
-        <script type="text/javascript" src="/js/popper.min.js"></script>
         <!-- Our CSS -->
         <link type="text/css" rel="stylesheet" href="/css/life-coach.css">
         <!-- Calendar CSS -->
