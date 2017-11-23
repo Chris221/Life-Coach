@@ -116,7 +116,7 @@
                         <div class="card-header title">
                             <div class="row">
                                 <div class="col-sm-5">
-                                    <a href="#" class="btn btn-primary">Today</a>
+                                    <a href="#" class="btn btn-primary" onClick="vanillacalendar.todayClicked();">Today</a>
                                 </div>
                                 <div class="col-sm-7">
                                     <a href="#" class="btn btn-primary">New Event</a>
@@ -142,6 +142,7 @@
         <script>
             window.addEventListener('load', function () {
                 vanillacalendar.init();
+				vanillacalendar.todayClicked();
             })
         </script>
 
