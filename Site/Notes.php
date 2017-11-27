@@ -49,7 +49,7 @@
 		$postedNote = $_POST['note'];
 		$photoid;
 		
-		addNote($postedNote,$clientid,$coachid,$photoid,$visitID,true);
+		addNote($_GET['p'],$postedNote,$clientid,$coachid,$photoid,$visitID);
 	}
 
 	$notes = viewNote($clientid);

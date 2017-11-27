@@ -39,7 +39,6 @@
         <title><?php echo($title); ?></title>
         <script type="text/javascript">
 			$(document).ready(function() {
-				$('.fc-event').remove();
 				// page is now ready, initialize the calendar...
 				$('#calendar').fullCalendar({
 					header: {
@@ -47,10 +46,22 @@
 						center: 'title',
 						right: 'month,agendaWeek,agendaDay,listWeek'
 					},
+					scrollTime: '08:00:00',
 					eventLimit: true, // allow "more" link when too many events
 					navLinks: true,
 					events: <?php echo($eventFeed); ?>
-				})
+				});
+				$('#today').fullCalendar({
+					header: {
+						left: '',
+						center: 'prev today next',
+						right: ''
+					},
+					scrollTime: '08:00:00',
+					defaultView: 'agendaDay',
+					navLinks: false,
+					events: <?php echo($eventFeed); ?>
+				});
 				var moment = $('#calendar').fullCalendar('getDate');
 				$('#current-date').text("Today is " + moment.format("dddd, MMMM Do YYYY"));
 			});
@@ -122,8 +133,7 @@
                 <div class="col-sm-6">
                     <div class="card text-center page-margin5 left">
                         <div class="card-header title">Daily Tasks</div>
-                        <div class="card-body">
-                            <h5 class="card-title">Daily tasks, reminders, and calendar events appear here.</h5>
+                        <div class="card-body" id="today">
                         </div>
                     </div>
 
@@ -136,8 +146,7 @@
                 </div>
                 <div class="col-sm-6">
                     <div class="card text-center page-margin5 right">
-                            <div class="card-body">
-                            <div id='calendar'></div>
+                            <div class="card-body" id='calendar'>
                             </div>
 					</div>
                 </div>

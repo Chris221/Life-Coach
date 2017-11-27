@@ -233,7 +233,7 @@
 		return $last_insert_id;
 	}
 
-	function addNote($postedNote,$clientid,$coachid,$photoid = null,$visitID = null,$debug = false) {
+	function addNote($pid,$postedNote,$clientid,$coachid,$photoid = null,$visitID = null,$debug = false) {
 		include('includes/db.php');
 		$cleanedNote = pg_escape_string($conn,$postedNote);
 		$photoid = "'".$photoid."'";
@@ -265,7 +265,12 @@
 		$insert_row = pg_fetch_row($insert_query);
 		$last_insert_id = $insert_row[0];
 		
+		if ($pid) {
+			$return = '?p='.$pid;
+		}
+		
 		pg_close($conn);
+		header('Location: /Profile'.$return);
 		return $last_insert_id;
 	}
 

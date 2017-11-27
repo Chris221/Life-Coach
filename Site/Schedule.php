@@ -39,7 +39,6 @@
         <title><?php echo($title); ?></title>
         <script type="text/javascript">
 			$(document).ready(function() {
-				$('.fc-event').remove();
 				// page is now ready, initialize the calendar...
 				$('#calendar').fullCalendar({
 					header: {
@@ -47,6 +46,7 @@
 						center: 'title',
 						right: 'month,agendaWeek,agendaDay,listWeek'
 					},
+					scrollTime: '08:00:00',
 					eventLimit: true, // allow "more" link when too many events
 					navLinks: true,
 					events: <?php echo($eventFeed); ?>
@@ -110,34 +110,16 @@
                     <div class="card text-center page-margin0 left right">
                         <div class="card-header title" id="current-date">
                         </div>
+                        <div class="col-sm-7">
+							<a href="/EventScheduleEvent" class="btn btn-primary">New Event</a>
+						</div>
                     </div>
                 </div>
             </div>
             <div class = "row">
-                <div class="col-sm-9">
-                    <div class="card text-center page-margin5 left right">
-                        <div class="card-body">
-                            <div id='calendar'></div>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-3">
-                    <div class="card text-center page-margin5 left right">
-                        <div class="card-header title">
-                            <div class="row">
-                                <div class="col-sm-5">
-                                    <a href="#" class="btn btn-primary" id="today-btn">Today</a>
-                                </div>
-                                <div class="col-sm-7">
-                                    <a href="#" class="btn btn-primary">New Event</a>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="card-body">
-                            <h4> Calendar Events will Appear Here in Chronological Order. </h4>
-                            <br />
-                            Today will bring user back to events for current date. New Event will allow user to add something to their calendar.
+                <div class="col-sm-12">
+                    <div class="card text-center page-margin0 left right">
+                        <div class="card-body" id='calendar'>
                         </div>
                     </div>
                 </div>
