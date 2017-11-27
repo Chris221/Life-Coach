@@ -1,16 +1,18 @@
 <?php
 	include('includes/log.php');
 	include('includes/session.php');
+	include('includes/protection.php');
+	include('includes/api.php');
 	if (!$_SESSION['personid']) {
 		header('Location: /Login');
 	}
 	o_log('Page Loaded');
 	$title = 'Home';
-?>
 
+	$eventFeed = viewSchedule();
+?>
 <!doctype html>
 <html>
-
     <head>
         <meta charset="UTF-8">
         <!-- For Mobile scaling -->
@@ -18,8 +20,10 @@
         <meta name="HandheldFriendly" content="true">
         <!-- Latest compiled and minified CSS -->
         <link type="text/css" rel="stylesheet" href="/bootstrap/4.0.0/css/bootstrap.min.css">
+        <!-- Moment -->
+        <script type="text/javascript" src="/js/calendar/moment.min.js"></script>
         <!-- jQuery library -->
-        <script type="text/javascript" src="/js/jquery/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="/js/jquery/jquery-1.12.4.min.js"></script>
         <!-- bootstrap bundle -->
         <script type="text/javascript" src="/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
         <!-- popper -->
@@ -30,20 +34,22 @@
         <link type="text/css" rel="stylesheet" href="/css/life-coach.css">
         <!-- Calendar CSS -->
         <link type="text/css" rel="stylesheet" href="/css/fullcalendar.min.css">
-        <!-- Moment -->
-        <script type="text/javascript" src="/js/calendar/moment.min.js"></script>
         <!-- calendar -->
         <script type="text/javascript" src="/js/calendar/fullcalendar.min.js"></script>
         <title><?php echo($title); ?></title>
         <script type="text/javascript">
 			$(document).ready(function() {
+				$('.fc-event').remove();
 				// page is now ready, initialize the calendar...
 				$('#calendar').fullCalendar({
 					header: {
 						left: 'prev,next today',
 						center: 'title',
 						right: 'month,agendaWeek,agendaDay,listWeek'
-					}
+					},
+					eventLimit: true, // allow "more" link when too many events
+					navLinks: true,
+					events: <?php echo($eventFeed); ?>
 				})
 				var moment = $('#calendar').fullCalendar('getDate');
 				$('#current-date').text("Today is " + moment.format("dddd, MMMM Do YYYY"));
@@ -53,7 +59,6 @@
 			});
 		</script>
     </head>
-
     <body>
         <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
             <a class="navbar-brand" href="/"><img src="/logo.png" width="50" height="50" alt="Logo" /></a>
@@ -98,7 +103,6 @@
                 </form>-->
             </div>
         </nav>
-
         <br />
         <div class="container">
             <div class ="row">
@@ -114,7 +118,6 @@
                 </div>
             </div>
         </div>
-
             <div class= "row">
                 <div class="col-sm-6">
                     <div class="card text-center page-margin5 left">
@@ -131,32 +134,19 @@
                         </div>
                     </div>
                 </div>
-
                 <div class="col-sm-6">
                     <div class="card text-center page-margin5 right">
                             <div class="card-body">
                             <div id='calendar'></div>
                             </div>
-                    </div>
-
-                    <div class="card text-center page-margin5 right">
-                        <div class="card-header title"> Upcoming Events</div>
-                        <div class="card-body">
-                            <div class="wrapper">
-                                <div id="organizerContainerSm"></div>
-                            </div>
-                        </div>
-                    </div>
+					</div>
                 </div>
             </div>
-
     <br/>
-
     <p class="footerText">
         Copyright &copy; 2017 No Rights Reserved.
         <br>
         Abroad Squad + Chris
     </p>
-
     </body>
 </html>

@@ -1,11 +1,15 @@
 <?php
 	include('includes/log.php');
 	include('includes/session.php');
+	include('includes/protection.php');
+	include('includes/api.php');
 	if (!$_SESSION['personid']) {
 		header('Location: /Login');
 	}
 	o_log('Page Loaded');
 	$title = 'Schedule';
+
+	$eventFeed = viewSchedule();
 ?>
 <!doctype html>
 <html>
@@ -16,8 +20,10 @@
         <meta name="HandheldFriendly" content="true">
         <!-- Latest compiled and minified CSS -->
         <link type="text/css" rel="stylesheet" href="/bootstrap/4.0.0/css/bootstrap.min.css">
+        <!-- Moment -->
+        <script type="text/javascript" src="/js/calendar/moment.min.js"></script>
         <!-- jQuery library -->
-        <script type="text/javascript" src="/js/jquery/jquery-3.2.1.min.js"></script>
+        <script type="text/javascript" src="/js/jquery/jquery-1.12.4.min.js"></script>
         <!-- bootstrap bundle -->
         <script type="text/javascript" src="/bootstrap/4.0.0/js/bootstrap.bundle.min.js"></script>
         <!-- popper -->
@@ -28,20 +34,22 @@
         <link type="text/css" rel="stylesheet" href="/css/life-coach.css">
         <!-- Calendar CSS -->
         <link type="text/css" rel="stylesheet" href="/css/fullcalendar.min.css">
-        <!-- Moment -->
-        <script type="text/javascript" src="/js/calendar/moment.min.js"></script>
         <!-- calendar -->
         <script type="text/javascript" src="/js/calendar/fullcalendar.min.js"></script>
         <title><?php echo($title); ?></title>
         <script type="text/javascript">
 			$(document).ready(function() {
+				$('.fc-event').remove();
 				// page is now ready, initialize the calendar...
 				$('#calendar').fullCalendar({
 					header: {
 						left: 'prev,next today',
 						center: 'title',
 						right: 'month,agendaWeek,agendaDay,listWeek'
-					}
+					},
+					eventLimit: true, // allow "more" link when too many events
+					navLinks: true,
+					events: <?php echo($eventFeed); ?>
 				})
 				var moment = $('#calendar').fullCalendar('getDate');
 				$('#current-date').text("Today is " + moment.format("dddd, MMMM Do YYYY"));

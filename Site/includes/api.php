@@ -30,6 +30,52 @@
 		return $data;
 	}
 
+	function viewSchedule($debug = false){
+		include('includes/db.php');
+		$sql = 'SELECT * FROM schedule_view WHERE coachid = '.$_SESSION['coachid'].';';
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('<br />Error! (View Schedule)<br />');
+				echo('Type: '.$type.'<br />');
+				echo('Where: '.$where.'<br />');
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		$schedule = '[';
+		
+		while ($row = pg_fetch_assoc($result)) {
+			$pid = $row['personid'];
+			$sid = $row['scheduleid'];
+			$middleName = '';
+			$start = date(DATE_ISO8601, strtotime($row['time_start']));
+			$end = date(DATE_ISO8601, strtotime($row['time_end']));
+			if ($row['middle_name']) {
+				$middleName = ' '.$row['middle_name'];
+			}
+			$clientName = $row['first_name'].$middleName.' '.$row['last_name'];
+			$encryptedPID = encrypt($pid);
+			if (strlen($schedule) > 2) {
+				$schedule .= ',';
+			}
+			$schedule .= "{
+							id: '$sid',
+							title: 'Appointment with $clientName',
+							start: '$start',
+							end: '$end',
+            				url: '/Profile?p=$encryptedPID'
+						}";
+		}
+		pg_close($conn);
+		
+		$schedule .= ']';
+		
+		return $schedule;
+	}
+
 	function viewClients($type,$sText,$debug = false){
 		include('includes/db.php');
 		if ($type == 'all') {
