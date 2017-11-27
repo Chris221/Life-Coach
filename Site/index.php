@@ -29,8 +29,29 @@
         <!-- Our CSS -->
         <link type="text/css" rel="stylesheet" href="/css/life-coach.css">
         <!-- Calendar CSS -->
-        <link type="text/css" rel="stylesheet" href="/css/calendar/calendar.css">
+        <link type="text/css" rel="stylesheet" href="/css/fullcalendar.min.css">
+        <!-- Moment -->
+        <script type="text/javascript" src="/js/calendar/moment.min.js"></script>
+        <!-- calendar -->
+        <script type="text/javascript" src="/js/calendar/fullcalendar.min.js"></script>
         <title><?php echo($title); ?></title>
+        <script type="text/javascript">
+			$(document).ready(function() {
+				// page is now ready, initialize the calendar...
+				$('#calendar').fullCalendar({
+					header: {
+						left: 'prev,next today',
+						center: 'title',
+						right: 'month,agendaWeek,agendaDay,listWeek'
+					}
+				})
+				var moment = $('#calendar').fullCalendar('getDate');
+				$('#current-date').text("Today is " + moment.format("dddd, MMMM Do YYYY"));
+			});
+			$('#today-btn').click(function() {
+				$('#calendar').fullCalendar('today');
+			});
+		</script>
     </head>
 
     <body>
@@ -114,24 +135,7 @@
                 <div class="col-sm-6">
                     <div class="card text-center page-margin5 right">
                             <div class="card-body">
-                                <div class="cal">
-                                    <div class="cal__header">
-                                        <button class="btn btn-action btn-link btn-lg" data-calendar-toggle="previous"><svg height="24" version="1.1" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M20,11V13H8L13.5,18.5L12.08,19.92L4.16,12L12.08,4.08L13.5,5.5L8,11H20Z"></path></svg></button>
-                                        <div class="cal__header__label" data-calendar-label="month">
-                                            March 2017
-                                        </div><button class="btn btn-action btn-link btn-lg" data-calendar-toggle="next"> <svg height="24" version="1.1" viewbox="0 0 24 24" width="24" xmlns="http://www.w3.org/2000/svg">
-                                                <path d="M4,11V13H16L10.5,18.5L11.92,19.92L19.84,12L11.92,4.08L10.5,5.5L16,11H4Z"></path></svg></button>
-                                    </div>
-                                    <div class="cal__week">
-                                        <span>Mon</span> <span>Tue</span><span>Wed</span> <span>Thu</span> <span>Fri</span> <span>Sat</span> <span>Sun</span>
-                                    </div>
-                                    <div class="cal__body" data-calendar-area="month"></div>
-                                </div>
-
-                                <p class="demo-picked hidden">
-                                    Date picked: <span data-calendar-label="picked"></span>
-                                </p>
+                            <div id='calendar'></div>
                             </div>
                     </div>
 
@@ -147,13 +151,6 @@
             </div>
 
     <br/>
-
-    <!-- Calendar JavaScript if it's not at the bottom it doesn't work -->
-    <script type="text/javascript" src="/js/calendar/calendar.js"></script>
-        <script>
-            vanillacalendar.init();
-			vanillacalendar.todayClicked();
-        </script>
 
     <p class="footerText">
         Copyright &copy; 2017 No Rights Reserved.
