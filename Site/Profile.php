@@ -26,6 +26,8 @@
 		$notelink = '/Notes';
 	}
 
+	$newAppointment = '/NewAppointment?p='.encrypt($pid);
+
 	$personResult = view('persons','personid='.$pid);
 	$clientResult = view('clients','personid='.$pid);
 	$coachResult  = view('coaches','personid='.$pid);
@@ -233,6 +235,7 @@
                     <div class="card text-center page-margin0 left right">
                         <div class="card-header title">
                             <?php echo($proTitle); ?>
+							<a href="<?php echo($newAppointment); ?>" class="btn btn-primary">New Appointment</a>
                         </div>
                     </div>
                 </div>

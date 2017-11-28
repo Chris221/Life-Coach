@@ -110,9 +110,6 @@
                     <div class="card text-center page-margin0 left right">
                         <div class="card-header title" id="current-date">
                         </div>
-                        <div class="col-sm-7">
-							<a href="/EventScheduleEvent" class="btn btn-primary">New Event</a>
-						</div>
                     </div>
                 </div>
             </div>
