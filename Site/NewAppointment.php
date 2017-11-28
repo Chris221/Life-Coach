@@ -74,8 +74,8 @@
 			if (strpos($visitReturned, 'blank') !== false) {
 				$text = $visitReturned.'<br />'.$text;
 			} else {
-				addSchedule($start,$addressReturned,$pid,$visitReturned,$end);
-				header('Location: /Profile?p='.$_POST['p']);
+				$sid = addSchedule($start,$addressReturned,$pid,$visitReturned,$end);
+				header('Location: /Appointments?a='.$sid);
 			}
 		}
 	}

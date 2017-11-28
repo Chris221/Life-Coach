@@ -30,9 +30,62 @@
 		return $data;
 	}
 
+	function delete($table,$where,$debug = false){
+		include('includes/db.php');
+		$escapedTable = pg_escape_string($conn, $table);
+		if (strlen($where) > 1) {
+			//$escapedWhere = pg_escape_string($conn, $where);
+			$fullWhere = ' WHERE '.$where;
+		} else {
+			return(false);
+		}
+		$sql = 'DELETE FROM '.$escapedTable.$fullWhere.';';
+		$result = pg_query($conn, $sql);
+		$error = pg_last_error($conn);
+		if ($debug) {
+			if ($error) {
+				echo('<br />Error! (Delete)<br />');
+				echo('Table: '.$table.'<br />');
+				echo('Escaped Table: '.$escapedTable.'<br />');
+				echo('Where statement: '.$where.'<br />');
+				echo('Full Where: '.$fullWhere.'<br />');
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+		if ($error) {
+			return(false);
+		} else {
+			return(true);
+		}
+	}
+
+	function markAsDeleted($sid,$debug = false){
+		include('includes/db.php');
+		$sql = 'UPDATE schedule SET deleted=true WHERE scheduleid='.$sid.';';
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			if ($error) {
+				echo('<br />Error! (markAsDeleted)<br />');
+				echo('sid: '.$sid.'<br />');
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+		if ($error) {
+			return(false);
+		} else {
+			return(true);
+		}
+	}
+
 	function viewSchedule($debug = false){
 		include('includes/db.php');
-		$sql = 'SELECT * FROM schedule_view WHERE coachid = '.$_SESSION['coachid'].';';
+		$sql = 'SELECT * FROM schedule_view WHERE coachid = '.$_SESSION['coachid'].' AND deleted IS NULL;';
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -303,6 +356,8 @@
 		}
 		$adressline2 = convertEmptyToNull($adressline2);
 		
+		pg_close($conn);
+		include('includes/db.php');
 		$sql = "INSERT INTO addresses(adressline1, adressline2, city, subdivision, zip, country) VALUES ('$adressline1',$adressline2,'$city','$subdivision','$zip','$country');";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
@@ -316,6 +371,7 @@
 				echo('zip: '.$zip.'<br />');
 				echo('country: '.$country.'<br />');
 				echo('failed?: '.$failed.'<br />');
+				echo('result: '.$result.'<br />');
 				echo('Error: '.$error.'<br />');
 			}
 		}
@@ -520,10 +576,7 @@
 			if (strlen($address['adressline2']) > 0) {
 				$returnAddress .= $address['adressline2'].'<br />';
 			}
-			if (strlen($address['subdivision']) > 0) {
-				$city = $address['subdivision'].' ';
-			}
-			$returnAddress .= $address['city'].', '.$city.$address['zip'].', '.$address['country'];
+			$returnAddress .= $address['city'].', '.$address['subdivision'].' '.$address['zip'].', '.$address['country'];
 		}
 		
 		return $returnAddress;
@@ -534,9 +587,11 @@
 	}
 
 	function formatAddress($line1,$line2,$city,$subdivision,$zip,$country) {
+		if (strlen($line2) > 1) {
+			$cLine2 = "$line2<br />";
+		}
 		if (strlen($line1) > 1) {
-			$address = "$line1<br />
-						$line2<br />
+			$address = "$line1<br />$cLine2
 						$city, $subdivision $zip $country";
 		}
 		return $address;

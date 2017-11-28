@@ -12,6 +12,14 @@
 	if (isset($_GET['a'])) {
 		$appointmentID = $_GET['a'];
 		o_log('Page Loaded','Appointment ID: '.$appointmentID);
+		$delete = '/Appointments?a='.$appointmentID.'&d=yes';
+		if ($_GET['d'] == "yes") {
+			if (markAsDeleted($appointmentID)) {
+				header('Location: /Schedule');
+			} else {
+				header('Location: /Appointments?a='.$appointmentID);
+			}
+		}
 	} else {
 		header('Location: /Schedule');
 	}
@@ -144,6 +152,7 @@
                     <div class="card text-center page-margin0 left right">
                         <div class="card-header title">
                             <?php echo($title); ?>
+                            <a href="<?php echo($delete); ?>" class="btn btn-primary">Delete</a>
                         </div>
                         <div class="card-body">
                         	<span class="marginAuto inline-block"><?php echo($text); ?></span>
