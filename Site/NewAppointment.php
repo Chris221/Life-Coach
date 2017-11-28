@@ -12,76 +12,150 @@
 	if (isset($_GET['p'])) {
 		$pid = decrypt($_GET['p']);
 		o_log('Page Loaded','New Appointment Person ID: '.$pid);
+		$new = true;
+	} else if (isset($_GET['a'])) {
+		$aid = $_GET['a'];
+		o_log('Page Loaded','Edit Appointment ID: '.$aid);
 	}
+	if ($new) {
+		$personResult = view('persons','personid='.$pid);
 
-	$personResult = view('persons','personid='.$pid);
+		$clientName = addStrTogether($personResult['prefix'],$personResult['first_name']);
+		$clientName = addStrTogether($clientName,$personResult['middle_name']);
+		$clientName = addStrTogether($clientName,$personResult['last_name']);
+		$clientName = addStrTogether($clientName,$personResult['suffix']);
 
-	$clientName = addStrTogether($personResult['prefix'],$personResult['first_name']);
-	$clientName = addStrTogether($clientName,$personResult['middle_name']);
-	$clientName = addStrTogether($clientName,$personResult['last_name']);
-	$clientName = addStrTogether($clientName,$personResult['suffix']);
+		$text = '<form action="#" method="post">
+					<table>
+					<tr><td>Start:*</td><td><input type="datetime-local" name="start" autocomplete="off" /></td></tr>
+					<tr><td>End:*</td><td><input type="datetime-local" name="end" autocomplete="off" /></td></tr>
+					<tr><td>Type:*</td><td><select name="type">
+											  <option value="Phone">Phone</option>
+											  <option value="In-Office">In-Office</option>
+											  <option value="In-Home">In-Home</option>
+											  <option value="Out">Out</option>
+											</select></td></tr>
+					<tr><td>Reason:*</td><td><textarea rows="6" cols="50" name="reason" autocomplete="off"></textarea></td></tr>
+					<tr><td>Emergency:</td><td><input type="checkbox" name="emergency" /></td></tr>
+					<tr><td>Address:</td><td><input type="text" name="line1" autocomplete="off" /></td></tr>
+					<tr><td></td><td><input type="text" name="line2" autocomplete="off" /></td></tr>
+					<tr><td>City:</td><td><input type="text" name="city" autocomplete="off" /></td></tr>
+					<tr><td>State/Provence:</td><td><input type="text" name="subdivision" autocomplete="off" /></td></tr>
+					<tr><td>Zip Code:</td><td><input type="number" name="zip" autocomplete="off" /></td></tr>
+					<tr><td>Country Code:</td><td><input type="text" name="country" autocomplete="off" /></td></tr>
+					</table><br />
+					<input type="submit" value="Submit" class="button" /><br />
+					<input type="reset" value="Reset" class="button" />
+				 </table></form>';
 
-	$text = '<form action="#" method="post">
-				<table>
-                <tr><td>Start:*</td><td><input type="datetime-local" name="start" autocomplete="off" /></td></tr>
-                <tr><td>End:*</td><td><input type="datetime-local" name="end" autocomplete="off" /></td></tr>
-                <tr><td>Type:*</td><td><select name="type">
-										  <option value="Phone">Phone</option>
-										  <option value="In-Office">In-Office</option>
-										  <option value="In-Home">In-Home</option>
-										  <option value="Out">Out</option>
-										</select></td></tr>
-                <tr><td>Reason:*</td><td><textarea rows="6" cols="50" name="reason" autocomplete="off"></textarea></td></tr>
-                <tr><td>Emergency:</td><td><input type="checkbox" name="emergency" /></td></tr>
-                <tr><td>Address:</td><td><input type="text" name="line1" autocomplete="off" /></td></tr>
-                <tr><td></td><td><input type="text" name="line2" autocomplete="off" /></td></tr>
-                <tr><td>City:</td><td><input type="text" name="city" autocomplete="off" /></td></tr>
-                <tr><td>State/Provence:</td><td><input type="text" name="subdivision" autocomplete="off" /></td></tr>
-                <tr><td>Zip Code:</td><td><input type="number" name="zip" autocomplete="off" /></td></tr>
-                <tr><td>Country Code:</td><td><input type="text" name="country" autocomplete="off" /></td></tr>
-				</table><br />
-				<input type="submit" value="Submit" class="button" /><br />
-				<input type="reset" value="Reset" class="button" />
-             </table></form>';
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			$start = $_POST['start'];
+			$end = $_POST['end'];
+			$type = $_POST['type'];
+			$reason = $_POST['reason'];
+			$line1 = $_POST['line1'];
+			$line2 = $_POST['line2'];
+			$city = $_POST['city'];
+			$subdivision = $_POST['subdivision'];
+			$zip = $_POST['zip'];
+			$country = $_POST['country'];
 
-	if ($_SERVER["REQUEST_METHOD"] == "POST") {
-		$start = $_POST['start'];
-		$end = $_POST['end'];
-		$type = $_POST['type'];
-		$reason = $_POST['reason'];
-		$line1 = $_POST['line1'];
-		$line2 = $_POST['line2'];
-		$city = $_POST['city'];
-		$subdivision = $_POST['subdivision'];
-		$zip = $_POST['zip'];
-		$country = $_POST['country'];
-		
-		if(isset($_POST['emergency'])) {
-			$emergency = 'true';
-		} else {
-			$emergency = 'false';
-		}
-		
-		if(!isset($start)) {
-			$failed = 'There must be a starting time.';
-		} 
-		
-		$addressReturned = addAddress($line1,$line2,$city,$subdivision,$zip,$country);
-		if ((strpos($addressReturned, 'blank') !== false) || $failed) {
-			$text = $failed.$addressReturned.'<br />'.$text;
-		} else {
-			$visitReturned = addVisit($start,$type,$reason,$addressid,$emergency);
-			if (strpos($visitReturned, 'blank') !== false) {
-				$text = $visitReturned.'<br />'.$text;
+			if(isset($_POST['emergency'])) {
+				$emergency = 'true';
 			} else {
-				$sid = addSchedule($start,$addressReturned,$pid,$visitReturned,$end);
-				header('Location: /Appointments?a='.$sid);
+				$emergency = 'false';
+			}
+
+			if(!isset($start)) {
+				$failed = 'There must be a starting time.<br />';
+			} 
+
+			$addressReturned = addAddress($line1,$line2,$city,$subdivision,$zip,$country);
+			if ((strpos($addressReturned, 'blank') !== false) || $failed) {
+				$text = $failed.$addressReturned.'<br />'.$text;
+			} else {
+				$visitReturned = addVisit($start,$type,$reason,$addressid,$emergency);
+				if (strpos($visitReturned, 'blank') !== false) {
+					$text = $visitReturned.'<br />'.$text;
+				} else {
+					$sid = addSchedule($start,$addressReturned,$pid,$visitReturned,$end);
+					header('Location: /Appointments?a='.$sid);
+				}
 			}
 		}
+		$title = 'New Appointment - '.$clientName;
+	} else {
+		$result = view('appointments','scheduleid='.$aid);
+
+		$clientName = addStrTogether($result['prefix'],$result['first_name']);
+		$clientName = addStrTogether($clientName,$result['middle_name']);
+		$clientName = addStrTogether($clientName,$result['last_name']);
+		$clientName = addStrTogether($clientName,$result['suffix']);
+		
+		if ($result['emergency']) {
+			$checked = 'checked';
+		}
+		$option = $result['type'];
+		if ($option == 'Phone') {
+			$phone = ' selected';
+		} else if ($option == 'In-Office') {
+			$office = ' selected';
+		} else if ($option == 'In-Home') {
+			$home = ' selected';
+		} else if ($option == 'Out') {
+			$out = ' selected';
+		}
+		$starta = date('Y-m-d', strtotime($result['time_start']));
+		$startb = date('H:i', strtotime($result['time_start']));
+		$start = ''.$starta.'T'.$startb;
+		$enda = date('Y-m-d', strtotime($result['time_end']));
+		$endb = date('H:i', strtotime($result['time_end']));
+		$end = ''.$enda.'T'.$endb;
+		$text = '<form action="#" method="post">
+					<table>
+					<tr><td>Start:*</td><td><input type="datetime-local" name="start" autocomplete="off" value="'.$start.'" /></td></tr>
+					<tr><td>End:*</td><td><input type="datetime-local" name="end" autocomplete="off" value="'.$end.'" /></td></tr>
+					<tr><td>Type:*</td><td><select name="type">
+											  <option value="Phone"'.$phone.'>Phone</option>
+											  <option value="In-Office"'.$office.'>In-Office</option>
+											  <option value="In-Home"'.$home.'>In-Home</option>
+											  <option value="Out"'.$out.'>Out</option>
+											</select></td></tr>
+					<tr><td>Reason:*</td><td><textarea rows="6" cols="50" name="reason" autocomplete="off">'.$result['reason'].'</textarea></td></tr>
+					<tr><td>Emergency:</td><td><input type="checkbox" name="emergency" '.$checked.' /></td></tr>
+					</table><br />
+					<input type="submit" value="Submit" class="button" /><br />
+					<input type="reset" value="Reset" class="button" />
+				 </table></form>';
+		
+		if ($_SERVER["REQUEST_METHOD"] == "POST") {
+			$start = $_POST['start'];
+			$end = $_POST['end'];
+			$type = $_POST['type'];
+			$reason = $_POST['reason'];
+
+			if(isset($_POST['emergency'])) {
+				$emergency = 'true';
+			} else {
+				$emergency = 'false';
+			}
+
+			if(!isset($start)) {
+				$failed = 'There must be a starting time.<br />';
+			}
+			if(!isset($reason)) {
+				$failed = 'Reason cannot be blank.<br />';
+			}
+			
+			if ($failed){
+				$text = $failed.'<br />'.$text;
+			} else {
+				changeSchedule($aid,$start,$type,$reason,$emergency,$end,true);
+				header('Location: /Appointments?a='.$aid);
+			}
+		}
+		$title = 'Edit Appointment - '.$clientName;
 	}
-
-
-	$title = 'New Appointment - '.$clientName;
 ?>
 <!doctype html>
 <html>

@@ -13,6 +13,7 @@
 		$appointmentID = $_GET['a'];
 		o_log('Page Loaded','Appointment ID: '.$appointmentID);
 		$delete = '/Appointments?a='.$appointmentID.'&d=yes';
+		$edit = '/NewAppointment?a='.$appointmentID;
 		if ($_GET['d'] == "yes") {
 			if (markAsDeleted($appointmentID)) {
 				header('Location: /Schedule');
@@ -31,11 +32,12 @@
 	$clientName = addStrTogether($clientName,$result['last_name']);
 	$clientName = addStrTogether($clientName,$result['suffix']);
 
-	$start = $result['time_start'];
-	$end = $result['time_end'];
+	$start = readableDate($result['time_start']);
+	$end = readableDate($result['time_end']);
 	$scheduledby = $result['scheduledby'];
 	$type = $result['type'];
 	$reason = $result['reason'];
+	$addressid = $result['addressid'];
 	$line1 = $result['adressline1'];
 	$line2 = $result['adressline2'];
 	$city = $result['city'];
@@ -44,6 +46,7 @@
 	$country = $result['country'];
 	$personid = $result['personid'];
 	$coachid = $result['coachid'];
+	$emergency = $result['emergency'];
 	$scheduleid = $result['scheduleid'];
 	
 	$coachResult = view('accounts','coachid='.$coachid);
@@ -52,9 +55,15 @@
 	$coachName = addStrTogether($coachName,$coachResult['last_name']);
 	$coachName = addStrTogether($coachName,$coachResult['suffix']);
 
-	$address = formatAddress($line1,$line2,$city,$subdivision,$zip,$country);
+	$address = formatAddress($addressid,$line1,$line2,$city,$subdivision,$zip,$country);
 	if (strlen($address) > 1) {
 		$addressOutput = '<tr><td>Address:</td><td>'.$address.'</td></tr>';
+	}
+
+	if ($emergency) {
+		$emergency = 'Yes';
+	} else {
+		$emergency = 'No';
 	}
 
 	$text = '<table>
@@ -62,6 +71,7 @@
                 <tr><td>Starts at:</td><td>'.$start.'</td></tr>
                 <tr><td>Ends at:</td><td>'.$end.'</td></tr>
 				
+                <tr><td>Emergency:</td><td>'.$emergency.'</td></tr>
                 <tr><td>Type:</td><td>'.$type.'</td></tr>
                 <tr><td>Reason:</td><td>'.$reason.'</td></tr>
                 <tr><td>Assigned to:</td><td><a href="/Profile?p='.encrypt($coachid).'">'.$coachName.'</a></td></tr>
@@ -152,6 +162,7 @@
                     <div class="card text-center page-margin0 left right">
                         <div class="card-header title">
                             <?php echo($title); ?>
+                            <a href="<?php echo($edit); ?>" class="btn btn-primary">Edit</a>
                             <a href="<?php echo($delete); ?>" class="btn btn-primary">Delete</a>
                         </div>
                         <div class="card-body">

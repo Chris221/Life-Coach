@@ -467,6 +467,53 @@
 		return $last_insert_id;
 	}
 
+	function changeSchedule($aid,$start,$type,$reason,$emergency,$end,$debug = false) {
+		include('includes/db.php');
+		$end = "'".$end."'";
+		$end = convertEmptyToNull($end);
+		
+		$sql = "UPDATE schedule SET time_start='$start', time_end=$end WHERE scheduleid=$aid;";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error || true) {
+				echo('SQL: '.$sql.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('start: '.$start.'<br />');
+				echo('end: '.$end.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		$sql = "SELECT visitid FROM schedule WHERE scheduleid=$aid;";
+		$result = pg_query($conn, $sql);
+		$result = pg_fetch_row($result);
+		$vid = $result[0];
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error || true) {
+				echo('SQL: '.$sql.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('vid: '.$vid.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		
+		$sql = "UPDATE visits SET date='$start', type='$type', reason='$reason', emergency='$emergency' WHERE visitid=$vid;";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error || true) {
+				echo('SQL: '.$sql.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('start: '.$start.'<br />');
+				echo('type: '.$type.'<br />');
+				echo('reason: '.$reason.'<br />');
+				echo('emergency: '.$emergency.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+	}
 
 	function viewNote($clientid,$debug = false) {
 		include('includes/db.php');
@@ -576,7 +623,7 @@
 			if (strlen($address['adressline2']) > 0) {
 				$returnAddress .= $address['adressline2'].'<br />';
 			}
-			$returnAddress .= $address['city'].', '.$address['subdivision'].' '.$address['zip'].', '.$address['country'];
+			$returnAddress .= $address['city'].', '.$address['subdivision'].' '.$address['zip'].', '.$address['country'].'<br />'.'<a href="/Address?a='.encrypt($aid).'" class="btn btn-primary">Edit Address</a>';
 		}
 		
 		return $returnAddress;
@@ -586,13 +633,18 @@
 		return $_SERVER['HTTP_REFERER'];
 	}
 
-	function formatAddress($line1,$line2,$city,$subdivision,$zip,$country) {
+	function readableDate($date) {
+		$cleanDate = date('m/d/Y g:i A', strtotime($date));
+		return $cleanDate;
+	}
+
+	function formatAddress($aid,$line1,$line2,$city,$subdivision,$zip,$country) {
 		if (strlen($line2) > 1) {
 			$cLine2 = "$line2<br />";
 		}
 		if (strlen($line1) > 1) {
 			$address = "$line1<br />$cLine2
-						$city, $subdivision $zip $country";
+						$city, $subdivision $zip $country<br />".'<a href="/Address?a='.encrypt($aid).'" class="btn btn-primary">Edit Address</a>';
 		}
 		return $address;
 	}
