@@ -403,7 +403,7 @@
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
-			if ($error || true) {
+			if ($error) {
 				echo('SQL: '.$sql.'<br />');
 				echo('adressline1: '.$adressline1.'<br />');
 				echo('adressline2: '.$adressline2.'<br />');
@@ -510,7 +510,7 @@
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
-			if ($error || true) {
+			if ($error) {
 				echo('SQL: '.$sql.'<br />');
 				echo('result: '.$result.'<br />');
 				echo('start: '.$start.'<br />');
@@ -524,7 +524,7 @@
 		$vid = $result[0];
 		if ($debug) {
 			$error = pg_last_error($conn);
-			if ($error || true) {
+			if ($error) {
 				echo('SQL: '.$sql.'<br />');
 				echo('result: '.$result.'<br />');
 				echo('vid: '.$vid.'<br />');
@@ -536,7 +536,7 @@
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
-			if ($error || true) {
+			if ($error) {
 				echo('SQL: '.$sql.'<br />');
 				echo('result: '.$result.'<br />');
 				echo('start: '.$start.'<br />');
@@ -787,7 +787,7 @@
 			$result = pg_query($conn, $sql);
 			if ($debug) {
 				$error = pg_last_error($conn);
-				if ($error || true) {
+				if ($error) {
 					echo('SQL: '.$sql.'<br />');
 					echo('result: '.$result.'<br />');
 					echo('supervisor: '.$supervisor.'<br />');
