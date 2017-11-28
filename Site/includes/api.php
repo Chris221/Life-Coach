@@ -392,8 +392,7 @@
 	}
 
 	function backButton() {
-		$previousPage = $_SERVER['HTTP_REFERER'];
-		return $previousPage;
+		return $_SERVER['HTTP_REFERER'];
 	}
 
 ?>
