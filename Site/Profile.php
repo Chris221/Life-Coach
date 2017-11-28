@@ -75,7 +75,7 @@
 	}
 
 	if ($coachResult['coachid']) {
-		if ($coachResult['supervisor']) {
+		if ($coachResult['supervisor'] != 'f') {
 			$supervisor = 'Yes';
 		} else  {
 			$supervisor = 'No';

@@ -683,4 +683,103 @@
 		return $address;
 	}
 
+	function changeProfile($pid, $firstname, $lastname, $email, $cell, $gender, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $middlename, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visitpreferencestart, $visitpreferenceend, $callpreferencestart, $callpreferenceend, $goals, $needs, $supervisor, $debug = false) {
+		include('includes/db.php');
+		$eFirstName = pg_escape_string($conn, $firstname);
+		$eLastName = pg_escape_string($conn, $lastname);
+		$eEmail = pg_escape_string($conn, $email);
+		$eCell = pg_escape_string($conn, $cell);
+		$ePrefix = pg_escape_string($conn, $prefix);
+		$eSuffix = pg_escape_string($conn, $suffix);
+		$eGender = pg_escape_string($conn, strtolower($gender));
+		$eHome = "'".pg_escape_string($conn, $home)."'";
+		$eWork = "'".pg_escape_string($conn, $worknumber)."'";
+		$eExtension = "'".pg_escape_string($conn, $extension)."'";
+		$eMiddleName = pg_escape_string($conn, $middlename);
+		
+		$eHome = convertEmptyToNull($eHome);
+		$eWork = convertEmptyToNull($eWork);
+		$eExtension = convertEmptyToNull($eExtension);
+		
+		$sql = "UPDATE persons SET prefix='$ePrefix', first_name='$eFirstName', last_name='$eLastName', suffix='$eSuffix', email='$eEmail', cell='$eCell', home=$eHome, work=$eWork, extension=$eExtension, date_of_birth='$correctDOB', middle_name='$eMiddleName', gender='$eGender' WHERE personid='$pid';";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('pid: '.$pid.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('ePrefix: '.$ePrefix.'<br />');
+				echo('eFirstName: '.$eFirstName.'<br />');
+				echo('eLastName: '.$eLastName.'<br />');
+				echo('eSuffix: '.$eSuffix.'<br />');
+				echo('eEmail: '.$eEmail.'<br />');
+				echo('eCell: '.$eCell.'<br />');
+				echo('eHome: '.$eHome.'<br />');
+				echo('eWork: '.$eWork.'<br />');
+				echo('eExtension: '.$eExtension.'<br />');
+				echo('correctDOB: '.$correctDOB.'<br />');
+				echo('eMiddleName: '.$eMiddleName.'<br />');
+				echo('eGender: '.$eGender.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		
+		$workcompany = pg_escape_string($conn, $workcompany);
+		$worktitle = pg_escape_string($conn, $worktitle);
+		$workfield = pg_escape_string($conn, $workfield);
+		$favoritebook = pg_escape_string($conn, $favoritebook);
+		$favoritefood = pg_escape_string($conn, $favoritefood);
+		$visitpreferencestart = "'".pg_escape_string($conn, $visitpreferencestart)."'";
+		$visitpreferenceend = "'".pg_escape_string($conn, $visitpreferenceend)."'";
+		$callpreferencestart = "'".pg_escape_string($conn, $callpreferencestart)."'";
+		$callpreferenceend = "'".pg_escape_string($conn, $callpreferenceend)."'";
+		$goals = pg_escape_string($conn, $goals);
+		$needs = pg_escape_string($conn, $needs);
+		
+		
+		$sql = "UPDATE clients SET work_company='$workcompany', work_title='$worktitle', work_field='$workfield', favorite_book='$favoritebook', favorite_food='$favoritefood', visit_time_preference_start=$visitpreferencestart, visit_time_preference_end=$visitpreferenceend, call_time_preference_start=$callpreferencestart, call_time_preference_end=$callpreferenceend, goals='$goals', needs='$needs' WHERE personid='$pid';";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('pid: '.$pid.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('workcompany: '.$workcompany.'<br />');
+				echo('worktitle: '.$worktitle.'<br />');
+				echo('workfield: '.$workfield.'<br />');
+				echo('favorite_book: '.$favorite_book.'<br />');
+				echo('favorite_food: '.$favorite_food.'<br />');
+				echo('visitpreferencestart: '.$visitpreferencestart.'<br />');
+				echo('visitpreferenceend: '.$visitpreferenceend.'<br />');
+				echo('callpreferencestart: '.$callpreferencestart.'<br />');
+				echo('callpreferenceend: '.$callpreferenceend.'<br />');
+				echo('goals: '.$goals.'<br />');
+				echo('needs: '.$needs.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+		
+		$coachResult  = view('coaches','personid='.$pid);
+		if ($coachResult['coachid']) {
+			include('includes/db.php');
+			$sql = "UPDATE coaches SET supervisor=$supervisor::boolean WHERE personid='$pid';";
+			$result = pg_query($conn, $sql);
+			if ($debug) {
+				$error = pg_last_error($conn);
+				if ($error || true) {
+					echo('SQL: '.$sql.'<br />');
+					echo('result: '.$result.'<br />');
+					echo('supervisor: '.$supervisor.'<br />');
+					echo('Error: '.$error.'<br />');
+				}
+			}
+			pg_close($conn);
+		} else {
+			echo('They are not a Coach, no attempt to change.<br />');
+		}
+	}
+
 ?>
