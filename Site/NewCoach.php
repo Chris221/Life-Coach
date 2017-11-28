@@ -124,41 +124,45 @@
 			}
 		}
 		if ($work) {
-			//$photoid = uploadImage();
-			$email1 = strtolower($email1);
-			$correctDOB = date("Y-m-d", strtotime($dob));
-			include('includes/password.php');
-			$pass = encryptpass($pass1);
-			$companyid = $_SESSION['companyid'];
-			$pid = addPerson($firstname,$lastname,$email1,$cell,$gender,$companyid,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename);
-			$output = true;
-			if ($pid && $output) {
-				echo("Person was added succesfully!<br />");
-				echo("Person ID:".$pid."<br />");
-				o_log('Person Add Successful', 'ID: '.$pid);
-			} else if ($output) {
-				echo("ERROR PERSON WAS NOT ADDED!<br />");
-				o_log('Person Add Failed');
-			}
-			$cid = addCoach($pid,$supervisor,$pass);
-			if ($cid && $output) {
-				echo("Coach was added succesfully!<br />");
-				echo("Coach ID:".$cid."<br />");
-				o_log('Coach Add Successful', 'ID: '.$cid);
-			} else if ($output) {
-				echo("ERROR COACH WAS NOT ADDED!<br />");
-				o_log('Coach Add Failed');
-			}
-			$time = date("H:i:s", strtotime('12:00:00'));
-			$clientID = addClient($pid,$workaddress,$workcompany,$worktitle,$workfield,$favoritebook,$favoritefood,$time,$time,$time,$time,$goals,$needs,$cid);
-			if ($clientID && $output) {
-				echo("Client was added succesfully!<br />");
-				echo("Client ID:".$clientID."<br />");
-				o_log('Client Add Successful', 'ID: '.$clientID);
-				header('Location: /');
-			} else if ($output) {
-				echo("ERROR CLIENT WAS NOT ADDED!<br />");
-				o_log('Client Add Failed');
+			$photoid = uploadImage();
+			if (strpos($photoid, '<br />') !== false) {
+				$text = $photoid;
+			} else {
+				$email1 = strtolower($email1);
+				$correctDOB = date("Y-m-d", strtotime($dob));
+				include('includes/password.php');
+				$pass = encryptpass($pass1);
+				$companyid = $_SESSION['companyid'];
+				$pid = addPerson($firstname,$lastname,$email1,$cell,$gender,$companyid,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename);
+				$output = true;
+				if ($pid && $output) {
+					echo("Person was added succesfully!<br />");
+					echo("Person ID:".$pid."<br />");
+					o_log('Person Add Successful', 'ID: '.$pid);
+				} else if ($output) {
+					echo("ERROR PERSON WAS NOT ADDED!<br />");
+					o_log('Person Add Failed');
+				}
+				$cid = addCoach($pid,$supervisor,$pass);
+				if ($cid && $output) {
+					echo("Coach was added succesfully!<br />");
+					echo("Coach ID:".$cid."<br />");
+					o_log('Coach Add Successful', 'ID: '.$cid);
+				} else if ($output) {
+					echo("ERROR COACH WAS NOT ADDED!<br />");
+					o_log('Coach Add Failed');
+				}
+				$time = date("H:i:s", strtotime('12:00:00'));
+				$clientID = addClient($pid,$workaddress,$workcompany,$worktitle,$workfield,$favoritebook,$favoritefood,$time,$time,$time,$time,$goals,$needs,$cid);
+				if ($clientID && $output) {
+					echo("Client was added succesfully!<br />");
+					echo("Client ID:".$clientID."<br />");
+					o_log('Client Add Successful', 'ID: '.$clientID);
+					header('Location: /');
+				} else if ($output) {
+					echo("ERROR CLIENT WAS NOT ADDED!<br />");
+					o_log('Client Add Failed');
+				}
 			}
 		}
 	}

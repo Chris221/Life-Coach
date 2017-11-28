@@ -16,7 +16,6 @@
 		$proTitle = 'Client Profile';
 		$nTitle = "Client Notes";
 		$notelink = '/Notes/?p='.encrypt($pid);
-		$edit = '/EditProfile/?p='.encrypt($pid);
 	} else {
 		$pid = $_SESSION['personid'];
 		o_log('Page Loaded','Own Profile');
@@ -25,8 +24,9 @@
 		$proTitle = 'Your Profile';
 		$nTitle = "Your Notes";
 		$notelink = '/Notes';
-		$edit = '/EditProfile/?p='.encrypt($pid);
 	}
+	$changephoto = '/EditImage/?p='.encrypt($pid);
+	$edit = '/EditProfile/?p='.encrypt($pid);
 
 	$newAppointment = '/NewAppointment?p='.encrypt($pid);
 
@@ -66,10 +66,11 @@
 	$goals = $clientResult['goals'];
 	$needs = $clientResult['needs'];
 	$gender = $personResult['gender'];
-
+	//echo('pid: '.$pid.'<br />');
+	//echo('cid: '.$clientid.'<br />');
 	if ($photoID) {
 		$imagelink = '\includes\viewPhoto?a='.encrypt($photoID);
-		$ptext = '<img src="'.$imagelink.'" width="50" height="50" alt="Profile Photo" />';
+		$ptext = '<img src="'.$imagelink.'" width="250" height="250" alt="Profile Photo" />';
 	} else {
 		$ptext = 'No Image Currently';
 	}
@@ -153,8 +154,8 @@
 	}
 
 	if ($companyID <> $_SESSION['companyid']) {
-		echo('CompanyID: '.$companyID.'<br />');
-		echo('Session CompanyID: '.$_SESSION['companyid'].'<br />');
+		//echo('CompanyID: '.$companyID.'<br />');
+		//echo('Session CompanyID: '.$_SESSION['companyid'].'<br />');
 		$itext = 'This client is not apart of your company';
 		$ptext = $itext;
 		$notes = $itext;
@@ -248,7 +249,8 @@
             <div class = "row">
                 <div class="col-sm-4">
                     <div class="card text-center page-margin5 left">
-                        <div class="card-header title"><?php echo($pTitle); ?></div>
+                        <div class="card-header title"><?php echo($pTitle); ?>
+							<a href="<?php echo($changephoto); ?>" class="btn btn-primary">Change</a></div>
                              <div class="card-body">
                                  <?php echo($ptext); ?>
                              </div>

@@ -2,7 +2,8 @@
 	include('includes/log.php');
 	include('includes/session.php');
 	include('includes/uploadPhoto.php');
-			include('includes/api.php');
+	include('includes/api.php');
+	include('includes/protection.php');
 	if (!$_SESSION['employeed']) {
 		header('Location: /');
 	}
@@ -103,32 +104,36 @@
 			}
 		}
 		if ($work) {
-			//$photoid = uploadImage();
-			$email1 = strtolower($email1);
-			$correctDOB = date("Y-m-d", strtotime($dob));
-			$companyid = $_SESSION['companyid'];
-			$pid = addPerson($firstname, $lastname, $email1, $cell, $gender, $companyid, $photoid, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $address, $middlename);
-			$output = true;
-			if ($pid && $output) {
-				echo("Person was added succesfully!<br />");
-				echo("Person ID:" . $pid . "<br />");
-				o_log('Person Add Successful', 'ID: ' . $pid);
-			} else if ($output) {
-				echo("ERROR PERSON WAS NOT ADDED!<br />");
-				o_log('Person Add failed');
-			}
+			$photoid = uploadImage();
+			if (strpos($photoid, '<br />') !== false) {
+				$text = $photoid;
+			} else {
+				$email1 = strtolower($email1);
+				$correctDOB = date("Y-m-d", strtotime($dob));
+				$companyid = $_SESSION['companyid'];
+				$pid = addPerson($firstname, $lastname, $email1, $cell, $gender, $companyid, $photoid, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $address, $middlename);
+				$output = true;
+				if ($pid && $output) {
+					echo("Person was added succesfully!<br />");
+					echo("Person ID:" . $pid . "<br />");
+					o_log('Person Add Successful', 'ID: ' . $pid);
+				} else if ($output) {
+					echo("ERROR PERSON WAS NOT ADDED!<br />");
+					o_log('Person Add failed');
+				}
 
-			$coachid = $_SESSION['coachid'];
+				$coachid = $_SESSION['coachid'];
 
-			$cid = addClient($pid, $workaddress, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visitpreferencestart, $visitpreferenceend, $callpreferencestart, $callpreferenceend, $goals, $needs, $coachid);
-			if ($cid && $output) {
-				echo("Client was added succesfully!<br />");
-				echo("Client ID:" . $cid . "<br />");
-				o_log('Client Add Successful', 'ID: ' . $cid);
-				header('Location: /');
-			} else if ($output) {
-				echo("ERROR CLIENT WAS NOT ADDED!<br />");
-				o_log('Client Add failed');
+				$cid = addClient($pid, $workaddress, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visitpreferencestart, $visitpreferenceend, $callpreferencestart, $callpreferenceend, $goals, $needs, $coachid);
+				if ($cid && $output) {
+					echo("Client was added succesfully!<br />");
+					echo("Client ID:" . $cid . "<br />");
+					o_log('Client Add Successful', 'ID: ' . $cid);
+					//header('Location: /Profile?p='.encrypt($pid));
+				} else if ($output) {
+					echo("ERROR CLIENT WAS NOT ADDED!<br />");
+					o_log('Client Add failed');
+				}
 			}
 		}
 	}
@@ -219,7 +224,7 @@
                                 echo($upload_image_text);
                                 echo($text);
                                 echo('<table>
-                        <form action="#" method="post">
+                        <form action="#" method="post" enctype="multipart/form-data">
                             <tr><td><h3 class="image_header">Photo</h3></td><td>&thinsp;</td></tr>
                             <input type="hidden" name="MAX_FILE_SIZE" value="5120000">
                             <tr><td><input name="image" type="file" accept="image/*"></td><td>&thinsp;</td></tr>
