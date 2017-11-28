@@ -57,7 +57,7 @@
 						center: 'prev today next',
 						right: ''
 					},
-					scrollTime: '08:00:00',
+					scrollTime: '<?php echo(date('H:i:s', strtotime('-2 hour')))?>',
 					defaultView: 'agendaDay',
 					navLinks: false,
 					events: <?php echo($eventFeed); ?>
@@ -131,16 +131,9 @@
         </div>
             <div class= "row">
                 <div class="col-sm-6">
-                    <div class="card text-center page-margin5 left">
+                    <div class="card text-center page-margin5 left calendar-list">
                         <div class="card-header title">Daily Tasks</div>
                         <div class="card-body" id="today">
-                        </div>
-                    </div>
-
-                    <div class="card text-center page-margin5 left">
-                        <div class="card-header title"> Recent Contact</div>
-                        <div class="card-body">
-                            <h5 class="card-title">Information regarding the most recent client contact will appear here.</h5>
                         </div>
                     </div>
                 </div>
@@ -149,6 +142,12 @@
                             <div class="card-body" id='calendar'>
                             </div>
 					</div>
+                       <div class="card text-center page-margin5 right">
+                        <div class="card-header title"> Recent Contact</div>
+                        <div class="card-body">
+                            <h5 class="card-title">Information regarding the most recent client contact will appear here.</h5>
+                        </div>
+                    </div>
                 </div>
             </div>
     <br/>
