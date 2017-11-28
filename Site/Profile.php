@@ -16,6 +16,7 @@
 		$proTitle = 'Client Profile';
 		$nTitle = "Client Notes";
 		$notelink = '/Notes/?p='.encrypt($pid);
+		$edit = '/EditProfile/?p='.encrypt($pid);
 	} else {
 		$pid = $_SESSION['personid'];
 		o_log('Page Loaded','Own Profile');
@@ -24,6 +25,7 @@
 		$proTitle = 'Your Profile';
 		$nTitle = "Your Notes";
 		$notelink = '/Notes';
+		$edit = '/EditProfile/?p='.encrypt($pid);
 	}
 
 	$newAppointment = '/NewAppointment?p='.encrypt($pid);
@@ -63,6 +65,7 @@
 	$call_time_preference_end = date('g:i A', strtotime($clientResult['call_time_preference_end']));
 	$goals = $clientResult['goals'];
 	$needs = $clientResult['needs'];
+	$gender = $personResult['gender'];
 
 	if ($photoID) {
 		$imagelink = '\includes\viewPhoto?a='.encrypt($photoID);
@@ -118,6 +121,7 @@
 		<tr><td>Cell Phone:</td><td><a href="tel:+:'.$cell.'" target="_blank">'.$cell.'</a></td></tr>
 		<tr><td>Home Phone:</td><td><a href="tel:+:'.$home.'" target="_blank">'.$home.'</a></td></tr>
 		<tr><td>Date of Birth:</td><td>'.$dob.'</td></tr>
+		<tr><td>Gender:</td><td>'.$gender.'</td></tr>
 		<tr><td>Home Address:</td><td>'.$homeAddress.'</td></tr>
 		<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
 		
@@ -259,7 +263,8 @@
 
                 <div class="col-sm-8">
                     <div class="card text-center page-margin5 right">
-                        <div class="card-header title"><?php echo($iTitle); ?></div>
+                        <div class="card-header title"><?php echo($iTitle); ?>
+							<a href="<?php echo($edit); ?>" class="btn btn-primary">Edit</a></div>
                         <div class="card-body">
                         	<span class="marginAuto inline-block"><?php echo($itext); ?></span>
                         </div>
