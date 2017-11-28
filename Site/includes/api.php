@@ -551,7 +551,7 @@
 
 	function viewNote($clientid,$debug = false) {
 		include('includes/db.php');
-		$sql = 'SELECT * FROM notes WHERE clientid='.$clientid.';';
+		$sql = 'SELECT * FROM notes WHERE clientid='.$clientid.' AND deleted IS NULL ORDER BY Date_Added ASC;';
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -572,11 +572,29 @@
 			$nid = $row['noteid'];
 			$description = $row['description'];
 			$vid = $row['visitid'];
+			$date = readableDate($row['date_added']);
 			
-			$notes .= '<div class="inline-block" id="'.$nid.'">'.$description.'</div>';
+			$notes .= '<div class="inline-block" id="'.$nid.'">'.$description.'</div><br />';
+			$notes .= '<div class="inline-block"><span class="notesDate">'.$date.'</span>
+                            <a href="/Notes?n='.$nid.'" class="btn btn-primary">Delete</a></div>';
 		}
 		
 		return $notes;
+	}
+
+	function markNoteAsDeleted($nid,$debug = false) {
+		include('includes/db.php');
+		$sql = 'UPDATE notes SET deleted=true WHERE noteid='.$nid.';';
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
 	}
 	
 	function cleanPhoneNumber($number) {

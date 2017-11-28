@@ -8,6 +8,13 @@
 	}
 	
 	//$back = backButton();
+	if (isset($_GET['n'])) {
+		$nid = $_GET['n'];
+		o_log('Page Loaded','Delete Notes ID: '.$nid);
+		markNoteAsDeleted($nid);
+		$back = backButton();
+		header('Location: '.$back);
+	}
 
 	if (isset($_GET['p'])) {
 		$pid = decrypt($_GET['p']);
