@@ -263,6 +263,7 @@
 		$callpreferenceend = "'".pg_escape_string($conn, $callpreferenceend)."'";
 		$goals = pg_escape_string($conn, $goals);
 		$needs = pg_escape_string($conn, $needs);
+		$selfawareness = pg_escape_string($conn, $selfawareness);
 		
 		$workaddress = convertEmptyToNull($workaddress);
 		
@@ -756,7 +757,7 @@
 		$needs = pg_escape_string($conn, $needs);
 		
 		
-		$sql = "UPDATE clients SET work_company='$workcompany', work_title='$worktitle', work_field='$workfield', favorite_book='$favoritebook', favorite_food='$favoritefood', visit_time_preference_start=$visitpreferencestart, visit_time_preference_end=$visitpreferenceend, call_time_preference_start=$callpreferencestart, call_time_preference_end=$callpreferenceend, goals='$goals', needs='$needs' WHERE personid='$pid';";
+		$sql = "UPDATE clients SET work_company='$workcompany', work_title='$worktitle', work_field='$workfield', favorite_book='$favoritebook', favorite_food='$favoritefood', visit_time_preference_start=$visitpreferencestart, visit_time_preference_end=$visitpreferenceend, call_time_preference_start=$callpreferencestart, call_time_preference_end=$callpreferenceend, goals='$goals', needs='$needs', selfawareness='$selfawareness' WHERE personid='$pid';";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -783,7 +784,7 @@
 		$coachResult  = view('coaches','personid='.$pid);
 		if ($coachResult['coachid']) {
 			include('includes/db.php');
-			$sql = "UPDATE coaches SET supervisor=$supervisor::boolean WHERE personid='$pid';";
+			$sql = "UPDATE coaches SET supervisor=$supervisor::boolean, employeed=$employeed::boolean WHERE personid='$pid';";
 			$result = pg_query($conn, $sql);
 			if ($debug) {
 				$error = pg_last_error($conn);
