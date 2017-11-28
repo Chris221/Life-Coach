@@ -7,16 +7,18 @@
 		header('Location: /Login');
 	}
 	
-	$back = backButton();
+	//$back = backButton();
 
 	if (isset($_GET['p'])) {
 		$pid = decrypt($_GET['p']);
 		o_log('Page Loaded','Notes Person ID: '.$pid);
 		$tTitle = "Client's Notes";
+		$back = '/Profile?p='.$_GET['p'];
 	} else {
 		$pid = $_SESSION['personid'];
 		o_log('Page Loaded','Own Notes');
 		$tTitle = 'Your Notes';
+		$back = '/Profile';
 	}
 
 	$personResult = view('persons','personid='.$pid);
@@ -48,8 +50,12 @@
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$postedNote = $_POST['note'];
 		$photoid;
-		
-		addNote($_GET['p'],$postedNote,$clientid,$coachid,$photoid,$visitID);
+		if ($postedNote) {
+			addNote($_GET['p'],$postedNote,$clientid,$coachid,$photoid,$visitID);
+		} else {
+			$error = 'The note cannot be blank.<br /><br />';
+			$text = $error.$text;
+		}
 	}
 
 	$notes = viewNote($clientid);
