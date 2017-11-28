@@ -2,7 +2,8 @@
 	include('includes/log.php');
 	include('includes/session.php');
 	include('includes/uploadPhoto.php');
-		include('includes/api.php');
+	include('includes/api.php');
+	include('includes/protection.php');
 	if (!$_SESSION['supervisor']) {
 		header('Location: /');
 	}
@@ -158,7 +159,7 @@
 					echo("Client was added succesfully!<br />");
 					echo("Client ID:".$clientID."<br />");
 					o_log('Client Add Successful', 'ID: '.$clientID);
-					header('Location: /');
+					header('Location: /Profile?p='.encrypt($pid));
 				} else if ($output) {
 					echo("ERROR CLIENT WAS NOT ADDED!<br />");
 					o_log('Client Add Failed');
@@ -252,7 +253,7 @@
                     echo($upload_image_text);
                     echo($text);
                     echo('
-                <form action="#" method="post">
+                <form action="#" method="post" enctype="multipart/form-data">
                     <table>
                     <tr><td><h3 class="image_header">Photo</h3></td><td>&thinsp;</td></tr>
                     <input type="hidden" name="MAX_FILE_SIZE" value="5120000">

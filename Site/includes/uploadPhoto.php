@@ -54,12 +54,12 @@
 						echo('Error: '.$error.'<br />');
 					}
 				}
+				//Get row
+				$insert_query = pg_query($conn,"SELECT lastval();");
+				$insert_row = pg_fetch_row($insert_query);
+				$imageID = $insert_row[0];
 			}
 		}
-		//Get row
-		$insert_query = pg_query($conn,"SELECT lastval();");
-		$insert_row = pg_fetch_row($insert_query);
-		$imageID = $insert_row[0];
 		
 		pg_close($conn);
 		return $imageID;

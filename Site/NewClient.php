@@ -36,6 +36,7 @@
 		$callpreferenceend = checkTime($_POST['calltimepreferenceend'] . ':00');
 		$favoritebook = $_POST['favoritebook'];
 		$favoritefood = $_POST['favoritefood'];
+		$selfawareness = $_POST['selfawareness'];
 		$goals = $_POST['goals'];
 		$needs = $_POST['needs'];
 
@@ -104,35 +105,60 @@
 			}
 		}
 		if ($work) {
-			$photoid = uploadImage();
-			if (strpos($photoid, '<br />') !== false) {
-				$text = $photoid;
+			$hline1 = $_POST['hline1'];
+			$hline2 = $_POST['hline2'];
+			$hcity = $_POST['hcity'];
+			$hsubdivision = $_POST['hsubdivision'];
+			$hzip = $_POST['hzip'];
+			$hcountry = $_POST['hcountry'];
+			
+			$address = addAddress($hline1,$hline2,$hcity,$hsubdivision,$hzip,$hcountry);
+			
+			if ((strpos($address, 'blank') !== false)) {
+				$text = $address.'<br />';
 			} else {
-				$email1 = strtolower($email1);
-				$correctDOB = date("Y-m-d", strtotime($dob));
-				$companyid = $_SESSION['companyid'];
-				$pid = addPerson($firstname, $lastname, $email1, $cell, $gender, $companyid, $photoid, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $address, $middlename);
-				$output = true;
-				if ($pid && $output) {
-					echo("Person was added succesfully!<br />");
-					echo("Person ID:" . $pid . "<br />");
-					o_log('Person Add Successful', 'ID: ' . $pid);
-				} else if ($output) {
-					echo("ERROR PERSON WAS NOT ADDED!<br />");
-					o_log('Person Add failed');
-				}
+				$wline1 = $_POST['wline1'];
+				$wline2 = $_POST['wline2'];
+				$wcity = $_POST['wcity'];
+				$wsubdivision = $_POST['wsubdivision'];
+				$wzip = $_POST['wzip'];
+				$wcountry = $_POST['wcountry'];
+			
+				$workaddress = addAddress($wline1,$wline2,$hcity,$wsubdivision,$wzip,$wcountry);
+				if ((strpos($workaddress, 'blank') !== false)) {
+					$text = $workaddress.'<br />';
+				} else {
+					$photoid = uploadImage();
+					if (strpos($photoid, '<br />') !== false) {
+						$text = $photoid.'<br />';
+					} else {
+						$email1 = strtolower($email1);
+						$correctDOB = date("Y-m-d", strtotime($dob));
+						$companyid = $_SESSION['companyid'];
+						$pid = addPerson($firstname, $lastname, $email1, $cell, $gender, $companyid, $photoid, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $address, $middlename);
+						$output = true;
+						if ($pid && $output) {
+							echo("Person was added succesfully!<br />");
+							echo("Person ID:" . $pid . "<br />");
+							o_log('Person Add Successful', 'ID: ' . $pid);
+						} else if ($output) {
+							echo("ERROR PERSON WAS NOT ADDED!<br />");
+							o_log('Person Add failed');
+						}
 
-				$coachid = $_SESSION['coachid'];
+						$coachid = $_SESSION['coachid'];
 
-				$cid = addClient($pid, $workaddress, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visitpreferencestart, $visitpreferenceend, $callpreferencestart, $callpreferenceend, $goals, $needs, $coachid);
-				if ($cid && $output) {
-					echo("Client was added succesfully!<br />");
-					echo("Client ID:" . $cid . "<br />");
-					o_log('Client Add Successful', 'ID: ' . $cid);
-					//header('Location: /Profile?p='.encrypt($pid));
-				} else if ($output) {
-					echo("ERROR CLIENT WAS NOT ADDED!<br />");
-					o_log('Client Add failed');
+						$cid = addClient($pid, $workaddress, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visitpreferencestart, $visitpreferenceend, $callpreferencestart, $callpreferenceend, $goals, $needs, $selfawareness, $coachid);
+						if ($cid && $output) {
+							echo("Client was added succesfully!<br />");
+							echo("Client ID:" . $cid . "<br />");
+							o_log('Client Add Successful', 'ID: ' . $cid);
+							//header('Location: /Profile?p='.encrypt($pid));
+						} else if ($output) {
+							echo("ERROR CLIENT WAS NOT ADDED!<br />");
+							o_log('Client Add failed');
+						}
+					}
 				}
 			}
 		}
@@ -250,9 +276,17 @@
                             <tr><td>Cell Number:*</td><td><input type="number" name="cell" autocomplete="off" /></td></tr>
                             <tr><td>Home Number:</td><td><input type="number" name="home" autocomplete="off" /></td></tr>
                             <tr><td>Date of Birth:</td><td><input type="date" name="dob" autocomplete="off" /></td></tr>
-                            <tr><td>Home address:</td><td>*NOT IMPLEMENTED YET*</td></tr>
 							
-                            
+                            <tr><td>&thinsp;</td><td>&thinsp;</td></tr>
+							
+                            <tr><td><h3>Home Address</h3></td><td>&thinsp;</td></tr>
+							<tr><td>Address:</td><td><input type="text" name="hline1" autocomplete="off" /></td></tr>
+							<tr><td></td><td><input type="text" name="hline2" autocomplete="off" /></td></tr>
+							<tr><td>City:</td><td><input type="text" name="hcity" autocomplete="off" /></td></tr>
+							<tr><td>State/Provence:</td><td><input type="text" name="hsubdivision" autocomplete="off" /></td></tr>
+							<tr><td>Zip Code:</td><td><input type="number" name="hzip" autocomplete="off" /></td></tr>
+							<tr><td>Country Code:</td><td><input type="text" name="hcountry" autocomplete="off" /></td></tr>
+							
                             <tr><td>&thinsp;</td><td>&thinsp;</td></tr>
                             
                             <tr><td><h3>Work Information</h3></td><td>&thinsp;</td></tr>
@@ -261,7 +295,16 @@
                             <tr><td>Place of work:</td><td><input type="text" name="workcompany" autocomplete="off" /></td></tr>
                             <tr><td>Job title:</td><td><input type="text" name="worktitle" autocomplete="off" /></td></tr>
                             <tr><td>Field of employment:</td><td><input type="text" name="workfield" autocomplete="off" /></td></tr>
-                            <tr><td>Work address:</td><td>*NOT IMPLEMENTED YET*</td></tr>
+                            
+                            <tr><td>&thinsp;</td><td>&thinsp;</td></tr>
+							
+                            <tr><td><h3>Work Address</h3></td><td>&thinsp;</td></tr>
+							<tr><td>Address:</td><td><input type="text" name="wline1" autocomplete="off" /></td></tr>
+							<tr><td></td><td><input type="text" name="wline2" autocomplete="off" /></td></tr>
+							<tr><td>City:</td><td><input type="text" name="wcity" autocomplete="off" /></td></tr>
+							<tr><td>State/Provence:</td><td><input type="text" name="wsubdivision" autocomplete="off" /></td></tr>
+							<tr><td>Zip Code:</td><td><input type="number" name="wzip" autocomplete="off" /></td></tr>
+							<tr><td>Country Code:</td><td><input type="text" name="wcountry" autocomplete="off" /></td></tr>
                             
                             <tr><td>&thinsp;</td><td>&thinsp;</td></tr>
                             
@@ -276,6 +319,7 @@
                             <tr><td><h3>About</h3></td><td>&thinsp;</td></tr>
                             <tr><td>Favorite book:</td><td><input type="text" name="favoritebook" autocomplete="off" /></td></tr>
                             <tr><td>Favorite food:</td><td><input type="text" name="favoritefood" autocomplete="off" /></td></tr>
+                            <tr><td>Prefered Self-Awareness Method:</td><td><input type="text" name="selfawareness" autocomplete="off" /></td></tr>
                             </table>
                             <table>
                             <tr><td class="client_about">Goals:</td></tr>

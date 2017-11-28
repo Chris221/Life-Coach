@@ -40,6 +40,7 @@
 	$workfield = $clientResult['work_field'];
 	$favoritebook = $clientResult['favorite_book'];
 	$favoritefood = $clientResult['favorite_food'];
+	$selfawareness = $clientResult['selfawareness'];
 	$visit_time_preference_start = date('H:i', strtotime($clientResult['visit_time_preference_start']));
 	$visit_time_preference_end = date('H:i', strtotime($clientResult['visit_time_preference_end']));
 	$call_time_preference_start = date('H:i', strtotime($clientResult['call_time_preference_start']));
@@ -59,10 +60,14 @@
 	if ($coachResult['supervisor'] != 'f') {
 		$supervisor = 'checked';
 	}
+	if ($coachResult['employeed'] != 'f') {
+		$employeed = 'checked';
+	}
 
-	if ($_SESSION['supervisor'] && $coachResult['coachid']) {
+	if ($coachResult['coachid']) {
 		$coachInfo = '<tr><td><h3>Coach Information</h3></td><td>&thinsp;</td></tr>
-                    <tr><td>supervisor:</td><td><input type="checkbox" name="supervisor" autocomplete="off" '.$supervisor.' /></td></tr>
+                    <tr><td>Supervisor:</td><td><input type="checkbox" name="supervisor" autocomplete="off" '.$supervisor.' /></td>
+                    <tr><td>Employeed:</td><td><input type="checkbox" name="employeed" autocomplete="off" '.$employeed.' /></td></tr>
                     <tr><td>&thinsp;</td><td>&thinsp;</td></tr>';
 	}
 
@@ -93,10 +98,16 @@
 		$favoritefood = $_POST['favoritefood'];
 		$goals = $_POST['goals'];
 		$needs = $_POST['needs'];
+		$selfawareness = $_POST['selfawareness'];
 		if(isset($_POST['supervisor'])) {
 			$supervisor = 'true';
 		} else {
 			$supervisor = 'false';
+		}
+		if(isset($_POST['employeed'])) {
+			$employeed = 'true';
+		} else {
+			$employeed = 'false';
 		}
 
 		pg_close($conn);
@@ -152,7 +163,7 @@
 			$email = strtolower($email);
 			$correctDOB = date("Y-m-d", strtotime($dob));
 			
-			changeProfile($pid, $firstname, $lastname, $email, $cell, $gender, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $middlename, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visit_time_preference_start, $visit_time_preference_end, $call_time_preference_start, $call_time_preference_end, $goals, $needs, $supervisor, true);
+			changeProfile($pid, $firstname, $lastname, $email, $cell, $gender, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $middlename, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visit_time_preference_start, $visit_time_preference_end, $call_time_preference_start, $call_time_preference_end, $goals, $needs, $selfawareness, $supervisor, $employeed, true);
 			
 			header('Location: '.$back);
 		}
@@ -284,6 +295,7 @@
                             <tr><td><h3>About</h3></td><td>&thinsp;</td></tr>
                             <tr><td>Favorite book:</td><td><input type="text" name="favoritebook" autocomplete="off"  value="'.$favoritebook.'" /></td></tr>
                             <tr><td>Favorite food:</td><td><input type="text" name="favoritefood" autocomplete="off"  value="'.$favoritefood.'" /></td></tr>
+                            <tr><td>Prefered Self-Awareness Method:</td><td><input type="text" name="selfawareness" autocomplete="off"  value="'.$selfawareness.'" /></td></tr>
                             </table>
                             <table>
                             <tr><td class="client_about">Goals:</td></tr>

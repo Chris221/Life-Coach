@@ -59,6 +59,7 @@
 	$workField = $clientResult['work_field'];
 	$favoriteBook = $clientResult['favorite_book'];
 	$favoriteFood = $clientResult['favorite_food'];
+	$selfawareness = $clientResult['selfawareness'];
 	$visit_time_preference_start = date('g:i A', strtotime($clientResult['visit_time_preference_start']));
 	$visit_time_preference_end = date('g:i A', strtotime($clientResult['visit_time_preference_end']));
 	$call_time_preference_start = date('g:i A', strtotime($clientResult['call_time_preference_start']));
@@ -70,7 +71,7 @@
 	//echo('cid: '.$clientid.'<br />');
 	if ($photoID) {
 		$imagelink = '\includes\viewPhoto?a='.encrypt($photoID);
-		$ptext = '<img src="'.$imagelink.'" width="250" height="250" alt="Profile Photo" />';
+		$ptext = '<a href="'.$imagelink.'"><img src="'.$imagelink.'" width="250" height="250" alt="Profile Photo" /></a>';
 	} else {
 		$ptext = 'No Image Currently';
 	}
@@ -81,12 +82,16 @@
 		} else  {
 			$supervisor = 'No';
 		}
-		if ($coachResult['employeed']) {
+		if ($coachResult['employeed'] != 'f') {
 			$employeed = 'Yes';
 		} else  {
 			$employeed = 'No';
 		}
-		$lastActive = date('m/d/Y', strtotime($coachResult['last_active']));
+		if (isset($coachResult['last_active'])) {
+			$lastActive = date('m/d/Y', strtotime($coachResult['last_active']));
+		} else {
+			$lastActive = 'Never';
+		}
 		
 		$coachText = '
 		<tr><td><h3>Coach Information</h3></td></tr>
@@ -144,6 +149,7 @@
 		<tr><td><h3>About</h3></td></tr>
 		<tr><td>Favorite Book:</td><td>'.$favoriteBook.'</td></tr>
 		<tr><td>Favorite Food:</td><td>'.$favoriteFood.'</td></tr>
+		<tr><td>Preffered Self-Awareness Method:</td><td>'.$selfawareness.'</td></tr>
 		<tr><td>Goals:</td><td>'.$goals.'</td></tr>
 		<tr><td>Needs:</td><td>'.$needs.'</td></tr>
 		</table>
