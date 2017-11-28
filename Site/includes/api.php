@@ -57,7 +57,6 @@
 				$middleName = ' '.$row['middle_name'];
 			}
 			$clientName = $row['first_name'].$middleName.' '.$row['last_name'];
-			$encryptedPID = encrypt($pid);
 			if (strlen($schedule) > 2) {
 				$schedule .= ',';
 			}
@@ -66,7 +65,7 @@
 							title: 'Appointment with $clientName',
 							start: '$start',
 							end: '$end',
-            				url: '/Profile?p=$encryptedPID'
+            				url: '/Appointments?a=$sid'
 						}";
 		}
 		pg_close($conn);
@@ -532,6 +531,15 @@
 
 	function backButton() {
 		return $_SERVER['HTTP_REFERER'];
+	}
+
+	function formatAddress($line1,$line2,$city,$subdivision,$zip,$country) {
+		if (strlen($line1) > 1) {
+			$address = "$line1<br />
+						$line2<br />
+						$city, $subdivision $zip $country";
+		}
+		return $address;
 	}
 
 ?>
