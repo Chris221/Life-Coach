@@ -274,6 +274,145 @@
 		return $last_insert_id;
 	}
 
+	function addAddress($adressline1,$adressline2,$city,$subdivision,$zip,$country,$debug = false) {
+		include('includes/db.php');
+		$adressline1 = pg_escape_string($conn,$adressline1);
+		$adressline2 = "'".pg_escape_string($conn,$adressline2)."'";
+		$city = pg_escape_string($conn,$city);
+		$subdivision = pg_escape_string($conn,$subdivision);
+		$notCleanZip = pg_escape_string($conn,$zip);
+		$country = pg_escape_string($conn,$country);
+		$zip = cleanPhoneNumber($notCleanZip);
+		
+		if (!(strlen($adressline1) > 1)) {
+			return;
+		}
+		if (!(strlen($city) >= 1)) {
+			$failed = 'City cannont be blank.<br />';
+		} 
+		if (!(strlen($subdivision) >= 1)) {
+			$failed .= 'State/Provence cannont be blank.<br />';
+		} 
+		if (!(strlen($zip) >= 1)) {
+			$failed .= 'Zip Code cannont be blank.<br />';
+		} 
+		if (!(strlen($country) >= 1)) {
+			$failed .= 'Country Code cannont be blank.<br />';
+		} 
+		if ($failed) {
+			return $failed;
+		}
+		$adressline2 = convertEmptyToNull($adressline2);
+		
+		$sql = "INSERT INTO addresses(adressline1, adressline2, city, subdivision, zip, country) VALUES ('$adressline1',$adressline2,'$city','$subdivision','$zip','$country');";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('adressline1: '.$adressline1.'<br />');
+				echo('adressline2: '.$adressline2.'<br />');
+				echo('city: '.$city.'<br />');
+				echo('subdivision: '.$subdivision.'<br />');
+				echo('zip: '.$zip.'<br />');
+				echo('country: '.$country.'<br />');
+				echo('failed?: '.$failed.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		
+		//Get row
+		$insert_query = pg_query($conn,"SELECT lastval();");
+		$insert_row = pg_fetch_row($insert_query);
+		$last_insert_id = $insert_row[0];
+		
+		pg_close($conn);
+		return $last_insert_id;
+	}
+
+	function addVisit($start,$type,$reason,$addressid,$emergency,$debug = false) {
+		include('includes/db.php');
+		$start = pg_escape_string($conn,$start);
+		$addressid = "'".pg_escape_string($conn,$addressid)."'";
+		$type = pg_escape_string($conn,$type);
+		$reason = pg_escape_string($conn,$reason);
+		
+		if (!(strlen($reason) >= 1)) {
+			$failed = 'Reason cannont be blank.<br />';
+		} 
+		if (!(strlen($type) >= 1)) {
+			$failed .= 'Type cannont be blank.<br />';
+		} 
+		if ($failed) {
+			return $failed;
+		}
+		
+		$addressid = convertEmptyToNull($addressid);
+		
+		$sql = "INSERT INTO visits(date, type, reason, addressid, emergency) VALUES ('$start','$type','$reason',$addressid,'$emergency');";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('start: '.$start.'<br />');
+				echo('type: '.$type.'<br />');
+				echo('reason: '.$reason.'<br />');
+				echo('addressid: '.$addressid.'<br />');
+				echo('emergency: '.$emergency.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		
+		//Get row
+		$insert_query = pg_query($conn,"SELECT lastval();");
+		$insert_row = pg_fetch_row($insert_query);
+		$last_insert_id = $insert_row[0];
+		
+		pg_close($conn);
+		return $last_insert_id;
+	}
+
+	function addSchedule($start,$addressid,$personid,$visitid,$end,$debug = false) {
+		include('includes/db.php');
+		$addressid = "'".pg_escape_string($conn,$addressid)."'";
+		$visitid = "'".pg_escape_string($conn,$visitid)."'";
+		$end = "'".$end."'";
+		
+		$addressid = convertEmptyToNull($addressid);
+		$visitid = convertEmptyToNull($visitid);
+		$end = convertEmptyToNull($end);
+		
+		$scheduledby = $_SESSION['coachid'];
+		$coachid = $_SESSION['coachid'];
+		
+		$sql = "INSERT INTO schedule(time_start, addressid, personid, coachid, scheduledby, visitid, time_end) VALUES ('$start',$addressid,'$personid','$coachid','$scheduledby',$visitid,$end);";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('start: '.$start.'<br />');
+				echo('addressid: '.$addressid.'<br />');
+				echo('personid: '.$personid.'<br />');
+				echo('coachid: '.$coachid.'<br />');
+				echo('scheduledby: '.$scheduledby.'<br />');
+				echo('end: '.$end.'<br />');
+				echo('failed?: '.$failed.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		
+		//Get row
+		$insert_query = pg_query($conn,"SELECT lastval();");
+		$insert_row = pg_fetch_row($insert_query);
+		$last_insert_id = $insert_row[0];
+		
+		pg_close($conn);
+		return $last_insert_id;
+	}
+
+
 	function viewNote($clientid,$debug = false) {
 		include('includes/db.php');
 		$sql = 'SELECT * FROM notes WHERE clientid='.$clientid.';';

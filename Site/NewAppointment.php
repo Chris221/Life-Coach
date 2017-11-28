@@ -21,41 +21,63 @@
 	$clientName = addStrTogether($clientName,$personResult['last_name']);
 	$clientName = addStrTogether($clientName,$personResult['suffix']);
 
-	$companyID = $personResult['companyid'];
-
 	$text = '<form action="#" method="post">
 				<table>
                 <tr><td>Start:*</td><td><input type="datetime-local" name="start" autocomplete="off" /></td></tr>
                 <tr><td>End:*</td><td><input type="datetime-local" name="end" autocomplete="off" /></td></tr>
-                <tr><td>Type:*</td><td></td></tr>
+                <tr><td>Type:*</td><td><select name="type">
+										  <option value="Phone">Phone</option>
+										  <option value="In-Office">In-Office</option>
+										  <option value="In-Home">In-Home</option>
+										  <option value="Out">Out</option>
+										</select></td></tr>
                 <tr><td>Reason:*</td><td><textarea rows="6" cols="50" name="reason" autocomplete="off"></textarea></td></tr>
                 <tr><td>Emergency:</td><td><input type="checkbox" name="emergency" /></td></tr>
-                <tr><td>Adress:*</td><td><input type="text" name="line1" autocomplete="off" /></td></tr>
+                <tr><td>Address:</td><td><input type="text" name="line1" autocomplete="off" /></td></tr>
                 <tr><td></td><td><input type="text" name="line2" autocomplete="off" /></td></tr>
-                <tr><td>City:*</td><td><input type="text" name="city" autocomplete="off" /></td></tr>
-                <tr><td>State/Provence:*</td><td><input type="text" name="subdivision" autocomplete="off" /></td></tr>
-                <tr><td>Zip Code:*</td><td><input type="number" name="zip" autocomplete="off" /></td></tr>
-                <tr><td>Country Code:*</td><td><input type="text" name="country" autocomplete="off" /></td></tr>
-				</table>
+                <tr><td>City:</td><td><input type="text" name="city" autocomplete="off" /></td></tr>
+                <tr><td>State/Provence:</td><td><input type="text" name="subdivision" autocomplete="off" /></td></tr>
+                <tr><td>Zip Code:</td><td><input type="number" name="zip" autocomplete="off" /></td></tr>
+                <tr><td>Country Code:</td><td><input type="text" name="country" autocomplete="off" /></td></tr>
+				</table><br />
 				<input type="submit" value="Submit" class="button" /><br />
 				<input type="reset" value="Reset" class="button" />
-             </form></table>';
+             </table></form>';
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		$start = $_POST['start'];
 		$end = $_POST['end'];
 		$type = $_POST['type'];
 		$reason = $_POST['reason'];
-		$emergency = $_POST['emergency'];
 		$line1 = $_POST['line1'];
 		$line2 = $_POST['line2'];
 		$city = $_POST['city'];
 		$subdivision = $_POST['subdivision'];
 		$zip = $_POST['zip'];
 		$country = $_POST['country'];
-		echo('Start: '.$start);
 		
-		//addSchedule($_GET['p'],$postedNote,$clientid,$coachid,$photoid,$visitID);
+		if(isset($_POST['emergency'])) {
+			$emergency = 'true';
+		} else {
+			$emergency = 'false';
+		}
+		
+		if(!isset($start)) {
+			$failed = 'There must be a starting time.';
+		} 
+		
+		$addressReturned = addAddress($line1,$line2,$city,$subdivision,$zip,$country);
+		if ((strpos($addressReturned, 'blank') !== false) || $failed) {
+			$text = $failed.$addressReturned.'<br />'.$text;
+		} else {
+			$visitReturned = addVisit($start,$type,$reason,$addressid,$emergency);
+			if (strpos($visitReturned, 'blank') !== false) {
+				$text = $visitReturned.'<br />'.$text;
+			} else {
+				addSchedule($start,$addressReturned,$pid,$visitReturned,$end);
+				header('Location: /Profile?p='.$_POST['p']);
+			}
+		}
 	}
 
 
@@ -138,7 +160,7 @@
                     </div>
                 </div>
             <div class ="row">
-                <div class="col-sm-8">
+                <div class="col-sm-12">
                     <div class="card text-center page-margin0 left right">
                         <div class="card-header title">
                             <?php echo($title); ?>
