@@ -385,6 +385,40 @@
 		return $last_insert_id;
 	}
 
+	function changeAddress($addressid,$adressline1,$adressline2,$city,$subdivision,$zip,$country,$debug = false) {
+		include('includes/db.php');
+		$adressline1 = pg_escape_string($conn,$adressline1);
+		$adressline2 = "'".pg_escape_string($conn,$adressline2)."'";
+		$city = pg_escape_string($conn,$city);
+		$subdivision = pg_escape_string($conn,$subdivision);
+		$notCleanZip = pg_escape_string($conn,$zip);
+		$country = pg_escape_string($conn,$country);
+		$zip = cleanPhoneNumber($notCleanZip);
+		
+		$adressline2 = convertEmptyToNull($adressline2);
+		
+		pg_close($conn);
+		include('includes/db.php');
+		$sql = "UPDATE addresses SET adressline1='$adressline1', adressline2=$adressline2, city='$city', subdivision='$subdivision', zip='$zip', country='$country' WHERE addressid='$addressid';";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error || true) {
+				echo('SQL: '.$sql.'<br />');
+				echo('adressline1: '.$adressline1.'<br />');
+				echo('adressline2: '.$adressline2.'<br />');
+				echo('city: '.$city.'<br />');
+				echo('subdivision: '.$subdivision.'<br />');
+				echo('zip: '.$zip.'<br />');
+				echo('country: '.$country.'<br />');
+				echo('failed?: '.$failed.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+	}
+
 	function addVisit($start,$type,$reason,$addressid,$emergency,$debug = false) {
 		include('includes/db.php');
 		$start = pg_escape_string($conn,$start);
