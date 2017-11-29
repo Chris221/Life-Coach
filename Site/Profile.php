@@ -16,7 +16,7 @@
 		$proTitle = 'Client Profile';
 		$nTitle = "Client Notes";
 		$notelink = '/Notes/?p='.encrypt($pid);
-		$eTitle = "Client Events";
+		$eTitle = "Client Life Events";
 		$eventlink = '/Events/?p='.encrypt($pid);
 	} else {
 		$own = true;
@@ -27,7 +27,7 @@
 		$proTitle = 'Your Profile';
 		$nTitle = "Your Notes";
 		$notelink = '/Notes';
-		$eTitle = "Your Events";
+		$eTitle = "Your Life Events";
 		$eventlink = '/Events';
 	}
 	$changephoto = '/EditImage/?p='.encrypt($pid);
@@ -308,7 +308,7 @@
 				<div class="card text-center page-margin5 left">
 					<div class="card-header title">
 						<?php echo($eTitle); ?>
-						<a href="<?php echo($eventlink); ?>" class="btn btn-primary">Add an Event</a>
+						<a href="<?php echo($eventlink); ?>" class="btn btn-primary">New Life Events</a>
 					</div>
 					<div class="card-body">
 						<span class="marginAuto inline-block"><?php echo($events); ?></span>

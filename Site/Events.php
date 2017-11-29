@@ -19,12 +19,12 @@
 	if (isset($_GET['p'])) {
 		$pid = decrypt($_GET['p']);
 		o_log('Page Loaded','Events Person ID: '.$pid);
-		$tTitle = "Client's Events";
+		$tTitle = "Client's Life Events";
 		$back = '/Profile?p='.$_GET['p'];
 	} else {
 		$pid = $_SESSION['personid'];
 		o_log('Page Loaded','Own Events');
-		$tTitle = 'Your Events';
+		$tTitle = 'Your Life Events';
 		$back = '/Profile';
 	}
 
