@@ -99,11 +99,16 @@
 			$lastActive = 'Never';
 		}
 		
+		if ($_SESSION['supervisor']) {
+			$resetpass = '<br /><a href="/ForgotPassword?p='.encrypt($pid).'">Reset</a>';
+		}
+		
 		$coachText = '
 		<tr><td><h3>Coach Information</h3></td></tr>
 		<tr><td>Supervisor:</td><td>'.$supervisor.'</td></tr>
 		<tr><td>Employed:</td><td>'.$employeed.'</td></tr>
 		<tr><td>Last Active on:</td><td>'.$lastActive.'</td></tr>
+		<tr><td>Password:</td><td>Encrypted'.$resetpass.'</td></tr>
 		<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
 		';
 	} else {

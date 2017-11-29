@@ -16,9 +16,19 @@
 		if (!isset($pid)) {
 			header('Location: /Login');
 		}
-		$personResult = view('persons','personid='.$pid);
 		o_log('Page Loaded','Reset password person ID: '.$pid);
 		$title = 'Forgot Password?';
+		$form = '<form action="#" method="post">
+					<table>
+						<tr><td>Password:* <span class="password_info">(minimum 8 characters)</span></td><td><input type="password" name="pass1"  autocomplete="off" /></td></tr>
+                    	<tr><td>Confirm Password:*</td><td><input type="password" name="pass2"  autocomplete="off" /></td></tr>
+					</table>
+                 	<input type="submit" value="Reset Password" class="button login_button" />
+                 </form>';
+	} else if (isset($_GET['p'])) {
+		$pid = decrypt($_GET['p']);
+		o_log('Page Loaded','Reset password person ID: '.$pid);
+		$title = 'Password Reset';
 		$form = '<form action="#" method="post">
 					<table>
 						<tr><td>Password:* <span class="password_info">(minimum 8 characters)</span></td><td><input type="password" name="pass1"  autocomplete="off" /></td></tr>
@@ -68,6 +78,44 @@
 				if (!$error) {
 					o_log('Page Loaded','Password was reset successfully, person ID: '.$pid);
 					header('Location: /Login');
+				} else {
+					o_log('Page Loaded','Password failed to reset, person ID: '.$pid);
+					$text .= 'Password failed to reset.<br />';
+					$text .= 'Error: '.$error.'<br />';
+				}
+			}
+		} else if (isset($_GET['p'])) {
+			$pass1 = $_POST['pass1'];
+			$pass2 = $_POST['pass2'];
+			$work = true;
+			if (strlen($pass1)<1) {
+				$text .= "The Password cannot be empty.<br />";
+				$work = false;
+			}
+			if (strlen($pass1)>50) {
+				$text .= "The Password is to long.<br />";
+				$work = false;
+			}
+			// Check password length
+			if (strlen($pass1)<8 && $work) {
+				$text = "The password is not long enough.<br />";
+				$work = false;
+			}
+			// Check password equality
+			if ($pass1 === $pass2) {
+				//echo("The passwords do match.");
+			} else if ($work) {
+				$text = "The passwords do not match.<br />";
+				$work = false;
+			}
+			$pass = encryptpass($pass1);
+			if ($work) {
+				$sql = "UPDATE coaches SET reset_code='', password='$pass' where personid='$pid';";
+				$data = pg_query($conn, $sql);
+				$error = pg_last_error($conn);
+				if (!$error) {
+					o_log('Page Loaded','Password was reset successfully, person ID: '.$pid);
+					header('Location: /Profile?p='.$pid);
 				} else {
 					o_log('Page Loaded','Password failed to reset, person ID: '.$pid);
 					$text .= 'Password failed to reset.<br />';
