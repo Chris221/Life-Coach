@@ -6,10 +6,10 @@
 	include('includes/mailer.php');
 	include('includes/password.php');
 	include('includes/db.php');
-	if ($_SESSION['employeed']) {
-		header('Location: /');
-	}
 	if (isset($_GET['uid'])) {
+		if ($_SESSION['employeed']) {
+			header('Location: /');
+		}
 		$UID = $_GET['uid'];
 		$coachResult = view('coaches','reset_code='.$UID);
 		$pid = $coachResult['personid'];
@@ -19,29 +19,40 @@
 		o_log('Page Loaded','Reset password person ID: '.$pid);
 		$title = 'Forgot Password?';
 		$form = '<form action="#" method="post">
-					<table>
+					<table style="margin: auto;">
 						<tr><td>Password:* <span class="password_info">(minimum 8 characters)</span></td><td><input type="password" name="pass1"  autocomplete="off" /></td></tr>
                     	<tr><td>Confirm Password:*</td><td><input type="password" name="pass2"  autocomplete="off" /></td></tr>
 					</table>
+					<br />
                  	<input type="submit" value="Reset Password" class="button login_button" />
                  </form>';
+		
 	} else if (isset($_GET['p'])) {
 		$pid = decrypt($_GET['p']);
+		if (!$_SESSION['supervisor']) {
+			header('Location: /Profile?p='.$pid);
+		}
 		o_log('Page Loaded','Reset password person ID: '.$pid);
 		$title = 'Password Reset';
 		$form = '<form action="#" method="post">
-					<table>
+					<table style="margin: auto;">
 						<tr><td>Password:* <span class="password_info">(minimum 8 characters)</span></td><td><input type="password" name="pass1"  autocomplete="off" /></td></tr>
                     	<tr><td>Confirm Password:*</td><td><input type="password" name="pass2"  autocomplete="off" /></td></tr>
 					</table>
+					<br />
                  	<input type="submit" value="Reset Password" class="button login_button" />
                  </form>';
 	} else {
+		if ($_SESSION['employeed']) {
+			header('Location: /');
+		}
 		o_log('Page Loaded');
 		$title = 'Forgot Password?';
 		$form = '<form action="#" method="post">
-                 	Email Address:* <br />
-                 	<input type="text" name="email" class="login_input" /><br />
+					<table style="margin: auto;">
+                 		<tr><td>Email Address:*</td><td><input type="text" name="email" class="login_input" /></td></tr>
+					</table>
+					<br />
                  	<input type="submit" value="Reset Password" class="button login_button" />
                  </form>';
 	}
@@ -73,7 +84,7 @@
 			$pass = encryptpass($pass1);
 			if ($work) {
 				$sql = "UPDATE coaches SET reset_code='', password='$pass' where personid='$pid';";
-				$data = pg_query($conn, $sql);
+				$result = pg_query($conn, $sql);
 				$error = pg_last_error($conn);
 				if (!$error) {
 					o_log('Page Loaded','Password was reset successfully, person ID: '.$pid);
@@ -111,11 +122,14 @@
 			$pass = encryptpass($pass1);
 			if ($work) {
 				$sql = "UPDATE coaches SET reset_code='', password='$pass' where personid='$pid';";
-				$data = pg_query($conn, $sql);
+				//resets $conn
+				pg_close($conn);
+				include('includes/db.php');
+				$result = pg_query($conn, $sql);
 				$error = pg_last_error($conn);
 				if (!$error) {
 					o_log('Page Loaded','Password was reset successfully, person ID: '.$pid);
-					header('Location: /Profile?p='.$pid);
+					//header('Location: /Profile?p='.encypt($pid));
 				} else {
 					o_log('Page Loaded','Password failed to reset, person ID: '.$pid);
 					$text .= 'Password failed to reset.<br />';
@@ -210,26 +224,80 @@
 <title><?php echo($title); ?></title>
 </head>
     <body>
-        <nav class="navbar navbar-expand-lg navbar-dark bg-blue">
-            <a class="navbar-brand" href="/index"><img src="/logo.png" width="50" height="50" alt="Logo" /></a>
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
-                <span class="navbar-toggler-icon"></span>
-            </button>
+       <?php
+			if($_SESSION['supervisor']) {
+				echo('<nav class="navbar navbar-expand-lg navbar-dark bg-blue">
+						<a class="navbar-brand" href="/"><img src="/logo.png" width="50" height="50" alt="Logo" /></a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
 
-            <div class="collapse navbar-collapse" id="navbarTogglerDemo02">
-                <ul class="navbar-nav mr-auto mt-2 mt-lg-0">
-                </ul>
-            </div>
-        </nav>
-        <div class="login_page">
-            <div class="login">
-                <?php
-                    echo($text);
-                    echo($form);
-                ?>
-            </div>
-        </div>
+						<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+							<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+								<li class="nav-item">
+									<a class="nav-link" href="/">Home</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/Schedule">Schedule</a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/Clients">Clients</a>
+								</li>
+							</ul>
+							<!--        I changed this to align the logout to the right-->
+							<ul class="nav navbar-nav navbar-right">');
+							if ($_SESSION['supervisor']) {
+								echo('<li class="nav-item right-marigin50p">
+									<a class="nav-link" href="/NewCoach">Add New Coach</a>
+								</li>');
+							}
+					 		echo('<li class="nav-item active">
+									<a class="nav-link" href="/Profile">Profile<span class="sr-only">(current)</span></a>
+								</li>
+								<li class="nav-item">
+									<a class="nav-link" href="/Logout" >Logout</a>
+								</li>
+								<!--            <li class="nav-item">
+												<a class="nav-link disabled" href="#">Disabled</a>
+											</li>-->
+							</ul>
+							<!--        <form class="form-inline my-2 my-lg-0">
+										<input class="form-control mr-sm-2" type="search" placeholder="Search">
+										<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+									</form>-->
+						</div>
+					</nav>');
+			} else {
+				echo('<nav class="navbar navbar-expand-lg navbar-dark bg-blue">
+						<a class="navbar-brand" href="/index"><img src="/logo.png" width="50" height="50" alt="Logo" /></a>
+						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
+							<span class="navbar-toggler-icon"></span>
+						</button>
 
+						<div class="collapse navbar-collapse" id="navbarTogglerDemo02">
+							<ul class="navbar-nav mr-auto mt-2 mt-lg-0">
+							</ul>
+						</div>
+					</nav>');
+			}
+		
+		?>
+        <br />
+        <div class="container">
+			<div class = "row">
+				<div class="col-sm-12">
+					<div class="card text-center page-margin0 left right">
+						<div class="card-header title"><?php echo($title); ?></div>
+						<div class="card-body">
+							<?php
+								echo($text);
+								echo($form);
+							?>
+						</div>
+					</div>
+				</div>
+			 </div>
+		</div>
         <br/>
         <p class="footerText">
             Copyright &copy; 2017 No Rights Reserved.

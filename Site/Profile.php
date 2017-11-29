@@ -100,7 +100,7 @@
 		}
 		
 		if ($_SESSION['supervisor']) {
-			$resetpass = '<br /><a href="/ForgotPassword?p='.encrypt($pid).'">Reset</a>';
+			$resetpass = '<br /><a href="/ForgotPassword?p='.encrypt($pid).'" class="btn btn-primary">Reset</a>';
 		}
 		
 		$coachText = '
