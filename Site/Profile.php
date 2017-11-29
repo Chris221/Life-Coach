@@ -27,6 +27,7 @@
 	}
 	$changephoto = '/EditImage/?p='.encrypt($pid);
 	$edit = '/EditProfile/?p='.encrypt($pid);
+	$deleteProfile = '/DeleteProfile/?p='.encrypt($pid);
 
 	$newAppointment = '/NewAppointment?p='.encrypt($pid);
 
@@ -250,6 +251,7 @@
                         <div class="card-header title">
                             <?php echo($proTitle); ?>
 							<a href="<?php echo($newAppointment); ?>" class="btn btn-primary">New Appointment</a>
+							<a href="<?php echo($deleteProfile); ?>" class="btn btn-primary">Delete Person</a>
                         </div>
                     </div>
                 </div>
