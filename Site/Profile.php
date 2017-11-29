@@ -16,7 +16,7 @@
 		$proTitle = 'Client Profile';
 		$nTitle = "Client Notes";
 		$notelink = '/Notes/?p='.encrypt($pid);
-		$eTitle = "Client Life Events";
+		$eTitle = "Client's Life Events";
 		$eventlink = '/Events/?p='.encrypt($pid);
 	} else {
 		$own = true;
