@@ -34,31 +34,11 @@
 		$country = $_POST['country'];
 		$back = $_POST['back'];
 
-		if (!(strlen($line1) > 1)) {
-			$failed = 'Address Line 1 cannont be blank.<br />';
-		}
-		if (!(strlen($city) >= 1)) {
-			$failed = 'City cannont be blank.<br />';
-		} 
-		if (!(strlen($subdivision) >= 1)) {
-			$failed .= 'State/Provence cannont be blank.<br />';
-		} 
-		if (!(strlen($zip) >= 1)) {
-			$failed .= 'Zip Code cannont be blank.<br />';
-		} 
-		if (!(strlen($country) >= 1)) {
-			$failed .= 'Country Code cannont be blank.<br />';
-		} 
-
-		if ($failed){
-			$text = $failed.'<br />'.$text;
-		} else {
-			changeAddress($addressid,$line1,$line2,$city,$subdivision,$zip,$country,true);
-			header('Location: '.$back);
-		}
+		changeAddress($addressid,$line1,$line2,$city,$subdivision,$zip,$country);
+		header('Location: '.$back);
 	}
 
-	$text = '<form action="#" method="post"><table>
+	$text .= '<form action="#" method="post"><table>
 				<input type="hidden" name="back" value="'.$back.'" hidden />
                 <tr><td>Address:</td><td><input type="text" name="line1" autocomplete="off" value="'.$line1.'" /></td></tr>
 				<tr><td></td><td><input type="text" name="line2" autocomplete="off" value="'.$line2.'" /></td></tr>

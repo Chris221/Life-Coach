@@ -329,37 +329,25 @@
 
 	function addAddress($adressline1,$adressline2,$city,$subdivision,$zip,$country,$debug = false) {
 		include('includes/db.php');
-		$adressline1 = pg_escape_string($conn,$adressline1);
+		$adressline1 = pg_escape_string($conn,$adressline1)."'";
 		$adressline2 = "'".pg_escape_string($conn,$adressline2)."'";
-		$city = pg_escape_string($conn,$city);
-		$subdivision = pg_escape_string($conn,$subdivision);
+		$city = "'".pg_escape_string($conn,$city)."'";
+		$subdivision = "'".pg_escape_string($conn,$subdivision)."'";
 		$notCleanZip = pg_escape_string($conn,$zip);
-		$country = pg_escape_string($conn,$country);
-		$zip = cleanPhoneNumber($notCleanZip);
+		$country = "'".pg_escape_string($conn,$country)."'";
 		
-		if (!(strlen($adressline1) > 1)) {
-			return;
-		}
-		if (!(strlen($city) >= 1)) {
-			$failed = 'City cannont be blank.<br />';
-		} 
-		if (!(strlen($subdivision) >= 1)) {
-			$failed .= 'State/Provence cannont be blank.<br />';
-		} 
-		if (!(strlen($zip) >= 1)) {
-			$failed .= 'Zip Code cannont be blank.<br />';
-		} 
-		if (!(strlen($country) >= 1)) {
-			$failed .= 'Country Code cannont be blank.<br />';
-		} 
-		if ($failed) {
-			return $failed;
-		}
+		$zip = "'".cleanPhoneNumber($notCleanZip)."'";
+		
+		$adressline1 = convertEmptyToNull($adressline1);
 		$adressline2 = convertEmptyToNull($adressline2);
+		$city = convertEmptyToNull($city);
+		$subdivision = convertEmptyToNull($subdivision);
+		$zip = convertEmptyToNull($zip);
+		$country = convertEmptyToNull($country);
 		
 		pg_close($conn);
 		include('includes/db.php');
-		$sql = "INSERT INTO addresses(adressline1, adressline2, city, subdivision, zip, country) VALUES ('$adressline1',$adressline2,'$city','$subdivision','$zip','$country');";
+		$sql = "INSERT INTO addresses(adressline1, adressline2, city, subdivision, zip, country) VALUES ($adressline1,$adressline2,$city,$subdivision,$zip,$country);";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -388,19 +376,25 @@
 
 	function changeAddress($addressid,$adressline1,$adressline2,$city,$subdivision,$zip,$country,$debug = false) {
 		include('includes/db.php');
-		$adressline1 = pg_escape_string($conn,$adressline1);
+		$adressline1 = "'".pg_escape_string($conn,$adressline1)."'";
 		$adressline2 = "'".pg_escape_string($conn,$adressline2)."'";
-		$city = pg_escape_string($conn,$city);
-		$subdivision = pg_escape_string($conn,$subdivision);
+		$city = "'".pg_escape_string($conn,$city)."'";
+		$subdivision = "'".pg_escape_string($conn,$subdivision)."'";
 		$notCleanZip = pg_escape_string($conn,$zip);
-		$country = pg_escape_string($conn,$country);
-		$zip = cleanPhoneNumber($notCleanZip);
+		$country = "'".pg_escape_string($conn,$country)."'";
 		
+		$zip = "'".cleanPhoneNumber($notCleanZip)."'";
+		
+		$adressline1 = convertEmptyToNull($adressline1);
 		$adressline2 = convertEmptyToNull($adressline2);
+		$city = convertEmptyToNull($city);
+		$subdivision = convertEmptyToNull($subdivision);
+		$zip = convertEmptyToNull($zip);
+		$country = convertEmptyToNull($country);
 		
 		pg_close($conn);
 		include('includes/db.php');
-		$sql = "UPDATE addresses SET adressline1='$adressline1', adressline2=$adressline2, city='$city', subdivision='$subdivision', zip='$zip', country='$country' WHERE addressid='$addressid';";
+		$sql = "UPDATE addresses SET adressline1=$adressline1, adressline2=$adressline2, city=$city, subdivision=$subdivision, zip=$zip, country=$country WHERE addressid='$addressid';";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -676,7 +670,10 @@
 			if (strlen($address['adressline2']) > 0) {
 				$returnAddress .= $address['adressline2'].'<br />';
 			}
-			$returnAddress .= $address['city'].', '.$address['subdivision'].' '.$address['zip'].', '.$address['country'].'<br />'.'<a href="/Address?a='.encrypt($aid).'" class="btn btn-primary">Edit Address</a>';
+			$returnAddress .= $address['city'].', '.$address['subdivision'].' '.$address['zip'].' '.$address['country'].'<br />'.'<a href="/Address?a='.encrypt($aid).'" class="btn btn-primary">Edit Address</a>';
+			if (!isset($address['adressline1']) || !isset($address['city']) || !isset($address['subdivision']) || !isset($address['zip']) || !isset($address['country'])) {
+				$returnAddress = 'This address is not complete. Please correct it.<br />'.'<a href="/Address?a='.encrypt($aid).'" class="btn btn-primary">Edit Address</a>';
+			}
 		}
 		
 		return $returnAddress;
@@ -698,6 +695,9 @@
 		if (strlen($line1) > 1) {
 			$address = "$line1<br />$cLine2
 						$city, $subdivision $zip $country<br />".'<a href="/Address?a='.encrypt($aid).'" class="btn btn-primary">Edit Address</a>';
+			if (!isset($address['adressline1']) || !isset($address['city']) || !isset($address['subdivision']) || !isset($address['zip']) || !isset($address['country'])) {
+				$returnAddress = 'This address is not complete. Please correct it.<br />'.'<a href="/Address?a='.encrypt($aid).'" class="btn btn-primary">Edit Address</a>';
+			}
 		}
 		return $address;
 	}
