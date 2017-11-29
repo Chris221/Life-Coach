@@ -1,7 +1,7 @@
 <?php
 	include('includes/log.php');
 	include('includes/session.php');
-	if ($_SESSION['personid']) {
+	if ($_SESSION['employeed']) {
 		header('Location: /');
 	}
 	o_log('Page Loaded');
@@ -103,6 +103,8 @@
 <!-- For Mobile scaling -->
 <meta name="viewport" content="width=device-width, user-scalable=no" />
 <meta name="HandheldFriendly" content="true">
+        <!-- BrowserIcon -->
+        <link rel="icon" type="image/ico" href="/logo.png">
 <!-- Latest compiled and minified CSS -->
 <link type="text/css" rel="stylesheet" href="/bootstrap/4.0.0/css/bootstrap.min.css">
 <!-- jQuery library -->
