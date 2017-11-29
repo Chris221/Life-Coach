@@ -31,12 +31,6 @@
 					}
 				} else {
 					$upload_image_text .= "File is not an image.<br />";
-					$uploadOk = 0;
-				}
-				$target_file = basename($fileName);
-				$imageFileType = pathinfo($target_file,PATHINFO_EXTENSION);
-				if($imageFileType != "jpg" && $imageFileType != "png" && $imageFileType != "jpeg" && $imageFileType != "gif" && $uploadOk) {
-					$upload_image_text .=  "Sorry, only JPG, PNG, & GIF files are allowed.<br />";
 					return $upload_image_text;
 				}
 			}
