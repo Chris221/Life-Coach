@@ -17,6 +17,7 @@
 		$nTitle = "Client Notes";
 		$notelink = '/Notes/?p='.encrypt($pid);
 	} else {
+		$own = true;
 		$pid = $_SESSION['personid'];
 		o_log('Page Loaded','Own Profile');
 		$pTitle =  'Your Photo';
@@ -101,6 +102,9 @@
 		
 		if ($_SESSION['supervisor']) {
 			$resetpass = '<br /><a href="/ForgotPassword?p='.encrypt($pid).'" class="btn btn-primary">Reset</a>';
+		}
+		if ($own) {
+			$resetpass = '<br /><a href="/ForgotPassword?p='.encrypt($pid).'" class="btn btn-primary">Change</a>';
 		}
 		
 		$coachText = '
