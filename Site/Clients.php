@@ -127,20 +127,11 @@
                 </div>
             </div>
             <div class="row">
-                <div class="col-md-7">
-                    <div class="card text-center page-margin5 left">
+                <div class="col-md-12">
+                    <div class="card text-center page-margin0 left">
                         <div class="card-header title"> Client List </div>
                         <div class="card-body scrollBox">
                            <?php echo($clientList); ?>
-                        </div>
-                    </div>
-                </div>
-
-                <div class="col-sm-5">
-                    <div class="card text-center page-margin5 right">
-                        <div class="card-header title">Client </div>
-                        <div class="card-body">
-                            Shortened Client Profile
                         </div>
                     </div>
                 </div>
