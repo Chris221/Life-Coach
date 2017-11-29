@@ -55,11 +55,11 @@
 				});
 				$('#today').fullCalendar({
 					header: {
-						left: '',
-						center: 'prev today next',
-						right: ''
+						left: 'prev today next',
+						center: '',
+						right: 'agendaDay,listWeek'
 					},
-					scrollTime: '<?php echo(date('H:i:s', strtotime('-2 hour')))?>',
+					scrollTime: '<?php echo(date('H:i:s', strtotime('-7 hour')))?>',
 					defaultView: 'agendaDay',
 					navLinks: false,
 					events: <?php echo($eventFeed); ?>

@@ -288,7 +288,7 @@
                     <tr><td>&thinsp;</td><td>&thinsp;</td></tr>
                     
                     <tr><td><h3>Coach Information</h3></td><td>&thinsp;</td></tr>
-                    <tr><td>supervisor:</td><td><input type="checkbox" name="supervisor" autocomplete="off" /></td></tr>
+                    <tr><td>Supervisor:</td><td><input type="checkbox" name="supervisor" autocomplete="off" /></td></tr>
                     <tr><td>Password:* <span class="password_info">(minimum 8 characters)</span></td><td><input type="password" name="pass1"  autocomplete="off" /></td></tr>
                     <tr><td>Confirm Password:*</td><td><input type="password" name="pass2"  autocomplete="off" /></td></tr>
                     <tr><td>&thinsp;</td><td>&thinsp;</td></tr>

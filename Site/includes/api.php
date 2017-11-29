@@ -470,7 +470,9 @@
 		$scheduledby = $_SESSION['coachid'];
 		$coachid = $_SESSION['coachid'];
 		
-		$sql = "INSERT INTO schedule(time_start, addressid, personid, coachid, scheduledby, visitid, time_end) VALUES ('$start',$addressid,'$personid','$coachid','$scheduledby',$visitid,$end);";
+		$date = date("Y-m-d H:i:s");
+		
+		$sql = "INSERT INTO schedule(time_start, addressid, personid, coachid, scheduledby, visitid, time_end, date_added) VALUES ('$start',$addressid,'$personid','$coachid','$scheduledby',$visitid,$end,'$date');";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
