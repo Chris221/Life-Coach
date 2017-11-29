@@ -1,8 +1,12 @@
 <?php
 	function o_log($Action,$Description = '',$debug = false) {
+		//echo ('o_log loaded<br />');
 		include('includes/db.php');
 		
 		$personid = $_SESSION['personid'];
+		if ($personid == '') {
+			$personid = '-1';
+		}
 		$Page = $_SERVER['REQUEST_URI'];
 		$date = date("Y-m-d H:i:s");
 		$IP = $_SERVER['REMOTE_ADDR'];

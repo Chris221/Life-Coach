@@ -2,13 +2,16 @@
 	include('includes/log.php');
 	include('includes/session.php');
 	include('includes/api.php');
+	include('includes/protection.php');
 	include('includes/mailer.php');
+	include('includes/password.php');
+	include('includes/db.php');
 	if ($_SESSION['employeed']) {
 		header('Location: /');
 	}
 	if (isset($_GET['uid'])) {
 		$UID = $_GET['uid'];
-		$coachResult  = view('coaches','reset_code='.$UID);
+		$coachResult = view('coaches','reset_code='.$UID);
 		$pid = $coachResult['personid'];
 		if (!isset($pid)) {
 			header('Location: /Login');
@@ -32,8 +35,6 @@
                  	<input type="submit" value="Reset Password" class="button login_button" />
                  </form>';
 	}
-
-	include('includes/db.php');
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
 		if (isset($_GET['uid'])) {
 			$pass1 = $_POST['pass1'];
@@ -59,7 +60,6 @@
 				$text = "The passwords do not match.<br />";
 				$work = false;
 			}
-			include('includes/password.php');
 			$pass = encryptpass($pass1);
 			if ($work) {
 				$sql = "UPDATE coaches SET reset_code='', password='$pass' where personid='$pid';";
@@ -85,10 +85,13 @@
 			// Check for valid email
 			if (!filter_var($email, FILTER_VALIDATE_EMAIL) === false) {
 			  //echo("$email is a valid email address.");
-			} else if (!strlen(email)<1 && $emailislong) {
+			} else if (!strlen($email)<1 && $emailislong) {
 			  $text .= "\"$email\" is not a valid email address.<br />";
 			  $email = '';
 			}
+			//reset $conn
+			pg_close($conn);
+			include('includes/db.php');
 			$email = pg_escape_string($conn,$email);
 
 			function generateRandomString($length = 10) {
@@ -102,25 +105,31 @@
 			}
 			//used to reset the pass
 			$UID = generateRandomString();
+			
+			$accountsResult = view('accounts','email='.$email);
+			$pid = $accountsResult['personid'];
+			$sql = "UPDATE coaches SET reset_code='$UID' WHERE personid='$pid';";
 
-			$sql = "UPDATE coaches SET reset_code='$UID' WHERE email='$email';";
-
-			$data = pg_query($conn, $sql);
+			$result = pg_query($conn, $sql);
 			$error = pg_last_error($conn);
 			if (!$error) {
-				$subject = "ABS Life Coach - Reset Password";
-				$body = '
-						<html>
-						<head>
-						  <title>ABS Life Coach - Reset Password</title>
-						</head>
-						<body>
-						  <p>Password reset for '.$email.'.</p>
+				$subject = "ABS Life Coach";
+				$body = '<p>Password reset for '.$email.'.</p>
 						  <p>Click here to reset your password <a href="https://abslifecoach.reev.us/ForgotPassword?uid='.$UID.'">https://abslifecoach.reev.us/ForgotPassword?uid='.$UID.'</a> or copy and paste this into your browser.</p><br />
-						  <p>Do not reply to this email. It will not be checked.</p>
-						</body>
-						</html>';
-				my_mailer($email, $subject, $body);
+						  <p>Do not reply to this email. It will not be checked.</p>';
+				$mail = my_mailer($email, $subject, $body);
+				if ($mail) {
+					$text = 'Mail successfully sent.<br />';
+					$form = 'Please check your email to reset your password.';
+				} else {
+					$form = 'Please check your email to reset your password.';
+				}
+			} else {
+				echo('Error: '.$error.'<br />');
+				echo('email: '.$email.'<br />');
+				echo('sql: '.$sql.'<br />');
+				echo('UID: '.$UID.'<br />');
+				echo('result: '.$result.'<br />');
 			}
 		}
 		if(strlen($text) > 0) {
