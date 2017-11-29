@@ -63,6 +63,10 @@
 	if ($coachResult['employeed'] != 'f') {
 		$employeed = 'checked';
 	}
+	
+	if ($personResult['deceased'] != 'f') {
+		$deceased = 'checked';
+	}
 
 	if ($coachResult['coachid']) {
 		$coachInfo = '<tr><td><h3>Coach Information</h3></td><td>&thinsp;</td></tr>
@@ -108,6 +112,11 @@
 			$employeed = 'true';
 		} else {
 			$employeed = 'false';
+		}
+		if(isset($_POST['deceased'])) {
+			$deceased = 'true';
+		} else {
+			$deceased = 'false';
 		}
 
 		pg_close($conn);
@@ -163,7 +172,7 @@
 			$email = strtolower($email);
 			$correctDOB = date("Y-m-d", strtotime($dob));
 			
-			changeProfile($pid, $firstname, $lastname, $email, $cell, $gender, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $middlename, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visit_time_preference_start, $visit_time_preference_end, $call_time_preference_start, $call_time_preference_end, $goals, $needs, $selfawareness, $supervisor, $employeed, true);
+			changeProfile($pid, $firstname, $lastname, $email, $cell, $gender, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $middlename, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visit_time_preference_start, $visit_time_preference_end, $call_time_preference_start, $call_time_preference_end, $goals, $needs, $selfawareness, $supervisor, $employeed, $deceased, true);
 			
 			header('Location: '.$back);
 		}
@@ -273,6 +282,7 @@
                             <tr><td>Cell Number:*</td><td><input type="number" name="cell" autocomplete="off" value="'.$cell.'" /></td></tr>
                             <tr><td>Home Number:</td><td><input type="number" name="home" autocomplete="off" value="'.$home.'" /></td></tr>
                             <tr><td>Date of Birth:</td><td><input type="date" name="dob" autocomplete="off" value="'.$dob.'" /></td></tr>
+                    		<tr><td>Deceased:</td><td><input type="checkbox" name="deceased" autocomplete="off" '.$deceased.' /></td></tr>
 							
                             <tr><td>&thinsp;</td><td>&thinsp;</td></tr>
 							'.$coachInfo.'

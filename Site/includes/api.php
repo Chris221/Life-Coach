@@ -208,7 +208,7 @@
 		$address = convertEmptyToNull($address);
 		$photoid = convertEmptyToNull($photoid);
 		
-		$sql = "INSERT INTO persons (photoid, prefix, first_name, last_name, suffix, email, cell, home, work, extension, date_of_birth, addressid, middle_name, companyid, gender) VALUES ($photoid, '$ePrefix', '$eFirstName', '$eLastName', '$eSuffix', '$eEmail', '$eCell', $eHome, $eWork, $eExtension, '$dob', $address, '$eMiddleName','$companyid','$eGender');";
+		$sql = "INSERT INTO persons (photoid, prefix, first_name, last_name, suffix, email, cell, home, work, extension, date_of_birth, addressid, middle_name, companyid, gender, deceased, deleted) VALUES ($photoid, '$ePrefix', '$eFirstName', '$eLastName', '$eSuffix', '$eEmail', '$eCell', $eHome, $eWork, $eExtension, '$dob', $address, '$eMiddleName','$companyid','$eGender',false,false);";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -591,6 +591,21 @@
 		}
 		pg_close($conn);
 	}
+
+	function markPersonAsDeleted($pid,$debug = false) {
+		include('includes/db.php');
+		$sql = 'UPDATE persons SET deleted=true WHERE personid='.$pid.';';
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+	}
 	
 	function cleanPhoneNumber($number) {
 		//cleans the phone number of extras
@@ -702,7 +717,7 @@
 		return $address;
 	}
 
-	function changeProfile($pid, $firstname, $lastname, $email, $cell, $gender, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $middlename, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visitpreferencestart, $visitpreferenceend, $callpreferencestart, $callpreferenceend, $goals, $needs, $selfawareness, $supervisor, $employeed, $debug = false) {
+	function changeProfile($pid, $firstname, $lastname, $email, $cell, $gender, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $middlename, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visitpreferencestart, $visitpreferenceend, $callpreferencestart, $callpreferenceend, $goals, $needs, $selfawareness, $supervisor, $employeed, $deceased, $debug = false) {
 		include('includes/db.php');
 		$eFirstName = pg_escape_string($conn, $firstname);
 		$eLastName = pg_escape_string($conn, $lastname);
@@ -720,7 +735,7 @@
 		$eWork = convertEmptyToNull($eWork);
 		$eExtension = convertEmptyToNull($eExtension);
 		
-		$sql = "UPDATE persons SET prefix='$ePrefix', first_name='$eFirstName', last_name='$eLastName', suffix='$eSuffix', email='$eEmail', cell='$eCell', home=$eHome, work=$eWork, extension=$eExtension, date_of_birth='$correctDOB', middle_name='$eMiddleName', gender='$eGender' WHERE personid='$pid';";
+		$sql = "UPDATE persons SET prefix='$ePrefix', first_name='$eFirstName', last_name='$eLastName', suffix='$eSuffix', email='$eEmail', cell='$eCell', home=$eHome, work=$eWork, extension=$eExtension, date_of_birth='$correctDOB', middle_name='$eMiddleName', gender='$eGender', deceased=$deceased::boolean WHERE personid='$pid';";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);

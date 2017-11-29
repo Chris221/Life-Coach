@@ -134,6 +134,7 @@
 				include('includes/password.php');
 				$pass = encryptpass($pass1);
 				$companyid = $_SESSION['companyid'];
+				$address = addAddress($line1,$line2,$city,$subdivision,$zip,$country);
 				$pid = addPerson($firstname,$lastname,$email1,$cell,$gender,$companyid,$photoid,$prefix,$suffix,$home,$worknumber,$extension,$correctDOB,$address,$middlename);
 				$output = true;
 				if ($pid && $output) {
@@ -154,7 +155,8 @@
 					o_log('Coach Add Failed');
 				}
 				$time = date("H:i:s", strtotime('12:00:00'));
-				$clientID = addClient($pid,$workaddress,$workcompany,$worktitle,$workfield,$favoritebook,$favoritefood,$time,$time,$time,$time,$goals,$needs,$cid);
+				$workaddress = addAddress($line1,$line2,$city,$subdivision,$zip,$country);
+				$clientID = addClient($pid,$workaddress,$workcompany,$worktitle,$workfield,$favoritebook,$favoritefood,$time,$time,$time,$time,$goals,$needs,$selfawareness,$cid);
 				if ($clientID && $output) {
 					echo("Client was added succesfully!<br />");
 					echo("Client ID:".$clientID."<br />");

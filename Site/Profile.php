@@ -67,6 +67,11 @@
 	$goals = $clientResult['goals'];
 	$needs = $clientResult['needs'];
 	$gender = $personResult['gender'];
+	if ($personResult['deceased'] != 'f') {
+		$deceased = 'Yes';
+	} else  {
+		$deceased = 'No';
+	}
 	//echo('pid: '.$pid.'<br />');
 	//echo('cid: '.$clientid.'<br />');
 	if ($photoID) {
@@ -88,7 +93,7 @@
 			$employeed = 'No';
 		}
 		if (isset($coachResult['last_active'])) {
-			$lastActive = date('m/d/Y', strtotime($coachResult['last_active']));
+			$lastActive = date('m/d/Y g:i a', strtotime($coachResult['last_active']));
 		} else {
 			$lastActive = 'Never';
 		}
@@ -128,6 +133,7 @@
 		<tr><td>Home Phone:</td><td><a href="tel:+:'.$home.'" target="_blank">'.$home.'</a></td></tr>
 		<tr><td>Date of Birth:</td><td>'.$dob.'</td></tr>
 		<tr><td>Gender:</td><td>'.$gender.'</td></tr>
+		<tr><td>Deceased:</td><td>'.$deceased.'</td></tr>
 		<tr><td>Home Address:</td><td>'.$homeAddress.'</td></tr>
 		<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
 		
