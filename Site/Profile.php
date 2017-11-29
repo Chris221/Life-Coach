@@ -16,6 +16,8 @@
 		$proTitle = 'Client Profile';
 		$nTitle = "Client Notes";
 		$notelink = '/Notes/?p='.encrypt($pid);
+		$eTitle = "Client Events";
+		$eventlink = '/Events/?p='.encrypt($pid);
 	} else {
 		$own = true;
 		$pid = $_SESSION['personid'];
@@ -25,6 +27,8 @@
 		$proTitle = 'Your Profile';
 		$nTitle = "Your Notes";
 		$notelink = '/Notes';
+		$eTitle = "Your Events";
+		$eventlink = '/Events';
 	}
 	$changephoto = '/EditImage/?p='.encrypt($pid);
 	$edit = '/EditProfile/?p='.encrypt($pid);
@@ -173,9 +177,8 @@
 		</table>
 		';
 
-	if (!$notes = viewNote($clientid)) {
-		$notes = "Currently No Notes";
-	}
+	$notes = viewNote($clientid);
+	$events = viewEvent($clientid);
 
 	if ($companyID <> $_SESSION['companyid']) {
 		//echo('CompanyID: '.$companyID.'<br />');
@@ -298,17 +301,32 @@
                         	<span class="marginAuto inline-block"><?php echo($itext); ?></span>
                         </div>
                     </div>
-                    <div class="card text-center page-margin5 right">
-                        <div class="card-header title">
-							<?php echo($nTitle); ?>
-                      		<a href="<?php echo($notelink); ?>" class="btn btn-primary">Add a Note</a>
-                        </div>
-                        <div class="card-body">
-                        	<span class="marginAuto inline-block"><?php echo($notes); ?></span>
-                        </div>
-                    </div>
                 </div>
             </div>
+			<div class="row">
+				<div class="col-sm-6">
+				<div class="card text-center page-margin5 left">
+					<div class="card-header title">
+						<?php echo($eTitle); ?>
+						<a href="<?php echo($eventlink); ?>" class="btn btn-primary">Add an Event</a>
+					</div>
+					<div class="card-body">
+						<span class="marginAuto inline-block"><?php echo($events); ?></span>
+					</div>
+				</div>
+				</div>
+				<div class="col-sm-6">
+				<div class="card text-center page-margin5 right">
+					<div class="card-header title">
+						<?php echo($nTitle); ?>
+						<a href="<?php echo($notelink); ?>" class="btn btn-primary">Add a Note</a>
+					</div>
+					<div class="card-body">
+						<span class="marginAuto inline-block"><?php echo($notes); ?></span>
+					</div>
+				</div>
+				</div>
+			</div>
         </div>
 
         <br/>

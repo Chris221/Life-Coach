@@ -327,6 +327,49 @@
 		return $last_insert_id;
 	}
 
+	function addEvent($pid,$name,$date,$description,$clientid,$coachid,$photoid = null,$debug = false) {
+		include('includes/db.php');
+		$name = pg_escape_string($conn,$name);
+		$date = pg_escape_string($conn,$date);
+		$description = pg_escape_string($conn,$description);
+		$photoid = "'".$photoid."'";
+		
+		$photoid = convertEmptyToNull($photoid);
+		
+		$dateNow = date("Y-m-d H:i:s");
+		
+		$sql = "INSERT INTO events(clientid, photoid, coachid, name, description, date, date_added) VALUES ('$clientid', $photoid, '$coachid', '$name', '$description', '$date', '$dateNow');";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('clientid: '.$clientid.'<br />');
+				echo('photoid: '.$photoid.'<br />');
+				echo('coachid: '.$coachid.'<br />');
+				echo('name: '.$name.'<br />');
+				echo('description: '.$description.'<br />');
+				echo('date: '.$date.'<br />');
+				echo('date_added: '.$dateNow.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		
+		//Get row
+		$insert_query = pg_query($conn,"SELECT lastval();");
+		$insert_row = pg_fetch_row($insert_query);
+		$last_insert_id = $insert_row[0];
+		
+		if ($pid) {
+			$return = '?p='.$pid;
+		}
+		
+		pg_close($conn);
+		header('Location: /Profile'.$return);
+		return $last_insert_id;
+	}
+
 	function addAddress($adressline1,$adressline2,$city,$subdivision,$zip,$country,$debug = false) {
 		include('includes/db.php');
 		$adressline1 = "'".pg_escape_string($conn,$adressline1)."'";
@@ -575,13 +618,68 @@
 			$notes .= '<div class="inline-block"><span class="notesDate">'.$date.'</span>
                             <a href="/Notes?n='.$nid.'" class="btn btn-primary">Delete</a></div>';
 		}
-		
+		if (!$notes) {
+			$notes = "Currently No Notes";
+		}
 		return $notes;
+	}
+
+	function viewEvent($clientid,$debug = false) {
+		include('includes/db.php');
+		$sql = 'SELECT * FROM events WHERE clientid='.$clientid.' AND deleted IS NULL ORDER BY Date_Added ASC;';
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('<br />Error! (View Notes)<br />');
+				echo('Client ID: '.$clientid.'<br />');
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+		
+		while ($row = pg_fetch_assoc($result)) {
+			if (strlen($events) > 0) {
+				$events .= '<br /><br />';
+			}
+			$eid = $row['eventid'];
+			$name = $row['name'];
+			$description = $row['description'];
+			$date = date('m/d/Y g:i A', strtotime($row['date']));
+			$dateAdded = readableDate($row['date_added']);
+			
+			$events .= '<div class="inline-block" id="'.$eid.'">Name: '.$name.'<br />'
+															.'Date: '.$date.'<br />'
+						.$description.'</div><br />';
+			$events .= '<div class="inline-block"><span class="notesDate">'.$dateAdded.'</span>
+                            <a href="/Events?e='.$eid.'" class="btn btn-primary">Delete</a></div>';
+		}
+		if (!$events) {
+			$events = "Currently No Events";
+		}
+		return $events;
 	}
 
 	function markNoteAsDeleted($nid,$debug = false) {
 		include('includes/db.php');
 		$sql = 'UPDATE notes SET deleted=true WHERE noteid='.$nid.';';
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+	}
+
+	function markEventAsDeleted($eid,$debug = false) {
+		include('includes/db.php');
+		$sql = 'UPDATE events SET deleted=true WHERE eventid='.$eid.';';
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
