@@ -92,8 +92,8 @@
 		$clientName = addStrTogether($clientName,$result['last_name']);
 		$clientName = addStrTogether($clientName,$result['suffix']);
 		
-		if ($result['emergency']) {
-			$checked = 'checked';
+		if ($result['emergency'] == 't') {
+			$checked = ' checked';
 		}
 		$option = $result['type'];
 		if ($option == 'Phone') {

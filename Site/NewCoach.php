@@ -188,7 +188,7 @@
 <!-- popper -->
 <script type="text/javascript" src="https://unpkg.com/popper.js@1.12.9/dist/umd/popper.js"></script>
 <!-- Latest compiled JavaScript -->
-<script type="text/javascript" src="/bootstrap/4.0.0/js/bootstrap.min.js"></script>\
+<script type="text/javascript" src="/bootstrap/4.0.0/js/bootstrap.min.js"></script>
 <!-- Our CSS -->
 <link type="text/css" rel="stylesheet" href="/css/life-coach.css">
 <title><?php echo($title); ?></title>

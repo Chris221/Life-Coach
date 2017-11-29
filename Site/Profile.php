@@ -95,7 +95,7 @@
 			$employeed = 'No';
 		}
 		if (isset($coachResult['last_active'])) {
-			$lastActive = date('m/d/Y g:i a', strtotime($coachResult['last_active']));
+			$lastActive = readableDate($coachResult['last_active']);
 		} else {
 			$lastActive = 'Never';
 		}
@@ -298,12 +298,8 @@
                     </div>
                     <div class="card text-center page-margin5 right">
                         <div class="card-header title">
-							<span class="col-sm-1.75">
-							   <a href="<?php echo($notelink); ?>" class="btn btn-primary">Add a Note</a>
-							</span>
-							<span class="col-sm-4">
-								<?php echo($nTitle); ?>
-                       		</span>
+							<?php echo($nTitle); ?>
+                      		<a href="<?php echo($notelink); ?>" class="btn btn-primary">Add a Note</a>
                         </div>
                         <div class="card-body">
                         	<span class="marginAuto inline-block"><?php echo($notes); ?></span>

@@ -7,7 +7,7 @@
 		header('Location: /Login');
 	}
 	
-	$back = backButton();
+	$back = '/Schedule';
 
 	if (isset($_GET['a'])) {
 		$appointmentID = $_GET['a'];
@@ -16,13 +16,13 @@
 		$edit = '/NewAppointment?a='.$appointmentID;
 		if ($_GET['d'] == "yes") {
 			if (markAsDeleted($appointmentID)) {
-				header('Location: /Schedule');
+				header('Location: '.$back);
 			} else {
 				header('Location: /Appointments?a='.$appointmentID);
 			}
 		}
 	} else {
-		header('Location: /Schedule');
+		header('Location: '.$back);
 	}
 
 	$result = view('appointments','scheduleid='.$appointmentID);
@@ -38,12 +38,6 @@
 	$type = $result['type'];
 	$reason = $result['reason'];
 	$addressid = $result['addressid'];
-	$line1 = $result['adressline1'];
-	$line2 = $result['adressline2'];
-	$city = $result['city'];
-	$subdivision = $result['subdivision'];
-	$zip = $result['zip'];
-	$country = $result['country'];
 	$personid = $result['personid'];
 	$coachid = $result['coachid'];
 	$emergency = $result['emergency'];
@@ -55,12 +49,10 @@
 	$coachName = addStrTogether($coachName,$coachResult['last_name']);
 	$coachName = addStrTogether($coachName,$coachResult['suffix']);
 
-	$address = formatAddress($addressid,$line1,$line2,$city,$subdivision,$zip,$country);
-	if (strlen($address) > 1) {
-		$addressOutput = '<tr><td>Address:</td><td>'.$address.'</td></tr>';
-	}
+	$address = getAddress($addressid);
+	$addressOutput = '<tr><td>Address:</td><td>'.$address.'</td></tr>';
 
-	if ($emergency) {
+	if ($emergency == 't') {
 		$emergency = 'Yes';
 	} else {
 		$emergency = 'No';

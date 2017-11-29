@@ -329,7 +329,7 @@
 
 	function addAddress($adressline1,$adressline2,$city,$subdivision,$zip,$country,$debug = false) {
 		include('includes/db.php');
-		$adressline1 = pg_escape_string($conn,$adressline1)."'";
+		$adressline1 = "'".pg_escape_string($conn,$adressline1)."'";
 		$adressline2 = "'".pg_escape_string($conn,$adressline2)."'";
 		$city = "'".pg_escape_string($conn,$city)."'";
 		$subdivision = "'".pg_escape_string($conn,$subdivision)."'";
@@ -527,7 +527,7 @@
 			}
 		}
 		
-		$sql = "UPDATE visits SET date='$start', type='$type', reason='$reason', emergency='$emergency' WHERE visitid=$vid;";
+		$sql = "UPDATE visits SET date='$start', type='$type', reason='$reason', emergency=$emergency WHERE visitid=$vid;";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
@@ -699,8 +699,10 @@
 	}
 
 	function readableDate($date) {
-		$cleanDate = date('m/d/Y g:i A', strtotime($date));
-		return $cleanDate;
+		$UTC = date_create($date, timezone_open('UTC'));
+		$EST = date_timezone_set($UTC, timezone_open('America/New_York'));
+		$date = date_format($EST, 'm/d/Y g:i A');
+		return $date;
 	}
 
 	function formatAddress($aid,$line1,$line2,$city,$subdivision,$zip,$country) {
