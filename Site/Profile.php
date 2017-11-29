@@ -55,6 +55,7 @@
 
 	$workCompany = $clientResult['work_company'];
 	$clientid = $clientResult['clientid'];
+	$lastContacted = mostRecentTimeContacted($clientid);
 	$cid = $clientResult['coachid'];
 	$workAddress = getAddress($clientResult['work_address']);
 	$workTitle = $clientResult['work_title'];
@@ -129,6 +130,7 @@
 		$coachText = '
 		<tr><td><h3>Coach Information</h3></td></tr>
 		<tr><td>Coach:</td><td>'.$cName.'</td></tr>
+		<tr><td>Last Contacted:</td><td>'.$lastContacted.'</td></tr>
 		<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
 		';
 	}

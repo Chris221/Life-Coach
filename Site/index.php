@@ -10,6 +10,8 @@
 	$title = 'Home';
 
 	$eventFeed = viewSchedule();
+
+	$mostRecentlyContacted = mostRecentContact($_SESSION['coachid']);
 ?>
 <!doctype html>
 <html>
@@ -147,7 +149,7 @@
                        <div class="card text-center page-margin5 right">
                         <div class="card-header title"> Recent Contact</div>
                         <div class="card-body">
-                            <h5 class="card-title">Information regarding the most recent client contact will appear here.</h5>
+                        	<?php echo($mostRecentlyContacted); ?>
                         </div>
                     </div>
                 </div>

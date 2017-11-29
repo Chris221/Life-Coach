@@ -820,4 +820,81 @@
 		}
 	}
 
+	function mostRecentTimeContacted($clientid,$debug = false) {
+		//returns time a client was contacted 
+		include('includes/db.php');
+		$sql = "select date_added as date from events where clientid='$clientid' AND date_added <= now()
+				union
+				select date_added as date from notes where clientid='$clientid' AND date_added <= now()
+				union
+				select date_added as date from schedule_client where clientid='$clientid' AND date_added <= now()
+				order by date desc
+				limit 1;";
+		$result = pg_query($conn, $sql);
+		$data = pg_fetch_assoc($result);
+		$dateRaw = $data['date'];
+		if (!isset($dateRaw)) {
+			$date = 'Never Contacted';
+		} else {
+			$date = readableDate($dateRaw);
+		}
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('date raw: '.$dateRaw.'<br />');
+				echo('date: '.$date.'<br />');
+				echo('clientid: '.$clientid.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+		return $date;
+	}
+
+	function mostRecentContact($coachid,$debug = false) {
+		//returns most recently contacted clientid 
+		include('includes/db.php');
+		include('../protection.php');
+		$sql = "select date_added as date, clientid from events where coachid='1' AND date_added <= now()
+				union
+				select date_added as date, clientid from notes where coachid='1' AND date_added <= now()
+				union
+				select date_added as date, clientid from schedule_client where coachid='1' AND date_added <= now()
+				order by date desc
+				limit 1;";
+		$result = pg_query($conn, $sql);
+		$data = pg_fetch_assoc($result);
+		$clientid = $data['clientid'];
+		$date = readableDate($data['date']);
+		if (!isset($clientid)) {
+			$r = 'None';
+		} else {
+			$clientResult = view('clients','clientid='.$clientid);
+			$pid = $clientResult['personid'];
+			$personResult = view('persons','personid='.$pid);
+
+			$name = addStrTogether($personResult['prefix'],$personResult['first_name']);
+			$name = addStrTogether($name,$personResult['middle_name']);
+			$name = addStrTogether($name,$personResult['last_name']);
+			$name = addStrTogether($name,$personResult['suffix']);
+			$r = '<a href="/Profile?p='.encrypt($pid).'">'.$name.'</a><br />'.$date;
+		}
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('coachid: '.$coachid.'<br />');
+				echo('clientid: '.$clientid.'<br />');
+				echo('date: '.$date.'<br />');
+				echo('return: '.$r.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+		return $r;
+	}
+
 ?>
