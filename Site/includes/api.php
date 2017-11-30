@@ -955,11 +955,11 @@
 		//returns most recently contacted clientid 
 		include('includes/db.php');
 		include('../protection.php');
-		$sql = "select date_added as date, clientid from events where coachid='1' AND date_added <= now()
+		$sql = "select date_added as date, clientid from events where coachid='$coachid' AND date_added <= now()
 				union
-				select date_added as date, clientid from notes where coachid='1' AND date_added <= now()
+				select date_added as date, clientid from notes where coachid='$coachid' AND date_added <= now()
 				union
-				select date_added as date, clientid from schedule_client where coachid='1' AND date_added <= now()
+				select date_added as date, clientid from schedule_client where coachid='$coachid' AND date_added <= now()
 				order by date desc
 				limit 1;";
 		$result = pg_query($conn, $sql);
