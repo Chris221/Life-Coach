@@ -130,7 +130,7 @@
 				$error = pg_last_error($conn);
 				if (!$error) {
 					o_log('Page Loaded','Password was reset successfully, person ID: '.$pid);
-					//header('Location: /Profile?p='.encypt($pid));
+					header('Location: /Profile?p='.encrypt($pid));
 				} else {
 					o_log('Page Loaded','Password failed to reset, person ID: '.$pid);
 					$text .= 'Password failed to reset.<br />';
@@ -226,7 +226,7 @@
 </head>
     <body>
        <?php
-			if($_SESSION['supervisor'] || ($pid == $_SESSION['personid'])) {
+			if($_SESSION['supervisor'] || ($pid == $_SESSION['personid'] && isset($_SESSION['personid']))) {
 				echo('<nav class="navbar navbar-expand-lg navbar-dark bg-blue">
 						<a class="navbar-brand" href="/"><img src="/logo.png" width="50" height="50" alt="Logo" /></a>
 						<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarTogglerDemo02" aria-controls="navbarTogglerDemo02" aria-expanded="false" aria-label="Toggle navigation">
