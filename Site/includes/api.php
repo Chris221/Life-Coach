@@ -995,4 +995,10 @@
 		return $r;
 	}
 
+	function getRelationship($pid,$familyRelation,$pos = '',$debug=true){
+		if ($familyRelation == ) {
+			
+		}
+	}
+
 ?>

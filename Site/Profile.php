@@ -33,6 +33,7 @@
 	$changephoto = '/EditImage/?p='.encrypt($pid);
 	$edit = '/EditProfile/?p='.encrypt($pid);
 	$deleteProfile = '/DeleteProfile/?p='.encrypt($pid);
+	$relationshipslink = '/Relationships/?p='.encrypt($pid);
 
 	$newAppointment = '/NewAppointment?p='.encrypt($pid);
 
@@ -286,7 +287,9 @@
                              </div>
                     </div>
                     <div class="card text-center page-margin5 left">
-                        <div class="card-header title">Family Tree </div>
+                        <div class="card-header title">Family Tree
+							<a href="<?php echo($relationshipslink); ?>" class="btn btn-primary">Details</a>
+                       	</div>
                         <div class="card-body">
                             <?php include('includes/treeBuilder.php'); buildTree($pid); ?>
                         </div>
