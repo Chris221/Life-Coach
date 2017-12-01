@@ -12,6 +12,8 @@
 	if (isset($_GET['p']) && isset($_GET['d'])) {
 		$returnLink = '/Relationships/?p='.$_GET['p'];
 		removeRelationship($returnLink,$_GET['d']);
+		o_log('Page Loaded','Deleting Relationship ID: '.$_GET['d']);
+		
 	} else if (isset($_GET['p']) && isset($_GET['r'])) {
 		$pid = decrypt($_GET['p']);
 		$relationshipType = $_GET['r'];
