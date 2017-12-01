@@ -1085,7 +1085,7 @@
 						$name = addStrTogether($personResult['first_name'],$personResult['middle_name']);
 						$name = addStrTogether($name,$personResult['last_name']);
 
-						$r .= '<tr><td>&thinsp;</td><td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?p='.encrypt($familypid).'&d='.$relationshipid.'" class="btn btn-primary">Delete</a></td></tr>';
+						$r .= '<tr><td>&thinsp;</td><td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?p='.encrypt($pid).'&d='.$relationshipid.'" class="btn btn-primary">Delete</a></td></tr>';
 					}
 				}
 			} else {
@@ -1098,7 +1098,7 @@
 					$name = addStrTogether($personResult['first_name'],$personResult['middle_name']);
 					$name = addStrTogether($name,$personResult['last_name']);
 
-					$r = '<tr><td>&thinsp;</td><td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?p='.encrypt($familypid).'&d='.$relationshipid.'" class="btn btn-primary">Delete</a></td></tr>';
+					$r = '<tr><td>&thinsp;</td><td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?p='.encrypt($pid).'&d='.$relationshipid.'" class="btn btn-primary">Delete</a></td></tr>';
 				}
 			}
 		} else {
@@ -1111,7 +1111,7 @@
 				$name = addStrTogether($personResult['first_name'],$personResult['middle_name']);
 				$name = addStrTogether($name,$personResult['last_name']);
 
-				$r = '<td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?p='.encrypt($familypid).'&d='.$relationshipid.'" class="btn btn-primary">Delete</a></td>';
+				$r = '<td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?p='.encrypt($pid).'&d='.$relationshipid.'" class="btn btn-primary">Delete</a></td>';
 			} else {
 				$r = '<td>None</td><td><a href="/EditRelationship?r='.$relationship.'&p='.encrypt($pid).'" class="btn btn-primary">Add</a></td>';
 			}
