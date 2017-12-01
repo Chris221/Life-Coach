@@ -146,6 +146,10 @@
 	background-color: lightgreen;
 	border-radius: calc(.25rem - 1px);
 }
+.deceased {
+	background-color: darkgray;
+	border-radius: calc(.25rem - 1px);
+}
 .emphasis {
 	font-style: italic;
 	font-weight: bold;
