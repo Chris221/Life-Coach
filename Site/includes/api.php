@@ -192,14 +192,14 @@
 			$cleanSearch = pg_escape_string($sText);
 			$where = "WHERE companyid='".$_SESSION['companyid']."' AND (last_name ILIKE '%$cleanSearch%' OR first_name ILIKE '%$cleanSearch%')";
 		} else {
-			$where = 'WHERE companyid='.$_SESSION['companyid'];
+			$where = "WHERE companyid='".$_SESSION['companyid']."'";
 		} 
 		$sql = 'SELECT personid FROM clients_view '.$where.' ORDER BY last_name ASC, first_name ASC;';
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
 			if ($error) {
-				echo('<br />Error! (View Clients)<br />');
+				echo('<br />Error! (View People)<br />');
 				echo('Type: '.$type.'<br />');
 				echo('Where: '.$where.'<br />');
 				echo('SQL: '.$sql.'<br />');
@@ -219,7 +219,7 @@
 			if ($debug) {
 				$error2 = pg_last_error($conn);
 				if ($error2) {
-					echo('<br />Error! (View Clients)<br />');
+					echo('<br />Error! (View People)<br />');
 					echo('Person ID: '.$pid.'<br />');
 					echo('SQL: '.$sql2.'<br />');
 					echo('Result: '.$result2.'<br />');
