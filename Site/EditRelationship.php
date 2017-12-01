@@ -36,6 +36,8 @@
                                 </div>
                                 <div class = "col-sm-5">
                                     <form class="form-inline my-2 my-lg-0" method="get" action="#">
+										<input type="hidden" value="'.$_GET['p'].'" name="p">
+                                        <input type="hidden" value="'.$relationshipType.'" name="r">
                                         <input class="form-control mr-sm-2" type="search" placeholder="Search all people" name="s">
                                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                                     </form>
