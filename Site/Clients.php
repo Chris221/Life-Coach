@@ -92,15 +92,6 @@
         <br />
 
         <div class="container">
-            <div class ="row">
-                <div class="col-sm-12">
-                    <div class="card text-center page-margin0 left right">
-                        <div class="card-header title">
-                            Client Portal
-                        </div>
-                    </div>
-                </div>
-            </div>
             <div class = "row">
                 <div class="col-sm-12">
                     <div class="card text-center page-margin0 left">
