@@ -131,10 +131,12 @@
 		$eCoachPID = encrypt($myCoachResult['personid']);
 		
 		$cName = '<a href="/Profile/?p='.$eCoachPID.'">'.$cName.'</a>';
+		$cChange = '<a href="/ChangeCoach/?p='.encrypt($pid).'" class="btn btn-primary">Change Coach</a>';
 		
 		$coachText = '
 		<tr><td><h3>Coach Information</h3></td></tr>
 		<tr><td>Coach:</td><td>'.$cName.'</td></tr>
+		<tr><td>&thinsp;</td><td>'.$cChange.'</td></tr>
 		<tr><td>Last Contacted:</td><td>'.$lastContacted.'</td></tr>
 		<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
 		';
