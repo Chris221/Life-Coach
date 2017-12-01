@@ -96,6 +96,9 @@
                     <li class="nav-item">
                         <a class="nav-link" href="/Clients">Clients</a>
                     </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Coaches">Coaches</a>
+                    </li>
                 </ul>
                 <!--        I changed this to align the logout to the right-->
                 <ul class="nav navbar-nav navbar-right">
