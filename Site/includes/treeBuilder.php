@@ -5,11 +5,12 @@
 	$spouse = '';
 	$spouse_close = '';
 	$parents_close = '';
+	$currentID = '';
 
 	function getPerson($pid,$c = false, $debug = false) {
 		include('includes/db.php');
 		include('includes/includes/db.php');
-		$sql = 'SELECT prefix, first_name, middle_name, last_name, suffix, gender FROM persons WHERE personid='.$pid.';';
+		$sql = 'SELECT prefix, first_name, middle_name, last_name, suffix, gender, deceased FROM persons WHERE personid='.$pid.';';
 		$result = pg_query($conn, $sql);
 		$data = pg_fetch_assoc($result);
 		if ($debug) {
@@ -29,7 +30,9 @@
 		$name = addStrTogether($name,$data['last_name']);
 		$name = addStrTogether($name,$data['suffix']);
 		
-		if ($data['gender'] == 'female') {
+		if ($data['deceased'] == 't') {
+			$gender = 'deceased';
+		} else if ($data['gender'] == 'female') {
 			$gender = 'woman';
 		} else if ($data['gender'] == 'male') {
 			$gender = 'man';
@@ -84,7 +87,7 @@
 		
 		$other = $data1['personid2'];
 		if ($other) {
-			$sql = 'SELECT prefix, first_name, middle_name, last_name, suffix, gender FROM persons WHERE personid='.$other.';';
+			$sql = 'SELECT prefix, first_name, middle_name, last_name, suffix, gender, deceased FROM persons WHERE personid='.$other.';';
 			$result = pg_query($conn, $sql);
 			$data = pg_fetch_assoc($result);
 			if ($debug) {
@@ -104,7 +107,9 @@
 			$name = addStrTogether($name,$data['last_name']);
 			$name = addStrTogether($name,$data['suffix']);
 
-			if ($data['gender'] == 'female') {
+			if ($data['deceased'] == 't') {
+				$gender = 'deceased';
+			} else if ($data['gender'] == 'female') {
 				$gender = 'woman';
 			} else if ($data['gender'] == 'male') {
 				$gender = 'man';
@@ -114,7 +119,7 @@
 
 			$link = '"marriages": [{
 					"spouse": {
-						"name": "<a href=\"/Profile/?p='.encrypt($pid).'\">'.$name.'</a>",'.
+						"name": "<a href=\"/Profile/?p='.encrypt($other).'\">'.$name.'</a>",'.
 						'"class": "'.$gender.'"}';
 		} else {
 			$link = '"marriages": [{
@@ -126,6 +131,34 @@
 		return $link;
 	}
 
+	function getParentsOtherChildren($other,$debug = false) {
+		global $currentID;
+		include('includes/db.php');
+		$sql = "SELECT personid2 FROM relationships WHERE personid1='$other' AND relationship = '2';";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('<br />Error! (getRelations)<br />');
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+		
+		while ($row = pg_fetch_assoc($result)) {
+			$other = $row['personid2'];
+			$relationship = $row['relationship'];
+			if ($other == $currentID) {
+			} else if ($other == $previous) {
+			} else {
+				$children = ','.AddtoChildren($children, Child($other));
+			}
+		}
+		return $children;
+	}
+
 	function Parent($other) {
 		global $parents, $parents_close;
 		
@@ -135,8 +168,11 @@
 		$parents = $parent.',
   				'.$spouse.',
 				"children": [{';
-		
-		$parents_close = '}]}]';
+		$siblings = getParentsOtherChildren($other);
+		if (strlen($siblings) > 0) {
+			$siblings;
+		}
+		$parents_close = '}'.$siblings.']}]';
 	}
 	
 	function Spouse($other) {
@@ -176,7 +212,6 @@
 		$p = getPerson($pid,true,true);
 		
 		include('includes/db.php');
-		include('includes/includes/db.php');
 		$sql = 'SELECT personid2, relationship FROM relationships WHERE personid1='.$pid.';';
 		$result = pg_query($conn, $sql);
 		if ($debug) {
@@ -211,6 +246,8 @@
 	}
 
 	function buildTree($pid) {
+		global $currentID;
+		$currentID = $pid;
 		//echo("PID: ".$pid."<br/>");
 		$treeData = getRelations($pid,true);
 		
