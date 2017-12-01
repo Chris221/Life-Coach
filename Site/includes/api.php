@@ -186,6 +186,59 @@
 		return $clientList;
 	}
 
+	function viewPeople($returnLocation,$type = 'all',$sText = '',$debug = false){
+		include('includes/db.php');
+		if ($type == 'search') {
+			$cleanSearch = pg_escape_string($sText);
+			$where = "WHERE companyid='".$_SESSION['companyid']."' AND (last_name ILIKE '%$cleanSearch%' OR first_name ILIKE '%$cleanSearch%')";
+		} else {
+			$where = 'WHERE companyid='.$_SESSION['companyid'];
+		} 
+		$sql = 'SELECT personid FROM clients_view '.$where.' ORDER BY last_name ASC, first_name ASC;';
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('<br />Error! (View Clients)<br />');
+				echo('Type: '.$type.'<br />');
+				echo('Where: '.$where.'<br />');
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		
+		while ($row = pg_fetch_assoc($result)) {
+			$pid = $row['personid'];
+			$middleName = '';
+			/*$rData = view('persons','personid='.$pid);*/
+			
+			$sql2 = "SELECT first_name, middle_name, last_name FROM persons WHERE personid='".$pid."';";
+			$result2 = pg_query($conn, $sql2);
+			$rData = pg_fetch_assoc($result2);
+			if ($debug) {
+				$error2 = pg_last_error($conn);
+				if ($error2) {
+					echo('<br />Error! (View Clients)<br />');
+					echo('Person ID: '.$pid.'<br />');
+					echo('SQL: '.$sql2.'<br />');
+					echo('Result: '.$result2.'<br />');
+					echo('Data: '.$rData.'<br />');
+					echo('Error: '.$error2.'<br />');
+				}
+			}
+			if ($rData['middle_name']) {
+				$middleName = ' '.$rData['middle_name'];
+			}
+			$peopleName = $rData['last_name'].', '.$rData['first_name'].$middleName;
+			$encryptedPID = encrypt($pid);
+			$peopleList .= '<a href="'.$returnLocation.'&n='.$encryptedPID.'">'.$peopleName.'</a><br />';
+		}
+		pg_close($conn);
+		
+		return $peopleList;
+	}
+
 	function addPerson($firstName, $lastName, $email, $cell, $gender, $companyid, $photoid = null, $prefix = null, $suffix = null, $home = null, $work = null, $extension = null, $dob = null, $address = null, $middleName = null, $debug = false){
 		include('includes/db.php');
 		$eFirstName = pg_escape_string($conn, $firstName);
@@ -1032,7 +1085,7 @@
 						$name = addStrTogether($personResult['first_name'],$personResult['middle_name']);
 						$name = addStrTogether($name,$personResult['last_name']);
 
-						$r .= '<tr><td>&thinsp;</td><td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?d='.$relationshipid.'" class="btn btn-primary">Delete</a></td></tr>';
+						$r .= '<tr><td>&thinsp;</td><td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?p='.encrypt($familypid).'&d='.$relationshipid.'" class="btn btn-primary">Delete</a></td></tr>';
 					}
 				}
 			} else {
@@ -1045,7 +1098,7 @@
 					$name = addStrTogether($personResult['first_name'],$personResult['middle_name']);
 					$name = addStrTogether($name,$personResult['last_name']);
 
-					$r = '<tr><td>&thinsp;</td><td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?d='.$relationshipid.'" class="btn btn-primary">Delete</a></td></tr>';
+					$r = '<tr><td>&thinsp;</td><td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?p='.encrypt($familypid).'&d='.$relationshipid.'" class="btn btn-primary">Delete</a></td></tr>';
 				}
 			}
 		} else {
@@ -1058,13 +1111,60 @@
 				$name = addStrTogether($personResult['first_name'],$personResult['middle_name']);
 				$name = addStrTogether($name,$personResult['last_name']);
 
-				$r = '<td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?d='.$relationshipid.'" class="btn btn-primary">Delete</a></td>';
+				$r = '<td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?p='.encrypt($familypid).'&d='.$relationshipid.'" class="btn btn-primary">Delete</a></td>';
 			} else {
 				$r = '<td>None</td><td><a href="/EditRelationship?r='.$relationship.'&p='.encrypt($pid).'" class="btn btn-primary">Add</a></td>';
 			}
 		}
 		pg_close($conn);
 		return($r);
+	}
+
+	function addRelationship($pid,$relationshipType,$newPersionID,$debug=false) {
+		include('includes/db.php');
+		$pid = pg_escape_string($conn, $pid);
+		$relationshipType = pg_escape_string($conn, $relationshipType);
+		$newPersionID = pg_escape_string($conn, $newPersionID);
+		
+		$sql = "INSERT INTO relationships(personid1, relationship, personid2) VALUES ('$pid','$relationshipType','$newPersionID');";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('pid: '.$pid.'<br />');
+				echo('relationshipType: '.$relationshipType.'<br />');
+				echo('newPersionID: '.$newPersionID.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		
+		//Get row
+		$insert_query = pg_query($conn,"SELECT lastval();");
+		$insert_row = pg_fetch_row($insert_query);
+		$last_insert_id = $insert_row[0];
+		
+		pg_close($conn);
+		return $last_insert_id;
+	}
+
+	function removeRelationship($returnLink,$relationshipID,$debug=false) {
+		include('includes/db.php');
+		$relationshipID = pg_escape_string($conn, $relationshipID);
+		
+		$sql = "DELETE FROM relationships WHERE relationshipid='$relationshipID';";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('relationshipID: '.$relationshipID.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		header('Location: '.$returnLink);
 	}
 
 ?>
