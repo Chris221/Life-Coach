@@ -105,7 +105,7 @@
 							</li>');
 						}
 					?>
-                    <li class="nav-item active">
+                    <li class="nav-item">
                         <a class="nav-link" href="/Profile">Profile</a>
                     </li>
                     <li class="nav-item">

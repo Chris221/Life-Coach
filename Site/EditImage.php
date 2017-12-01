@@ -106,8 +106,8 @@
 							</li>');
 						}
 					?>
-                    <li class="nav-item active">
-                        <a class="nav-link" href="/Profile">Profile<span class="sr-only">(current)</span></a>
+                    <li class="nav-item">
+                        <a class="nav-link" href="/Profile">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Logout" >Logout</a>

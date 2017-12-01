@@ -217,7 +217,7 @@
             <li class="nav-item">
                 <a class="nav-link" href="/Schedule">Schedule</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href="/Clients">Clients</a>
             </li>
         </ul>
@@ -230,7 +230,7 @@
 							</li>');
 						}
 					?>
-            <li class="nav-item">
+            <li class="nav-item active">
                 <a class="nav-link" href="/Profile">Profile<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
