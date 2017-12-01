@@ -40,6 +40,9 @@
                                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                                     </form>
                                 </div>
+                                <div class = "col-sm-5 text-right">
+                                    <a href="/NewClient" class="btn btn-primary">Add a New Client</a>
+                                </div>
                             </div>
                         </div>
                     </div>
