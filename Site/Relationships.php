@@ -24,11 +24,20 @@
 	$name = addStrTogether($name,$personResult['last_name']);
 	$name = addStrTogether($name,$personResult['suffix']);
 
-	/*$text .= '<table>
-				<tr><td>Parents:</td>'.getRelationship($pid,'parent',1).'</tr>
-			 </table>';*/
+	$parent1 = getRelationship($pid,'parent',0);
+	$parent2 = getRelationship($pid,'parent',1);
 
-	$text = 'ADD/DELETE Current';
+	if ((strpos($parent2, 'None') !== false) && (strpos($parent1, 'None') !== false)) {
+		$showParent2 = '';
+	} else {
+		$showParent2 = '<tr><td>&thinsp;</td>'.$parent2.'</tr>';
+	}
+
+	$text .= '<table>
+				<tr><td>Parents:</td>'.$parent1.'</tr>'.$showParent2.'
+				<tr><td>Spouse:</td>'.getRelationship($pid,'spouse',0).'</tr>
+				<tr><td>Children:</td><td><a href="/EditRelationship?r=2&p='.encrypt($pid).'" class="btn btn-primary">Add</a></td><td>&thinsp;</td></tr>'.getRelationship($pid,'child').'
+			 </table>';
 
 	$title = 'Family Relationships - '.$name;
 ?>

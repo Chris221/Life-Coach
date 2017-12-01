@@ -995,10 +995,76 @@
 		return $r;
 	}
 
-	function getRelationship($pid,$familyRelation,$pos = '',$debug=true){
-		if ($familyRelation == ) {
-			
+	function getRelationship($pid,$familyRelation,$pos = '-1',$debug=false){
+		include('includes/db.php');
+		include('../protection.php');
+		if ($familyRelation == 'parent') {
+			$relationship = '1';
+		} else if ($familyRelation == 'child') {
+			$relationship = '2';
+		} else if ($familyRelation == 'spouse') {
+			$relationship = '3';
 		}
+		
+		$sql = "SELECT relationshipid,personid2 FROM relationships WHERE personid1='$pid' AND relationship='$relationship';";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('pid: '.$pid.'<br />');
+				echo('familyRelation: '.$familyRelation.'<br />');
+				echo('pos: '.$pos.'<br />');
+				echo('relationship: '.$relationship.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('data: '.$data.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		if ($relationship == '2') {
+			if ($pos == '-1') {
+				while ($row = pg_fetch_assoc($result)) {
+					$familypid = $row['personid2'];
+					$relationshipid = $row['relationshipid'];
+					if (isset($familypid)) {
+						$personResult = view('persons','personid='.$familypid);
+
+						$name = addStrTogether($personResult['first_name'],$personResult['middle_name']);
+						$name = addStrTogether($name,$personResult['last_name']);
+
+						$r .= '<tr><td>&thinsp;</td><td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?d='.$relationshipid.'" class="btn btn-primary">Delete</a></td></tr>';
+					}
+				}
+			} else {
+				$data = pg_fetch_assoc($result,$pos);
+				$familypid = $data['personid2'];
+				$relationshipid = $data['relationshipid'];
+				if (isset($familypid)) {
+					$personResult = view('persons','personid='.$familypid);
+
+					$name = addStrTogether($personResult['first_name'],$personResult['middle_name']);
+					$name = addStrTogether($name,$personResult['last_name']);
+
+					$r = '<tr><td>&thinsp;</td><td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?d='.$relationshipid.'" class="btn btn-primary">Delete</a></td></tr>';
+				}
+			}
+		} else {
+			$data = pg_fetch_assoc($result,$pos);
+			$familypid = $data['personid2'];
+			$relationshipid = $data['relationshipid'];
+			if (isset($familypid)) {
+				$personResult = view('persons','personid='.$familypid);
+
+				$name = addStrTogether($personResult['first_name'],$personResult['middle_name']);
+				$name = addStrTogether($name,$personResult['last_name']);
+
+				$r = '<td><a href="/Profile?p='.encrypt($familypid).'">'.$name.'</a></td><td><a href="/EditRelationship?d='.$relationshipid.'" class="btn btn-primary">Delete</a></td>';
+			} else {
+				$r = '<td>None</td><td><a href="/EditRelationship?r='.$relationship.'&p='.encrypt($pid).'" class="btn btn-primary">Add</a></td>';
+			}
+		}
+		pg_close($conn);
+		return($r);
 	}
 
 ?>
