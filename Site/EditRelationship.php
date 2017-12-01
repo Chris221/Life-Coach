@@ -22,9 +22,7 @@
 			//ADDS THE RELATIONSHIP
 			$newPersionID = decrypt($_GET['n']);
 			$newRelationshipID = addRelationship($pid,$relationshipType,$newPersionID);
-			if ($newRelationshipID > 0) {
-				header('Location: '.$back);
-			}
+			header('Location: '.$back);
 		}
 		$topBar = '<div class = "row">
                 <div class="col-sm-12">

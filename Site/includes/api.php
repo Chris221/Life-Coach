@@ -1131,27 +1131,65 @@
 		if ($debug) {
 			$error = pg_last_error($conn);
 			if ($error) {
+				echo('First<br />');
 				echo('SQL: '.$sql.'<br />');
 				echo('result: '.$result.'<br />');
-				echo('pid: '.$pid.'<br />');
-				echo('relationshipType: '.$relationshipType.'<br />');
-				echo('newPersionID: '.$newPersionID.'<br />');
+				echo('personid1: '.$pid.'<br />');
+				echo('relationship: '.$relationshipType.'<br />');
+				echo('personid2: '.$newPersionID.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		if ($relationshipType == '1') {
+			$otherRelationship = '2';
+		} else if ($relationshipType == '2') {
+			$otherRelationship = '1';
+		} else {
+			$otherRelationship = $relationshipType;
+		}
+		
+		$sql = "INSERT INTO relationships(personid1, relationship, personid2) VALUES ('$newPersionID','$otherRelationship','$pid');";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('Second<br />');
+				echo('SQL: '.$sql.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('personid1: '.$newPersionID.'<br />');
+				echo('relationship: '.$otherRelationship.'<br />');
+				echo('personid2: '.$pid.'<br />');
 				echo('Error: '.$error.'<br />');
 			}
 		}
 		
-		//Get row
-		$insert_query = pg_query($conn,"SELECT lastval();");
-		$insert_row = pg_fetch_row($insert_query);
-		$last_insert_id = $insert_row[0];
 		
 		pg_close($conn);
-		return $last_insert_id;
 	}
 
 	function removeRelationship($returnLink,$relationshipID,$debug=false) {
 		include('includes/db.php');
 		$relationshipID = pg_escape_string($conn, $relationshipID);
+		
+		$sql = "SELECT relationship,personid1,personid2 FROM relationships WHERE relationshipid='$relationshipID';";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('pid: '.$pid.'<br />');
+				echo('familyRelation: '.$familyRelation.'<br />');
+				echo('pos: '.$pos.'<br />');
+				echo('relationship: '.$relationship.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('data: '.$data.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		$data = pg_fetch_assoc($result);
+		$relationship = $data['relationship'];
+		$personid2 = $data['personid2'];
+		$personid1 = $data['personid1'];
 		
 		$sql = "DELETE FROM relationships WHERE relationshipid='$relationshipID';";
 		$result = pg_query($conn, $sql);
@@ -1164,6 +1202,27 @@
 				echo('Error: '.$error.'<br />');
 			}
 		}
+		
+		if ($relationship == '1') {
+			$otherRelationship = '2';
+		} else if ($relationship == '2') {
+			$otherRelationship = '1';
+		} else {
+			$otherRelationship = $relationship;
+		}
+			
+		$sql = "DELETE FROM relationships WHERE personid1='$personid2' AND relationship='$otherRelationship' AND personid2='$personid1';";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('SQL: '.$sql.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('relationshipID: '.$relationshipID.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
 		header('Location: '.$returnLink);
 	}
 
