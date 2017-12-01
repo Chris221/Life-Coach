@@ -138,11 +138,11 @@
 						$pid = addPerson($firstname, $lastname, $email1, $cell, $gender, $companyid, $photoid, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $address, $middlename);
 						$output = true;
 						if ($pid && $output) {
-							echo("Person was added succesfully!<br />");
-							echo("Person ID:" . $pid . "<br />");
+							//echo("Person was added succesfully!<br />");
+							//echo("Person ID:" . $pid . "<br />");
 							o_log('Person Add Successful', 'ID: ' . $pid);
 						} else if ($output) {
-							echo("ERROR PERSON WAS NOT ADDED!<br />");
+							//echo("ERROR PERSON WAS NOT ADDED!<br />");
 							o_log('Person Add failed');
 						}
 
@@ -150,12 +150,12 @@
 
 						$cid = addClient($pid, $workaddress, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visitpreferencestart, $visitpreferenceend, $callpreferencestart, $callpreferenceend, $goals, $needs, $selfawareness, $coachid);
 						if ($cid && $output) {
-							echo("Client was added succesfully!<br />");
-							echo("Client ID:" . $cid . "<br />");
+							//echo("Client was added succesfully!<br />");
+							//echo("Client ID:" . $cid . "<br />");
 							o_log('Client Add Successful', 'ID: ' . $cid);
-							//header('Location: /Profile?p='.encrypt($pid));
+							header('Location: /Profile?p='.encrypt($pid));
 						} else if ($output) {
-							echo("ERROR CLIENT WAS NOT ADDED!<br />");
+							//echo("ERROR CLIENT WAS NOT ADDED!<br />");
 							o_log('Client Add failed');
 						}
 					}
