@@ -276,6 +276,43 @@
 		return $coachList;
 	}
 
+	function viewCoaches($type = 'all',$sText = '',$debug = false){
+		include('includes/db.php');
+		if ($type == 'search') {
+			$cleanSearch = pg_escape_string($sText);
+			$where = "WHERE companyid='".$_SESSION['companyid']."' AND (last_name ILIKE '%$cleanSearch%' OR first_name ILIKE '%$cleanSearch%')";
+		} else {
+			$where = "WHERE companyid='".$_SESSION['companyid']."'";
+		} 
+		$sql = 'SELECT first_name, middle_name, last_name, personid FROM accounts '.$where.' ORDER BY last_name ASC, first_name ASC;';
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('<br />Error! (View Coaches)<br />');
+				echo('Type: '.$type.'<br />');
+				echo('Where: '.$where.'<br />');
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		
+		while ($row = pg_fetch_assoc($result)) {
+			$pid = $row['personid'];
+			$middleName = '';
+			if ($row['middle_name']) {
+				$middleName = ' '.$row['middle_name'];
+			}
+			$coachName = $row['last_name'].', '.$row['first_name'].$middleName;
+			$encryptedPID = encrypt($pid);
+			$coachList .= '<a href="/Profile/?p='.$encryptedPID.'">'.$coachName.'</a><br />';
+		}
+		pg_close($conn);
+		
+		return $coachList;
+	}
+
 	function addPerson($firstName, $lastName, $email, $cell, $gender, $companyid, $photoid = null, $prefix = null, $suffix = null, $home = null, $work = null, $extension = null, $dob = null, $address = null, $middleName = null, $debug = false){
 		include('includes/db.php');
 		$eFirstName = pg_escape_string($conn, $firstName);
