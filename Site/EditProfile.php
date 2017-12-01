@@ -218,7 +218,7 @@
                 <a class="nav-link" href="/Schedule">Schedule</a>
             </li>
             <li class="nav-item active">
-                <a class="nav-link" href="/Clients">Clients <span class="sr-only">(current)</span></a>
+                <a class="nav-link" href="/Clients">Clients</a>
             </li>
         </ul>
         <!--        I changed this to align the logout to the right-->
@@ -231,7 +231,7 @@
 						}
 					?>
             <li class="nav-item">
-                <a class="nav-link" href="/Profile">Profile</a>
+                <a class="nav-link" href="/Profile">Profile<span class="sr-only">(current)</span></a>
             </li>
             <li class="nav-item">
                 <a class="nav-link" href="/Logout">Logout</a>

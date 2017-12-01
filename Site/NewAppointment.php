@@ -193,7 +193,7 @@
                         <a class="nav-link" href="/">Home</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Schedule">Schedule</a>
+                        <a class="nav-link" href="/Schedule">Schedule<span class="sr-only">(current)</span></a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Clients">Clients</a>
@@ -209,7 +209,7 @@
 						}
 					?>
                     <li class="nav-item active">
-                        <a class="nav-link" href="/Profile">Profile<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/Profile">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Logout" >Logout</a>
