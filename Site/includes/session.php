@@ -20,6 +20,29 @@
 		$_SESSION['supervisor'] = $data['supervisor'];
 		$_SESSION['clientid'] = $data['clientid'];
 		$_SESSION['employeed'] = $data['employeed'];
+		
+		$companyid = $_SESSION['companyid'];
+		
+		$sql = "SELECT * FROM companies WHERE companyid='$companyid';";
+		$result = pg_query($conn, $sql);
+		$data = pg_fetch_assoc($result);
+		
+		if (($data['admin_personid'] == $_SESSION['personid']) && ($_SESSION['personid'] >= '1')) {
+			$_SESSION['admin'] = 'true';
+		} else {
+			$_SESSION['admin'] = 'false';
+		}
+		
+		if ($data['deleted'] != 'f') {
+			session_unset();
+			session_destroy();
+			if (isset($_COOKIE['Login'])) {
+				unset($_COOKIE['Login']);
+				setcookie('Login', null, -1, '/');
+			}
+			header('Location: /Login');
+		}
+		
 		pg_close($conn);
 		include('includes/log.php');
 		o_log('Logged in', 'From the cookie');

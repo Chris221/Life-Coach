@@ -61,6 +61,18 @@
 				$_SESSION['clientid'] = $data['clientid'];
 				$_SESSION['employeed'] = $data['employeed'];
 				
+				$companyid = $_SESSION['companyid'];
+				
+				$sql = "SELECT * FROM companies WHERE companyid='$companyid';";
+				$result = pg_query($conn, $sql);
+				$data = pg_fetch_assoc($result);
+
+				if (($data['admin_personid'] == $_SESSION['personid']) && ($_SESSION['personid'] >= '1')) {
+					$_SESSION['admin'] = 'true';
+				} else {
+					$_SESSION['admin'] = 'false';
+				}
+				
 				//sets cookie if it was checked
 				if ($_POST['remember']) {
 					include('includes/protection.php');
@@ -80,7 +92,18 @@
 				//update last active time
 				pg_query($conn, "UPDATE coaches SET last_active='$date' WHERE personid='$personid'");
 				//redirects to home
-				header('Location: /');
+				
+				if ($data['deleted'] == 'f') {
+					header('Location: /');
+				} else {
+					session_unset();
+					session_destroy();
+					if (isset($_COOKIE['Login'])) {
+						unset($_COOKIE['Login']);
+						setcookie('Login', null, -1, '/');
+					}
+					$text = 'The company you are trying to connect to does not exisit.<br />';
+				}
 			}
 		} else {
 			if (strlen($text) == 0){
