@@ -1,4 +1,3 @@
-
 <?php
 	$parents = '';
 	$children = '';
@@ -274,6 +273,4 @@
 		echo($tree);
 		
 	}
-?>
-        			
-		
+?>	
