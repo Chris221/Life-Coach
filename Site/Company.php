@@ -78,7 +78,7 @@
 										</form>
 									</div>
 									<div class = "col-sm-5 text-right">
-										<a href="/EditCompany" class="btn btn-primary">Add a New Company</a>
+										<a href="/NewCompany" class="btn btn-primary">Add a New Company</a>
 									</div>
 								</div>
 							</div>

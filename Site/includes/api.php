@@ -444,6 +444,49 @@
 		return $last_insert_id;
 	}
 
+	function addCompany($companyname,$companylocation,$companysite,$pid,$debug = false) {
+		include('includes/db.php');
+		$sql = "INSERT INTO companies (admin_personid,name,location,domain,deleted) VALUES ('$pid','$companyname','$companylocation','$companysite',false);";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error || true) {
+				echo('SQL: '.$sql.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('pid: '.$pid.'<br />');
+				echo('companyname: '.$companyname.'<br />');
+				echo('companylocation: '.$companylocation.'<br />');
+				echo('companysite: '.$companysite.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		
+		//Get row
+		$insert_query = pg_query($conn,"SELECT lastval();");
+		$insert_row = pg_fetch_row($insert_query);
+		$last_insert_id = $insert_row[0];
+		
+		$companyid = pg_escape_string($conn, $last_insert_id);
+		
+		$sql = "UPDATE persons SET companyid='$companyid' WHERE personid='$pid';";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error || true) {
+				echo('SQL: '.$sql.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('pid: '.$pid.'<br />');
+				echo('companyname: '.$companyname.'<br />');
+				echo('companylocation: '.$companylocation.'<br />');
+				echo('companysite: '.$companysite.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		
+		pg_close($conn);
+		return $companyid;
+	}
+
 	function addClient($personid,$workaddress,$workcompany = null,$worktitle = null,$workfield = null,$favoritebook = null,$favoritefood = null,$visitpreferencestart = null, $visitpreferenceend = null,$callpreferencestart = null,$callpreferenceend = null,$goals = null,$needs = null,$selfawareness = null,$coachid = null,$debug = false) {
 		include('includes/db.php');
 		
