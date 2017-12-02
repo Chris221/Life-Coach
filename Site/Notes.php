@@ -47,7 +47,7 @@
 				<input type="reset" value="Reset" class="button" />
              </form></table>';
 
-	if ($companyID <> $_SESSION['companyid']) {
+	if (($companyID <> $_SESSION['companyid']) && (!$_SESSION['super_admin'])) {
 		echo('CompanyID: '.$companyID.'<br />');
 		echo('Session CompanyID: '.$_SESSION['companyid'].'<br />');
 		$itext = 'This client is not apart of your company';
