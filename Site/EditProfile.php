@@ -172,7 +172,7 @@
 			$email = strtolower($email);
 			$correctDOB = date("Y-m-d", strtotime($dob));
 			
-			changeProfile($pid, $firstname, $lastname, $email, $cell, $gender, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $middlename, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visit_time_preference_start, $visit_time_preference_end, $call_time_preference_start, $call_time_preference_end, $goals, $needs, $selfawareness, $supervisor, $employeed, $deceased, true);
+			changeProfile($pid, $firstname, $lastname, $email, $cell, $gender, $prefix, $suffix, $home, $worknumber, $extension, $correctDOB, $middlename, $workcompany, $worktitle, $workfield, $favoritebook, $favoritefood, $visit_time_preference_start, $visit_time_preference_end, $call_time_preference_start, $call_time_preference_end, $goals, $needs, $selfawareness, $supervisor, $employeed, $deceased);
 			
 			header('Location: '.$back);
 		}

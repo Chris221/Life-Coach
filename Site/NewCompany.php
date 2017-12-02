@@ -133,7 +133,7 @@
 		
 		if ($work) {
 			// Check for Email duplicates
-			$data = view('accounts',"email='$email1'",true);
+			$data = view('accounts',"email='$email1'");
 			if($data['personid']) {
 				$text = "The email address \"$email1\" already exists.<br />";
 				$work = false;
@@ -178,7 +178,7 @@
 				o_log('Client Add Failed');
 			}
 			
-			$companyid = addCompany($companyname,$companylocation,$companysite,$pid,true);
+			$companyid = addCompany($companyname,$companylocation,$companysite,$pid);
 			if ($companyid) {
 				o_log('Company Add Successful', 'ID: '.$companyid);
 				header('Location: /Company?c='.encrypt($companyid));

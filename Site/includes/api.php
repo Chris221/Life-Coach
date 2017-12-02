@@ -450,7 +450,7 @@
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
-			if ($error || true) {
+			if ($error) {
 				echo('SQL: '.$sql.'<br />');
 				echo('result: '.$result.'<br />');
 				echo('pid: '.$pid.'<br />');
@@ -472,7 +472,7 @@
 		$result = pg_query($conn, $sql);
 		if ($debug) {
 			$error = pg_last_error($conn);
-			if ($error || true) {
+			if ($error) {
 				echo('SQL: '.$sql.'<br />');
 				echo('result: '.$result.'<br />');
 				echo('pid: '.$pid.'<br />');

@@ -150,7 +150,7 @@
 			if ($failed){
 				$text = $failed.'<br />'.$text;
 			} else {
-				changeSchedule($aid,$start,$type,$reason,$emergency,$end,true);
+				changeSchedule($aid,$start,$type,$reason,$emergency,$end);
 				header('Location: /Appointments?a='.$aid);
 			}
 		}

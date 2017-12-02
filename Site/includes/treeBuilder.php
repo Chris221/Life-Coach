@@ -7,7 +7,7 @@
 	$parents_close = '';
 	$currentID = '';
 
-	function getPerson($pid,$c = false, $debug = false) {
+	function getPerson($pid, $debug = false) {
 		include('includes/db.php');
 		include('includes/includes/db.php');
 		$sql = 'SELECT prefix, first_name, middle_name, last_name, suffix, gender, deceased FROM persons WHERE personid='.$pid.';';
@@ -139,7 +139,7 @@
 		if ($debug) {
 			$error = pg_last_error($conn);
 			if ($error) {
-				echo('<br />Error! (getRelations)<br />');
+				echo('<br />Error! (getParentsOtherChildren)<br />');
 				echo('SQL: '.$sql.'<br />');
 				echo('Result: '.$result.'<br />');
 				echo('Error: '.$error.'<br />');
@@ -163,7 +163,7 @@
 		global $parents, $parents_close;
 		
 		$parent = getPerson($other);
-		$spouse = getSpouse($other,true);
+		$spouse = getSpouse($other);
 		
 		$parents = $parent.',
   				'.$spouse.',
@@ -202,14 +202,14 @@
 		}
 	}
 
-	function getRelations($pid,$debug) {
+	function getRelations($pid,$debug = false) {
 		global $parents, $children, $spouse, $spouse_close, $parents_close;
 		$parents = '';
 		$children = '';
 		$spouse = '';
 		$spouse_close = '';
 		$parents_close = '';
-		$p = getPerson($pid,true,true);
+		$p = getPerson($pid);
 		
 		include('includes/db.php');
 		$sql = 'SELECT personid2, relationship FROM relationships WHERE personid1='.$pid.';';
@@ -249,7 +249,7 @@
 		global $currentID;
 		$currentID = $pid;
 		//echo("PID: ".$pid."<br/>");
-		$treeData = getRelations($pid,true);
+		$treeData = getRelations($pid);
 		
 		$tree = '
 		<script type="text/javascript" src="../../js/tree/d3.v4.min.js"></script>
