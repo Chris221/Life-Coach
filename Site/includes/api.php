@@ -1320,4 +1320,18 @@
 		pg_close($conn);
 	}
 
+	function getCompanyLink() {
+		include('../protection.php');
+		return '/Company?c='.encrypt($_SESSION['companyid']);
+	}
+
+	function getPersonName($pid) {
+		$result = view('persons','personid='.$pid);
+		$name = addStrTogether($result['prefix'],$result['first_name']);
+		$name = addStrTogether($name,$result['middle_name']);
+		$name = addStrTogether($name,$result['last_name']);
+		$name = addStrTogether($name,$result['suffix']);
+		return $name;
+	}
+
 ?>
