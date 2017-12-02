@@ -66,9 +66,7 @@
 					include('includes/protection.php');
 					//BROKEN fix with Try catches
 					$pid = $_SESSION['personid'];
-					echo("pid: ".$pid.'<br />');
 					$epid = encrypt($pid);
-					echo("epid: ".$epid.'<br />');
 					o_log('Logged in', 'From the log in page');
 					setcookie("Login", $epid, time() + (86400 * 30), "/"); // 86400 = 1 day
 				}

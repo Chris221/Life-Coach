@@ -5,9 +5,9 @@
 		include('includes/db.php');
 		include('includes/protection.php');
 		$personid = (int) decrypt($_COOKIE['Login']);
-		$sql = "SELECT * FROM accounts WHERE personid='$personid'";
-		$data = pg_query($conn, $sql);
-		$data = pg_fetch_assoc($data);
+		$sql = "SELECT * FROM accounts WHERE personid='$personid';";
+		$result = pg_query($conn, $sql);
+		$data = pg_fetch_assoc($result);
 		
 		$_SESSION['personid'] = $data['personid'];
 		$_SESSION['coachid'] = $data['coachid'];
