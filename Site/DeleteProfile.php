@@ -6,7 +6,6 @@
 	if (!$_SESSION['employeed']) {
 		header('Location: /Login');
 	}
-	$title = 'Profile';
 
 	if (isset($_GET['p']) && isset($_GET['d'])) {
 		$pid = decrypt($_GET['p']);

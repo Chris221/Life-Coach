@@ -102,7 +102,7 @@
                         <div class="card-header title">
                             <div class = "row">
                                 <div class = "col-sm-1.75 right-marigin5p">
-                                    <a href="/Coaches/?c=all" class="btn btn-primary">All Coaches</a>
+                                    <a href="/Coaches" class="btn btn-primary">All Coaches</a>
                                 </div>
                                 <div class = "col-sm-5">
                                     <form class="form-inline my-2 my-lg-0" method="get" action="#">
