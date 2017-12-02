@@ -3,96 +3,65 @@
 	include('includes/session.php');
 	include('includes/api.php');
 	include('includes/protection.php');
-	if (!$_SESSION['admin']) {
-		header('Location: /');
+	if (!$_SESSION['super_admin']) {
+		header('Location: /Company');
 	}
 	
 	$back = backButton();
 
-	if (isset($_GET['c'])) {
+	if (isset($_GET['c']) && ($_GET['d'] == 'yes2')) {
 		$companyid = decrypt($_GET['c']);
-		o_log('Page Loaded','Company ID: '.$companyid);
+		o_log('Page Loaded','Delete Company ID: '.$companyid);
+		markCompanyAsDeleted($companyid);
+		header('Location: /Company?c='.$_GET['c']);
+	} else if (isset($_GET['c']) && ($_GET['r'] == 'yes')) {
+		$companyid = decrypt($_GET['c']);
+		o_log('Page Loaded','Restore Company ID: '.$companyid);
+		markCompanyAsNOTDeleted($companyid);
+		header('Location: /Company?c='.$_GET['c']);
+	} else if (isset($_GET['c']) && ($_GET['d'] == 'yes')) {
+		$companyid = decrypt($_GET['c']);
+		o_log('Page Loaded','Delete confirm Company ID: '.$companyid);
+	} else if (isset($_GET['c'])) {
+		$companyid = decrypt($_GET['c']);
+		o_log('Page Loaded','Edit Company ID: '.$companyid);
 	} else {
-		header('Location: /');
+		header('Location: '.$back);
 	}
 
 	$result = view('companies','companyid='.$companyid);
 
 	$name = $result['name'];
-	$admin_personid = $result['admin_personid'];
-	$admin_name = getPersonName($admin_personid);
 	$location = $result['location'];
-	$domain = $result['domain'];
-	$disabled = $result['deleted'];
+	$site = $result['domain'];
+	
+	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		$name = $_POST['name'];
+		$location = $_POST['location'];
+		$site = $_POST['site'];
+		$back = $_POST['back'];
 
-	if ($disabled == 'f') {
-		$disabled = 'No';
-	} else {
-		$disabled = 'Yes';
+		changeCompany($companyid,$name,$location,$site);
+		header('Location: '.$back);
 	}
 
-	$title = 'Manage Company '.$name;
+	$text = '<form action="#" method="post"><table>
+				<input type="hidden" name="back" value="'.$back.'" hidden />
+                <tr><td>Company Name:</td><td>&thinsp;</td><td><input type="text" name="name" autocomplete="off" value="'.$name.'" /></td></tr>
+				<tr><td>Company Location:</td><td>&thinsp;</td><td><input type="text" name="location" autocomplete="off" value="'.$location.'" /></td></tr>
+				<tr><td>Company Website:</td><td>&thinsp;</td><td><input type="text" name="site" autocomplete="off" value="'.$site.'" /></td></tr></table>
+				<input type="submit" value="Submit" class="button" /><br />
+				<input type="reset" value="Reset" class="button" />
+			 </form>';
 
-	$text = '<table>
-				<tr><td>Company Name:</td><td>&thinsp;</td><td>'.$name.'</td></tr>
-				<tr><td>Admin:</td><td>&thinsp;</td><td><a href="/Profile?p='.encrypt($admin_personid).'">'.$admin_name.'</a></td></tr>
-				<tr><td>Location:</td><td>&thinsp;</td><td>'.$location.'</td></tr>
-				<tr><td>Website:</td><td>&thinsp;</td><td><a href="http://'.$domain.'">'.$domain.'</a></td></tr>
-				<tr><td>Disabled:</td><td>&thinsp;</td><td>'.$disabled.'</td></tr>
-			</table>';
-	$edit = '/EditCompany?c='.$_GET['c'];
-	$editDelete = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
-
-	if ($_SESSION['super_admin']) {
-		$delete = '/EditCompany?c='.$_GET['c'].'&d=yes';
-		$restore = '/EditCompany?c='.$_GET['c'].'&r=yes';
+	$title = 'Edit Company '.$name;
+	if ($_GET['d'] == 'yes') {
+		$yes = '/EditCompany/?c='.encrypt($companyid).'&d=yes2';
+		$text = 'Are you sure you want to delete company "'.$name.'"?<br /><br />
+			<a href="'.$back.'" class="btn btn-primary">No</a>&emsp;&emsp;&emsp;
+			<a href="'.$yes.'" class="btn btn-primary">Yes</a>';
 		
-		if ($companyid == $_SESSION['companyid']) {
-			$disabledDelete = ' disabled';
-		}
-		if ($disabled == 'Yes') {
-			$editDelete .= '&thinsp;<a href="'.$restore.'" class="btn btn-primary">Restore</a>';
-		} else {
-			$editDelete .= '&thinsp;<a href="'.$delete.'" class="btn btn-primary'.$disabledDelete.'">Delete</a>';
-		}
-		
-		if ($_GET['s']) {
-			$search = $_GET['s'];
-			$companyList = viewCompanies('search',$search);
-		} else {
-			$companyList = viewCompanies();
-		}
-		$fullPage = '<div class = "row">
-					<div class="col-sm-12">
-						<div class="card text-center page-margin0 left">
-							<div class="card-header title">
-								<div class = "row">
-									<div class = "col-sm-1.75 right-marigin5p">
-										<a href="/Company?c='.$_GET['c'].'" class="btn btn-primary">All Companies</a>
-									</div>
-									<div class = "col-sm-5">
-										<form class="form-inline my-2 my-lg-0" method="get" action="#">
-											<input type="hidden" value="'.$_GET['c'].'" name="c">
-											<input class="form-control mr-sm-2" type="search" placeholder="Search all companies" name="s">
-											<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-										</form>
-									</div>
-									<div class = "col-sm-5 text-right">
-										<a href="/EditCompany" class="btn btn-primary">Add a New Company</a>
-									</div>
-								</div>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="row">
-					<div class="col-md-12">
-						<div class="card text-center page-margin0 left">
-							<div class="card-header title"> Company List </div>
-							<div class="card-body scrollBox">'.$companyList.'</div>
-						</div>
-					</div>
-				</div>';
+		$title = 'Delete Company '.$name;
 	}
 ?>
 <!doctype html>
@@ -144,7 +113,7 @@
                 <ul class="nav navbar-nav navbar-right">
                 	<?php
 						if ($_SESSION['admin']) {
-							echo('<li class="nav-item active">
+							echo('<li class="nav-item">
 								<a class="nav-link" href="'.getCompanyLink().'">Manage Company</a>
 							</li>');
 						}
@@ -155,7 +124,7 @@
 						}
 					?>
                     <li class="nav-item">
-                        <a class="nav-link" href="/Profile">Profile<span class="sr-only">(current)</span></a>
+                        <a class="nav-link" href="/Profile">Profile</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/Logout" >Logout</a>
@@ -178,17 +147,7 @@
                 <div class="col-sm-12">
                     <div class="card text-center page-margin0 left right">
                         <div class="card-header title">
-                        	<div class="row">
-								<div class="col-sm-3 text-left">
-									<a href="<?php echo($back); ?>" class="btn btn-primary">Back</a>
-								</div>
-								<div class="col-sm-6">
-									<?php echo($title); ?>
-								</div>
-								<div class="col-sm-3 text-right">
-									<?php echo($editDelete); ?>
-								</div>
-                            </div>
+                            <?php echo($title); ?>
                         </div>
                         <div class="card-body">
                         	<span class="marginAuto inline-block"><?php echo($text); ?></span>
@@ -196,7 +155,6 @@
                     </div>
                 </div>
             </div>
-            <?php echo($fullPage); ?>
         </div>
     </body>
 </html>

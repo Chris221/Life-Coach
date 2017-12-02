@@ -1,5 +1,5 @@
 <?php
-	function view($table,$where = '',$debug = false){
+	function view($table,$where = '',$debug = false) {
 		include('includes/db.php');
 		$escapedTable = pg_escape_string($conn, $table);
 		if (strlen($where) > 1) {
@@ -30,7 +30,7 @@
 		return $data;
 	}
 
-	function delete($table,$where,$debug = false){
+	function delete($table,$where,$debug = false) {
 		include('includes/db.php');
 		$escapedTable = pg_escape_string($conn, $table);
 		if (strlen($where) > 1) {
@@ -62,10 +62,11 @@
 		}
 	}
 
-	function markAsDeleted($sid,$debug = false){
+	function markAsDeleted($sid,$debug = false) {
 		include('includes/db.php');
 		$sql = 'UPDATE schedule SET deleted=true WHERE scheduleid='.$sid.';';
 		$result = pg_query($conn, $sql);
+		$error = pg_last_error($conn);
 		if ($debug) {
 			if ($error) {
 				echo('<br />Error! (markAsDeleted)<br />');
@@ -83,7 +84,41 @@
 		}
 	}
 
-	function viewSchedule($debug = false){
+	function markCompanyAsDeleted($companyid,$debug = false) {
+		include('includes/db.php');
+		$sql = 'UPDATE companies SET deleted=true WHERE companyid='.$companyid.';';
+		$result = pg_query($conn, $sql);
+		$error = pg_last_error($conn);
+		if ($debug) {
+			if ($error) {
+				echo('<br />Error! (markCompanyAsDeleted)<br />');
+				echo('companyid: '.$companyid.'<br />');
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+	}
+
+	function markCompanyAsNOTDeleted($companyid,$debug = false) {
+		include('includes/db.php');
+		$sql = 'UPDATE companies SET deleted=false WHERE companyid='.$companyid.';';
+		$result = pg_query($conn, $sql);
+		$error = pg_last_error($conn);
+		if ($debug) {
+			if ($error) {
+				echo('<br />Error! (markCompanyAsNOTDeleted)<br />');
+				echo('companyid: '.$companyid.'<br />');
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+	}
+
+	function viewSchedule($debug = false) {
 		include('includes/db.php');
 		$sql = 'SELECT * FROM schedule_view WHERE coachid = '.$_SESSION['coachid'].' AND deleted IS NULL;';
 		$result = pg_query($conn, $sql);
@@ -128,7 +163,7 @@
 		return $schedule;
 	}
 
-	function viewClients($type,$sText,$debug = false){
+	function viewClients($type,$sText,$debug = false) {
 		include('includes/db.php');
 		if ($type == 'all') {
 			$where = 'WHERE companyid='.$_SESSION['companyid'];
@@ -186,7 +221,7 @@
 		return $clientList;
 	}
 
-	function viewPeople($returnLocation,$type = 'all',$sText = '',$debug = false){
+	function viewPeople($returnLocation,$type = 'all',$sText = '',$debug = false) {
 		include('includes/db.php');
 		if ($type == 'search') {
 			$cleanSearch = pg_escape_string($sText);
@@ -239,7 +274,7 @@
 		return $peopleList;
 	}
 
-	function viewCoachesForChange($returnLocation,$type = 'all',$sText = '',$debug = false){
+	function viewCoachesForChange($returnLocation,$type = 'all',$sText = '',$debug = false) {
 		include('includes/db.php');
 		if ($type == 'search') {
 			$cleanSearch = pg_escape_string($sText);
@@ -276,7 +311,7 @@
 		return $coachList;
 	}
 
-	function viewCoaches($type = 'all',$sText = '',$debug = false){
+	function viewCoaches($type = 'all',$sText = '',$debug = false) {
 		include('includes/db.php');
 		if ($type == 'search') {
 			$cleanSearch = pg_escape_string($sText);
@@ -313,7 +348,41 @@
 		return $coachList;
 	}
 
-	function addPerson($firstName, $lastName, $email, $cell, $gender, $companyid, $photoid = null, $prefix = null, $suffix = null, $home = null, $work = null, $extension = null, $dob = null, $address = null, $middleName = null, $debug = false){
+	function viewCompanies($type = 'all',$sText = '',$debug = false) {
+		include('includes/db.php');
+		if ($type == 'search') {
+			$cleanSearch = pg_escape_string($sText);
+			$where = "WHERE name ILIKE '%$cleanSearch%'";
+		}
+		$sql = 'SELECT name, companyid, deleted FROM companies '.$where.' ORDER BY name ASC;';
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('<br />Error! (View Companies)<br />');
+				echo('Type: '.$type.'<br />');
+				echo('Where: '.$where.'<br />');
+				echo('SQL: '.$sql.'<br />');
+				echo('Result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		
+		while ($row = pg_fetch_assoc($result)) {
+			$companyid = encrypt($row['companyid']);
+			$name = $row['name'];
+			if ($row['deleted'] != 'f') {
+				$deleted = ' class="text-muted"';
+			}
+			
+			$companyList .= '<a href="/Company/?c='.$companyid.'"'.$deleted.'>'.$name.'</a><br />';
+		}
+		pg_close($conn);
+		
+		return $companyList;
+	}
+
+	function addPerson($firstName, $lastName, $email, $cell, $gender, $companyid, $photoid = null, $prefix = null, $suffix = null, $home = null, $work = null, $extension = null, $dob = null, $address = null, $middleName = null, $debug = false) {
 		include('includes/db.php');
 		$eFirstName = pg_escape_string($conn, $firstName);
 		$eLastName = pg_escape_string($conn, $lastName);
@@ -354,7 +423,7 @@
 		return $last_insert_id;
 	}
 
-	function addCoach($personid,$surperviser,$pass,$debug = false){
+	function addCoach($personid,$surperviser,$pass,$debug = false) {
 		include('includes/db.php');
 		$sql = "INSERT INTO coaches(personid,supervisor,password) VALUES ('$personid',$surperviser::boolean,'$pass');";
 		$result = pg_query($conn, $sql);
@@ -577,6 +646,28 @@
 				echo('zip: '.$zip.'<br />');
 				echo('country: '.$country.'<br />');
 				echo('failed?: '.$failed.'<br />');
+				echo('result: '.$result.'<br />');
+				echo('Error: '.$error.'<br />');
+			}
+		}
+		pg_close($conn);
+	}
+
+	function changeCompany($companyid,$name,$location,$site,$debug = false) {
+		include('includes/db.php');
+		$name = pg_escape_string($conn,$name);
+		$location = pg_escape_string($conn,$location);
+		$site = pg_escape_string($conn,$site);
+		
+		$sql = "UPDATE companies SET name='$name', location='$location', domain='$site' WHERE companyid='$companyid';";
+		$result = pg_query($conn, $sql);
+		if ($debug) {
+			$error = pg_last_error($conn);
+			if ($error) {
+				echo('name: '.$name.'<br />');
+				echo('adressline1: '.$adressline1.'<br />');
+				echo('location: '.$location.'<br />');
+				echo('site: '.$site.'<br />');
 				echo('result: '.$result.'<br />');
 				echo('Error: '.$error.'<br />');
 			}
@@ -1122,7 +1213,7 @@
 		return $r;
 	}
 
-	function getRelationship($pid,$familyRelation,$pos = '-1',$debug=false){
+	function getRelationship($pid,$familyRelation,$pos = '-1',$debug=false) {
 		include('includes/db.php');
 		include('../protection.php');
 		if ($familyRelation == 'parent') {
