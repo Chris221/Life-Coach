@@ -181,7 +181,7 @@
 			$companyid = addCompany($companyname,$companylocation,$companysite,$pid,true);
 			if ($companyid) {
 				o_log('Company Add Successful', 'ID: '.$companyid);
-				//header('Location: /Company?c='.encrypt($companyid));
+				header('Location: /Company?c='.encrypt($companyid));
 			} else {
 				o_log('Company Add Failed');
 			}
