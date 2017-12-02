@@ -24,6 +24,9 @@
 							<div class="card-header title">
 								<div class = "row">
 									<div class = "col-sm-1.75 right-marigin5p">
+										<a href="'.$back.'" class="btn btn-primary">Back</a>
+									</div>
+									<div class = "col-sm-1.75 right-marigin5p">
 										<a href="'.$currentLink.'" class="btn btn-primary">All Coaches</a>
 									</div>
 									<div class = "col-sm-5">
@@ -133,14 +136,7 @@
         <br />
 
         <div class="container">
-                <div class="row">
-                    <div class="col-md-2">
-                        <a href="<?php echo($back); ?>" class="btn btn-primary">Back</a>
-                        <br />
-                        <br />
-                    </div>
-                </div>
-                <?php echo($topBar); ?>
+            <?php echo($topBar); ?>
             <div class ="row">
                 <div class="col-sm-12">
                     <div class="card text-center page-margin0 left right">
