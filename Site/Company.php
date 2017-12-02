@@ -180,7 +180,7 @@
                         <div class="card-header title">
                         	<div class="row">
 								<div class="col-sm-3 text-left">
-									<a href="<?php echo($back); ?>" class="btn btn-primary">Back</a>
+									<!--<a href="<?php echo($back); ?>" class="btn btn-primary">Back</a>-->
 								</div>
 								<div class="col-sm-6">
 									<?php echo($title); ?>
