@@ -10,6 +10,9 @@
 
 	if (isset($_GET['p'])) {
 		$pid = decrypt($_GET['p']);
+		if ($pid == $_SESSION['personid']) {
+			header('Location: /Profile');
+		}
 		o_log('Page Loaded','Profile ID: '.$pid);
 		$pTitle =  'Client Photo';
 		$iTitle = 'Client Info';
