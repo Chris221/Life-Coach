@@ -73,6 +73,12 @@
 					$_SESSION['admin'] = 'false';
 				}
 				
+				if ($_SESSION['personid'] == '1') {
+					$_SESSION['super_admin'] = 'true';
+				} else {
+					$_SESSION['super_admin'] = 'false';
+				}
+				
 				//sets cookie if it was checked
 				if ($_POST['remember']) {
 					include('includes/protection.php');

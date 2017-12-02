@@ -32,6 +32,12 @@
 		} else {
 			$_SESSION['admin'] = 'false';
 		}
+				
+		if ($_SESSION['personid'] == '1') {
+			$_SESSION['super_admin'] = 'true';
+		} else {
+			$_SESSION['super_admin'] = 'false';
+		}
 		
 		if ($data['deleted'] != 'f') {
 			session_unset();
