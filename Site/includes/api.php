@@ -373,6 +373,8 @@
 			$name = $row['name'];
 			if ($row['deleted'] != 'f') {
 				$deleted = ' class="text-muted"';
+			} else {
+				$deleted = '';
 			}
 			
 			$companyList .= '<a href="/Company/?c='.$companyid.'"'.$deleted.'>'.$name.'</a><br />';

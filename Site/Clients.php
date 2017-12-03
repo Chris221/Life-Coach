@@ -105,19 +105,17 @@
                     <div class="card text-center page-margin0 left">
                         <div class="card-header title">
                             <div class = "row">
-                                <div class = "col-sm-1.75 right-marigin5p">
-                                    <a href="/Clients/?c=mine" class="btn btn-primary">My Clients</a>
-                                </div>
-                                <div class = "col-sm-1.75 right-marigin5p">
+                                <div class = "col-sm-3 text-left">
+                                    <a href="/Clients/?c=mine" class="btn btn-primary">My Clients</a>&thinsp;
                                     <a href="/Clients/?c=all" class="btn btn-primary">All Clients</a>
                                 </div>
-                                <div class = "col-sm-5">
+                                <div class = "col-sm-7">
                                     <form class="form-inline my-2 my-lg-0" method="get" action="#">
                                         <input class="form-control mr-sm-2" type="search" placeholder="Search all clients" name="s">
                                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                                     </form>
                                 </div>
-                                <div class = "col-sm-4 text-right">
+                                <div class = "col-sm-2 text-right">
                                     <a href="/NewClient" class="btn btn-primary">Add a New Client</a>
                                 </div>
                             </div>

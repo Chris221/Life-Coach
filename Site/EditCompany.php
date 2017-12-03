@@ -11,7 +11,7 @@
 
 	if (isset($_GET['c']) && ($_GET['d'] == 'yes2')) {
 		$companyid = decrypt($_GET['c']);
-		o_log('Page Loaded','Delete Company ID: '.$companyid);
+		o_log('Page Loaded','Disabled Company ID: '.$companyid);
 		markCompanyAsDeleted($companyid);
 		header('Location: /Company?c='.$_GET['c']);
 	} else if (isset($_GET['c']) && ($_GET['r'] == 'yes')) {
@@ -57,11 +57,11 @@
 	$title = 'Edit Company '.$name;
 	if ($_GET['d'] == 'yes') {
 		$yes = '/EditCompany/?c='.encrypt($companyid).'&d=yes2';
-		$text = 'Are you sure you want to delete company "'.$name.'"?<br /><br />
+		$text = 'Are you sure you want to disable the company "'.$name.'"?<br /><br />
 			<a href="'.$back.'" class="btn btn-primary">No</a>&emsp;&emsp;&emsp;
 			<a href="'.$yes.'" class="btn btn-primary">Yes</a>';
 		
-		$title = 'Delete Company '.$name;
+		$title = 'Disable Company '.$name;
 	}
 ?>
 <!doctype html>

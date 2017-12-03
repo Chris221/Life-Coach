@@ -120,18 +120,18 @@
         <br />
 
         <div class="container">
-                <div class="row">
-                    <div class="col-md-2">
-                        <a href="<?php echo($back); ?>" class="btn btn-primary">Back</a>
-                        <br />
-                        <br />
-                    </div>
-                </div>
             <div class ="row">
                 <div class="col-sm-12">
                     <div class="card text-center page-margin0 left right">
                         <div class="card-header title">
-                            <?php echo($title); ?>
+							<div class="row">
+								<div class="col-sm-1">
+									<a href="<?php echo($back); ?>" class="btn btn-primary">Back</a>
+								</div>
+								<div class="col-sm-10">
+									<?php echo($title); ?>
+								</div>
+							</div>
                         </div>
                         <div class="card-body">
                         	<span class="marginAuto inline-block"><?php echo($text); ?></span>

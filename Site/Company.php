@@ -53,7 +53,7 @@
 		if ($disabled == 'Yes') {
 			$editDelete .= '&thinsp;<a href="'.$restore.'" class="btn btn-primary">Restore</a>';
 		} else {
-			$editDelete .= '&thinsp;<a href="'.$delete.'" class="btn btn-primary'.$disabledDelete.'">Delete</a>';
+			$editDelete .= '&thinsp;<a href="'.$delete.'" class="btn btn-primary'.$disabledDelete.'">Disable</a>';
 		}
 		
 		if ($_GET['s']) {
@@ -67,17 +67,17 @@
 						<div class="card text-center page-margin0 left">
 							<div class="card-header title">
 								<div class = "row">
-									<div class = "col-sm-1.75 right-marigin5p">
+									<div class = "col-sm-2 text-left">
 										<a href="/Company?c='.$_GET['c'].'" class="btn btn-primary">All Companies</a>
 									</div>
-									<div class = "col-sm-5">
+									<div class = "col-sm-7">
 										<form class="form-inline my-2 my-lg-0" method="get" action="#">
 											<input type="hidden" value="'.$_GET['c'].'" name="c">
 											<input class="form-control mr-sm-2" type="search" placeholder="Search all companies" name="s">
 											<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 										</form>
 									</div>
-									<div class = "col-sm-5 text-right">
+									<div class = "col-sm-3 text-right">
 										<a href="/NewCompany" class="btn btn-primary">Add a New Company</a>
 									</div>
 								</div>

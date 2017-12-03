@@ -141,27 +141,27 @@
                 </div>
             </div>
         </div>
-            <div class= "row">
-                <div class="col-sm-6">
-                    <div class="card text-center page-margin5 left calendar-list">
-                        <div class="card-header title">Daily Tasks</div>
-                        <div class="card-body" id="today">
-                        </div>
-                    </div>
-                </div>
-                <div class="col-sm-6">
-                    <div class="card text-center page-margin5 right">
-                            <div class="card-body" id='calendar'>
-                            </div>
+		<div class= "row">
+			<div class="col-sm-6">
+				<div class="card text-center page-margin0 calendar-list">
+					<div class="card-header title">Daily Tasks</div>
+					<div class="card-body" id="today">
 					</div>
-                       <div class="card text-center page-margin5 right">
-                        <div class="card-header title"> Recent Contact</div>
-                        <div class="card-body">
-                        	<?php echo($mostRecentlyContacted); ?>
-                        </div>
-                    </div>
-                </div>
-            </div>
+				</div>
+			</div>
+			<div class="col-sm-6">
+				<div class="card text-center page-margin0">
+						<div class="card-body" id='calendar'>
+						</div>
+			</div>
+			<div class="card text-center page-margin0">
+				<div class="card-header title">Recent Contact</div>
+				<div class="card-body">
+					<?php echo($mostRecentlyContacted); ?>
+				</div>
+			</div>
+		</div>
+	</div>
     <br/>
     <p class="footerText">
         Copyright &copy; 2017 No Rights Reserved.

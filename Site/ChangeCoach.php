@@ -23,13 +23,11 @@
 						<div class="card text-center page-margin0 left">
 							<div class="card-header title">
 								<div class = "row">
-									<div class = "col-sm-1.75 right-marigin5p">
+									<div class = "col-sm-3 text-left">
 										<a href="'.$back.'" class="btn btn-primary">Back</a>
-									</div>
-									<div class = "col-sm-1.75 right-marigin5p">
 										<a href="'.$currentLink.'" class="btn btn-primary">All Coaches</a>
 									</div>
-									<div class = "col-sm-5">
+									<div class = "col-sm-7">
 										<form class="form-inline my-2 my-lg-0" method="get" action="#">
 											<input type="hidden" value="'.$_GET['p'].'" name="p">
 											<input class="form-control mr-sm-2" type="search" placeholder="Search all coaches" name="s">
@@ -37,7 +35,7 @@
 										</form>
 									</div>';
 		if ($_SESSION['supervisor']) {
-			$topBar .= '<div class = "col-sm-4 text-right">
+			$topBar .= '<div class = "col-sm-2 text-right">
 				<a href="/NewCoach" class="btn btn-primary">Add a New Coach</a>
 			</div>';
 		}

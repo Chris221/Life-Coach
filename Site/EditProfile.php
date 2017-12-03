@@ -256,16 +256,18 @@
 </nav>
 <br/>
 <div class="container">
-        <div class="card text-center page-margin">
+        <div class="card text-center page-margin0">
             <div class="card-header title">
-                <?php echo($title); ?>
-            </div>
-            <div class="card-body">
                 <div class="row">
-                    <div class="col-md-2">
+                    <div class="col-sm-1">
                         <a href="<?php echo($back); ?>" class="btn btn-primary">Back</a>
                     </div>
+                    <div class="col-sm-10">
+                		<?php echo($title); ?>
+                    </div>
                 </div>
+            </div>
+            <div class="card-body">
                 <div class="row">
                     <div class="col-md-12">
                         <div class="newclient_page page">

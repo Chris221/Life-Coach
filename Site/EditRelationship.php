@@ -31,13 +31,11 @@
                     <div class="card text-center page-margin0 left">
                         <div class="card-header title">
                             <div class = "row">
-								<div class = "col-sm-1.75 right-marigin5p">
-									<a href="'.$back.'" class="btn btn-primary">Back</a>
-								</div>
-                                <div class = "col-sm-1.75 right-marigin5p">
+								<div class = "col-sm-3 text-left">
+									<a href="'.$back.'" class="btn btn-primary">Back</a>&thinsp;
                                     <a href="'.$currentLink.'" class="btn btn-primary">All People</a>
                                 </div>
-                                <div class = "col-sm-5">
+                                <div class = "col-sm-6">
                                     <form class="form-inline my-2 my-lg-0" method="get" action="#">
 										<input type="hidden" value="'.$_GET['p'].'" name="p">
                                         <input type="hidden" value="'.$relationshipType.'" name="r">
@@ -45,7 +43,7 @@
                                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
                                     </form>
                                 </div>
-                                <div class = "col-sm-4 text-right">
+                                <div class = "col-sm-3 text-right">
                                     <a href="/NewClient" class="btn btn-primary">Add a New Client</a>
                                 </div>
                             </div>

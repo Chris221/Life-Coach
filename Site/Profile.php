@@ -43,6 +43,11 @@
 	$personResult = view('persons','personid='.$pid);
 	$clientResult = view('clients','personid='.$pid);
 	$coachResult  = view('coaches','personid='.$pid);
+	$admin  = view('companies','admin_personid='.$pid);
+	
+	if ($admin['companyid'] > '0') {
+		$deleteDisabled = ' disabled';
+	}
 
 	$name = addStrTogether($personResult['prefix'],$personResult['first_name']);
 	$name = addStrTogether($name,$personResult['middle_name']);
@@ -276,31 +281,53 @@
                 <div class="col-sm-12">
                     <div class="card text-center page-margin0 left right">
                         <div class="card-header title">
-                            <?php echo($proTitle); ?>
-							<a href="<?php echo($newAppointment); ?>" class="btn btn-primary">New Appointment</a>
-							<a href="<?php echo($deleteProfile); ?>" class="btn btn-primary">Delete Person</a>
+							<div class = "row">
+								<div class="col-sm-4 text-left">
+									&thinsp;
+								</div>
+								<div class="col-sm-4">
+                        			<?php echo($proTitle); ?>
+								</div>
+								<div class="col-sm-4 text-right">
+									<a href="<?php echo($newAppointment); ?>" class="btn btn-primary">New Appointment</a>&thinsp;
+									<a href="<?php echo($deleteProfile); ?>" class="btn btn-primary<?php echo($deleteDisabled); ?>">Delete Person</a>
+								</div>
+                       		</div>
                         </div>
                     </div>
                 </div>
-            </div><!--
+            </div>
             <div class = "row">
-                <div class="col-sm-4 text-center">
-                    <a href="/NewClient" class="btn btn-primary">Add New Coach</a>
-                </div>
-            </div>-->
-            <br />
-            <div class = "row">
-                <div class="col-sm-4">
-                    <div class="card text-center page-margin5 left">
-                        <div class="card-header title"><?php echo($pTitle); ?>
-							<a href="<?php echo($changephoto); ?>" class="btn btn-primary">Change</a></div>
-                             <div class="card-body">
-                                 <?php echo($ptext); ?>
-                             </div>
+                <div class="col-sm-6">
+                    <div class="card text-center page-margin0">
+                        <div class="card-header title">
+							<div class = "row">
+								<div class="col-sm-3 text-left">
+									&thinsp;
+								</div>
+								<div class="col-sm-6">
+                        			<?php echo($pTitle); ?>
+								</div>
+								<div class="col-sm-3 text-right">
+									<a href="<?php echo($changephoto); ?>" class="btn btn-primary">Change</a>
+								</div>
+                       		</div>
+                        </div>
+                        <div class="card-body">
+							<?php echo($ptext); ?>
+                        </div>
                     </div>
-                    <div class="card text-center page-margin5 left">
-                        <div class="card-header title">Family Tree
-							<a href="<?php echo($relationshipslink); ?>" class="btn btn-primary">Details</a>
+                    <div class="card text-center page-margin0">
+                        <div class="card-header title">
+							<div class = "row">
+								<div class="col-sm-3 text-left">
+									&thinsp;
+								</div>
+								<div class="col-sm-6">Family Tree</div>
+								<div class="col-sm-3 text-right">
+									<a href="<?php echo($relationshipslink); ?>" class="btn btn-primary">Details</a>
+								</div>
+                       		</div>
                        	</div>
                         <div class="card-body">
                             <?php include('includes/treeBuilder.php'); buildTree($pid); ?>
@@ -308,38 +335,68 @@
                     </div>
                 </div>
 
-                <div class="col-sm-8">
-                    <div class="card text-center page-margin5 right">
-                        <div class="card-header title"><?php echo($iTitle); ?>
-							<a href="<?php echo($edit); ?>" class="btn btn-primary">Edit</a></div>
+                <div class="col-sm-6">
+                    <div class="card text-center page-margin0">
+                        <div class="card-header title">
+							<div class = "row">
+								<div class="col-sm-3 text-left">
+									&thinsp;
+								</div>
+								<div class="col-sm-6">
+									<?php echo($iTitle); ?>
+								</div>
+								<div class="col-sm-3 text-right">
+									<a href="<?php echo($edit); ?>" class="btn btn-primary">Edit</a>
+								</div>
+                       		</div>
+						</div>
                         <div class="card-body">
                         	<span class="marginAuto inline-block"><?php echo($itext); ?></span>
                         </div>
                     </div>
                 </div>
             </div>
+            <br />
 			<div class="row">
 				<div class="col-sm-6">
-				<div class="card text-center page-margin5 left">
-					<div class="card-header title">
-						<?php echo($eTitle); ?>
-						<a href="<?php echo($eventlink); ?>" class="btn btn-primary">New Life Events</a>
+					<div class="card text-center page-margin0">
+						<div class="card-header title">
+							<div class = "row">
+								<div class="col-sm-4 text-left">
+									&thinsp;
+								</div>
+								<div class="col-sm-4">
+									<?php echo($eTitle); ?>
+								</div>
+								<div class="col-sm-4 text-right">
+									<a href="<?php echo($eventlink); ?>" class="btn btn-primary">New Event</a>
+								</div>
+                       		</div>
+						</div>
+						<div class="card-body">
+							<span class="marginAuto inline-block"><?php echo($events); ?></span>
+						</div>
 					</div>
-					<div class="card-body">
-						<span class="marginAuto inline-block"><?php echo($events); ?></span>
-					</div>
-				</div>
 				</div>
 				<div class="col-sm-6">
-				<div class="card text-center page-margin5 right">
-					<div class="card-header title">
-						<?php echo($nTitle); ?>
-						<a href="<?php echo($notelink); ?>" class="btn btn-primary">Add a Note</a>
+					<div class="card text-center page-margin0">
+						<div class="card-header title">
+							<div class = "row">
+								<div class="col-sm-4 text-left">
+									&thinsp;
+								</div>
+								<div class="col-sm-4">
+									<?php echo($nTitle); ?>
+								</div>
+								<div class="col-sm-4 text-right">
+									<a href="<?php echo($notelink); ?>" class="btn btn-primary">Add a Note</a>
+								</div>
+                       		</div>
+						</div>
+						<div class="card-body">
+							<span class="marginAuto inline-block"><?php echo($notes); ?></span>
+						</div>
 					</div>
-					<div class="card-body">
-						<span class="marginAuto inline-block"><?php echo($notes); ?></span>
-					</div>
-				</div>
 				</div>
 			</div>
         </div>
