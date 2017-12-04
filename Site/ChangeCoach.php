@@ -34,7 +34,7 @@
 											<button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
 										</form>
 									</div>';
-		if ($_SESSION['supervisor']) {
+		if ($_SESSION['supervisor'] == 't') {
 			$topBar .= '<div class = "col-sm-2 text-right">
 				<a href="/NewCoach" class="btn btn-primary">Add a New Coach</a>
 			</div>';

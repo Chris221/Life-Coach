@@ -111,7 +111,7 @@
                                     </form>
                                 </div>
                                 <?php
-									if ($_SESSION['supervisor']) {
+									if ($_SESSION['supervisor'] == 't') {
 										echo('<div class = "col-sm-3 text-right">
 												<a href="/NewCoach" class="btn btn-primary">Add a New Coach</a>
 											</div>');

@@ -8,12 +8,6 @@
 		header('Location: /Login');
 	}
 	$title = 'Profile';
-		$personid = $_SESSION['personid'];
-		$sql = "SELECT * FROM accounts WHERE personid='$personid';";
-		$result = pg_query($conn, $sql);
-		$data = pg_fetch_assoc($result);
-		$_SESSION['employeed'] = $data['employeed'];
-	echo('employeed: '.$_SESSION['employeed']);
 
 	if (isset($_GET['p'])) {
 		$pid = decrypt($_GET['p']);
@@ -121,7 +115,7 @@
 			$lastActive = 'Never';
 		}
 		
-		if ($_SESSION['supervisor']) {
+		if ($_SESSION['supervisor'] == 't') {
 			$resetpass = '<br /><a href="/ForgotPassword?p='.encrypt($pid).'" class="btn btn-primary">Reset</a>';
 		}
 		if ($own) {

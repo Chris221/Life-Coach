@@ -223,7 +223,7 @@
 								<a class="nav-link" href="'.getCompanyLink().'">Manage Company</a>
 							</li>');
 						}
-						if ($_SESSION['supervisor']) {
+						if ($_SESSION['supervisor'] == 't') {
 							echo('<li class="nav-item right-marigin50p active">
 								<a class="nav-link" href="/NewCoach">Add New Coach</a>
 							</li>');
