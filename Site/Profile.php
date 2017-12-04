@@ -48,6 +48,8 @@
 	
 	if ($admin['companyid'] > '0') {
 		$deleteDisabled = ' disabled';
+	} else if ($pid == $_SESSION['personid']) {
+		$deleteDisabled = ' disabled';
 	}
 
 	$name = addStrTogether($personResult['prefix'],$personResult['first_name']);
