@@ -224,7 +224,7 @@
 							</li>');
 						}
 						if ($_SESSION['supervisor'] == 't') {
-							echo('<li class="nav-item right-marigin50p active">
+							echo('<li class="nav-item right-marigin40p active">
 								<a class="nav-link" href="/NewCoach">Add New Coach</a>
 							</li>');
 						}
