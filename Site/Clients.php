@@ -3,7 +3,7 @@
 	include('includes/session.php');
 	include('includes/api.php');
 	include('includes/protection.php');
-	if (!$_SESSION['employeed']) {
+	if ($_SESSION['employeed']  ==  'f') {
         header('Location: /Login');
     }
 	o_log('Page Loaded');
@@ -69,12 +69,12 @@
                 <!--        I changed this to align the logout to the right-->
                 <ul class="nav navbar-nav navbar-right">
                 	<?php
-						if ($_SESSION['admin']) {
+						 if ($_SESSION['admin'] == 'true') {
 							echo('<li class="nav-item">
 								<a class="nav-link" href="'.getCompanyLink().'">Manage Company</a>
 							</li>');
 						}
-						if ($_SESSION['supervisor']) {
+						if ($_SESSION['supervisor'] == 't') {
 							echo('<li class="nav-item right-marigin50p">
 								<a class="nav-link" href="/NewCoach">Add New Coach</a>
 							</li>');

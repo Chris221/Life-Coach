@@ -3,7 +3,7 @@
 	include('includes/session.php');
 	include('includes/api.php');
 	include('includes/protection.php');
-	if (!$_SESSION['admin']) {
+	if ($_SESSION['admin'] == 'false') {
 		header('Location: /');
 	}
 	
@@ -43,7 +43,7 @@
 	$edit = '/EditCompany?c='.$_GET['c'];
 	$editDelete = '<a href="'.$edit.'" class="btn btn-primary">Edit</a>';
 
-	if ($_SESSION['super_admin']) {
+	if ($_SESSION['super_admin'] == 'true') {
 		$delete = '/EditCompany?c='.$_GET['c'].'&d=yes';
 		$restore = '/EditCompany?c='.$_GET['c'].'&r=yes';
 		
@@ -143,12 +143,12 @@
                 <!--        I changed this to align the logout to the right-->
                 <ul class="nav navbar-nav navbar-right">
                 	<?php
-						if ($_SESSION['admin']) {
+						 if ($_SESSION['admin'] == 'false') {
 							echo('<li class="nav-item active">
 								<a class="nav-link" href="'.getCompanyLink().'">Manage Company</a>
 							</li>');
 						}
-						if ($_SESSION['supervisor']) {
+						if ($_SESSION['supervisor'] == 't') {
 							echo('<li class="nav-item right-marigin50p">
 								<a class="nav-link" href="/NewCoach">Add New Coach</a>
 							</li>');

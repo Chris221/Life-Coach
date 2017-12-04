@@ -3,7 +3,7 @@
 	include('includes/session.php');
 	include('includes/api.php');
 	include('includes/protection.php');
-	if (!$_SESSION['employeed']) {
+	if ($_SESSION['employeed']  ==  'f') {
 		header('Location: /Login');
 	}
 

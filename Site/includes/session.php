@@ -53,7 +53,7 @@
 		include('includes/log.php');
 		o_log('Logged in', 'From the cookie');
 	}
-	if ($_SESSION['employeed']) {
+	if ($_SESSION['employeed'] == 't') {
 		include('includes/db.php');
 		$date = date("Y-m-d H:i:s");
 		$personid = $_SESSION['personid'];

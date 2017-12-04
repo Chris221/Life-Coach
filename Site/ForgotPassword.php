@@ -7,7 +7,7 @@
 	include('includes/password.php');
 	include('includes/db.php');
 	if (isset($_GET['uid'])) {
-		if ($_SESSION['employeed']) {
+		if ($_SESSION['employeed'] == 't') {
 			header('Location: /');
 		}
 		$UID = $_GET['uid'];
@@ -44,7 +44,7 @@
                  	<input type="submit" value="Reset Password" class="button login_button" />
                  </form>';
 	} else {
-		if ($_SESSION['employeed']) {
+		if ($_SESSION['employeed'] == 't') {
 			header('Location: /');
 		}
 		o_log('Page Loaded');
@@ -250,13 +250,13 @@
 							</ul>
 							<!--        I changed this to align the logout to the right-->
 							<ul class="nav navbar-nav navbar-right">');
-							if ($_SESSION['admin']) {
-								echo('<li class="nav-item">
+							 if ($_SESSION['admin'] == 'true') {
+							echo('<li class="nav-item">
 									<a class="nav-link" href="'.getCompanyLink().'">Manage Company</a>
 								</li>');
 							}
-							if ($_SESSION['supervisor']) {
-								echo('<li class="nav-item right-marigin50p">
+							if ($_SESSION['supervisor'] == 't') {
+							echo('<li class="nav-item right-marigin50p">
 									<a class="nav-link" href="/NewCoach">Add New Coach</a>
 								</li>');
 							}

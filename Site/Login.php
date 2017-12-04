@@ -1,7 +1,7 @@
 <?php
 	include('includes/log.php');
 	include('includes/session.php');
-	if ($_SESSION['employeed']) {
+	if ($_SESSION['employeed'] == 't') {
 		header('Location: /');
 	}
 	o_log('Page Loaded');

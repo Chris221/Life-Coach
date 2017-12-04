@@ -3,7 +3,7 @@
 	include('includes/session.php');
 	include('includes/protection.php');
 	include('includes/api.php');
-	if (!$_SESSION['employeed']) {
+	if ($_SESSION['employeed']  ==  'f') {
 		header('Location: /Login');
 	}
 	if (isset($_GET['p'])) {
@@ -67,10 +67,14 @@
 	if ($personResult['deceased'] != 'f') {
 		$deceased = 'checked';
 	}
+	
+	if ($_SESSION['supervisor'] != 'f') {
+		$supervisorFull = '<tr><td>Supervisor:</td><td><input type="checkbox" name="supervisor" autocomplete="off" '.$supervisor.' /></td></tr>';
+	}
 
 	if ($coachResult['coachid']) {
 		$coachInfo = '<tr><td><h3>Coach Information</h3></td><td>&thinsp;</td></tr>
-                    <tr><td>Supervisor:</td><td><input type="checkbox" name="supervisor" autocomplete="off" '.$supervisor.' /></td>
+                    '.$supervisorFull.'
                     <tr><td>Employeed:</td><td><input type="checkbox" name="employeed" autocomplete="off" '.$employeed.' /></td></tr>
                     <tr><td>&thinsp;</td><td>&thinsp;</td></tr>';
 	}
@@ -227,12 +231,12 @@
         <!--        I changed this to align the logout to the right-->
         <ul class="nav navbar-nav navbar-right">
                 	<?php
-						if ($_SESSION['admin']) {
+						 if ($_SESSION['admin'] == 'true') {
 							echo('<li class="nav-item">
 								<a class="nav-link" href="'.getCompanyLink().'">Manage Company</a>
 							</li>');
 						}
-						if ($_SESSION['supervisor']) {
+						if ($_SESSION['supervisor'] == 't') {
 							echo('<li class="nav-item right-marigin50p">
 								<a class="nav-link" href="/NewCoach">Add New Coach</a>
 							</li>');

@@ -4,7 +4,7 @@
 	include('includes/uploadPhoto.php');
 	include('includes/api.php');
 	include('includes/protection.php');
-	if (!$_SESSION['supervisor']) {
+	if ($_SESSION['supervisor'] == 'f') {
 		header('Location: /');
 	}
 	o_log('Page Loaded');
@@ -218,7 +218,7 @@
         <!--        I changed this to align the logout to the right-->
         <ul class="nav navbar-nav navbar-right">
                 	<?php
-						if ($_SESSION['admin']) {
+						 if ($_SESSION['admin'] == 'true') {
 							echo('<li class="nav-item">
 								<a class="nav-link" href="'.getCompanyLink().'">Manage Company</a>
 							</li>');
