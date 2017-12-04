@@ -7,12 +7,14 @@
 	$currentID = '';
 
 	function getPerson($pid, $debug = false) {
+		//Loading Includes
 		include('includes/db.php');
 		include('includes/includes/db.php');
 		$sql = 'SELECT prefix, first_name, middle_name, last_name, suffix, gender, deceased FROM persons WHERE personid='.$pid.';';
 		$result = pg_query($conn, $sql);
 		$data = pg_fetch_assoc($result);
 		if ($debug) {
+			//Debug information
 			$error = pg_last_error($conn);
 			if ($error) {
 				echo('<br />Error! (getPerson)<br />');
@@ -68,12 +70,14 @@
 	}
 
 	function getSpouse($other, $debug = false) {
+		//Loading Includes
 		include('includes/db.php');
 		include('includes/includes/db.php');
 		$sql1 = 'SELECT personid2 FROM relationships WHERE personid1='.$other.' AND relationship=3;';
 		$result1 = pg_query($conn, $sql1);
 		$data1 = pg_fetch_assoc($result1);
 		if ($debug) {
+			//Debug information
 			$error1 = pg_last_error($conn);
 			if ($error1) {
 				echo('<br />Error! (getSpouse)<br />');
@@ -90,6 +94,7 @@
 			$result = pg_query($conn, $sql);
 			$data = pg_fetch_assoc($result);
 			if ($debug) {
+			//Debug information
 				$error = pg_last_error($conn);
 				if ($error) {
 					echo('<br />Error! (getSpouse2)<br />');
@@ -136,6 +141,7 @@
 		$sql = "SELECT personid2 FROM relationships WHERE personid1='$other' AND relationship = '2';";
 		$result = pg_query($conn, $sql);
 		if ($debug) {
+			//Debug information
 			$error = pg_last_error($conn);
 			if ($error) {
 				echo('<br />Error! (getParentsOtherChildren)<br />');
@@ -214,6 +220,7 @@
 		$sql = 'SELECT personid2, relationship FROM relationships WHERE personid1='.$pid.';';
 		$result = pg_query($conn, $sql);
 		if ($debug) {
+			//Debug information
 			$error = pg_last_error($conn);
 			if ($error) {
 				echo('<br />Error! (getRelations)<br />');

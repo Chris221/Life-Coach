@@ -1,8 +1,11 @@
 <?php
+	//connection string
 	$connString = "host=localhost dbname=life_coach user=webuser password=Cappingteampablo2";
 
+	//executes the connection string
 	$conn = pg_connect($connString);
 
+	//debuging to confirm connection
 	if (false) {
 		$stat = pg_connection_status($conn);
 		if ($stat === PGSQL_CONNECTION_OK) {
@@ -12,9 +15,7 @@
 		}
 	}
 
-
-
-	//CODE FOR LATER USE, Love past Chris
+	//CODE FOR LATER USE
 	//$result = pg_query($conn, "SQL GOES HERE");
 	//while ($row = pg_fetch_row($result))
 	//pg_fetch_all($result); pg_fetch_assoc

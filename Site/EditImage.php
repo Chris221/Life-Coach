@@ -1,4 +1,5 @@
 <?php
+	//Loading Includes
 	include('includes/log.php');
 	include('includes/session.php');
 	include('includes/uploadPhoto.php');
@@ -37,6 +38,7 @@
 		} else {
 			$photoid = "'".$photoid."'";
 			$photoid = convertEmptyToNull($photoid);
+			//Loading Includes
 			include('includes/db.php');
 			$sql = "UPDATE persons SET photoid=$photoid WHERE personid='$pid';";
 			$result = pg_query($conn, $sql);

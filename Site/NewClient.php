@@ -1,4 +1,5 @@
 <?php
+	//Loading Includes
 	include('includes/log.php');
 	include('includes/session.php');
 	include('includes/uploadPhoto.php');
@@ -12,6 +13,7 @@
 
 
 	if ($_SERVER["REQUEST_METHOD"] == "POST") {
+		//Loading Includes
 		include('includes/db.php');
 		$prefix = pg_escape_string($conn, $_POST['prefix']);
 		$firstname = pg_escape_string($conn, $_POST['firstname']);
@@ -20,10 +22,10 @@
 		$suffix = pg_escape_string($conn, $_POST['suffix']);
 		$email1 = pg_escape_string($conn, strtolower($_POST['email1']));
 		$email2 = pg_escape_string($conn, strtolower($_POST['email2']));
-		$cell = cleanPhoneNumber($_POST['cell']);
-		$home = cleanPhoneNumber($_POST['home']);
-		$worknumber = cleanPhoneNumber($_POST['work']);
-		$extension = cleanPhoneNumber($_POST['extension']);
+		$cell = cleanNumber($_POST['cell']);
+		$home = cleanNumber($_POST['home']);
+		$worknumber = cleanNumber($_POST['work']);
+		$extension = cleanNumber($_POST['extension']);
 		$dob = $_POST['dob'];
 		$gender = $_POST['gender'];
 

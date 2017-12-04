@@ -1,4 +1,5 @@
 <?php
+	//Loading Includes
 	include('includes/log.php');
 	include('includes/session.php');
 	include('includes/api.php');
@@ -32,8 +33,8 @@
 	$clientName = addStrTogether($clientName,$result['last_name']);
 	$clientName = addStrTogether($clientName,$result['suffix']);
 
-	$start = readableDate($result['time_start']);
-	$end = readableDate($result['time_end']);
+	$start = readableDateNoTZ($result['time_start']);
+	$end = readableDateNoTZ($result['time_end']);
 	$scheduledby = $result['scheduledby'];
 	$type = $result['type'];
 	$reason = $result['reason'];

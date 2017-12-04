@@ -1,4 +1,5 @@
 <?php
+	//Loading Includes
 	include('includes/log.php');
 	include('includes/session.php');
 	include('includes/api.php');
@@ -347,7 +348,9 @@
                        		</div>
                        	</div>
                         <div class="card-body">
-                            <?php include('includes/treeBuilder.php'); buildTree($pid); ?>
+                            <?php
+	//Loading Includes
+	include('includes/treeBuilder.php'); buildTree($pid); ?>
                         </div>
                     </div>
                 </div>

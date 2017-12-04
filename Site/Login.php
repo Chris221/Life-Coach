@@ -1,4 +1,5 @@
 <?php
+	//Loading Includes
 	include('includes/log.php');
 	include('includes/session.php');
 	if ($_SESSION['employeed'] == 't') {
@@ -81,6 +82,7 @@
 				
 				//sets cookie if it was checked
 				if ($_POST['remember']) {
+					//Loading Includes
 					include('includes/protection.php');
 					//BROKEN fix with Try catches
 					$pid = $_SESSION['personid'];
