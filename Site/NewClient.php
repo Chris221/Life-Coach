@@ -4,7 +4,7 @@
 	include('includes/uploadPhoto.php');
 	include('includes/api.php');
 	include('includes/protection.php');
-	if ($_SESSION['employeed']  ==  'f') {
+	if ($_SESSION['employeed']  ==  'f' || !$_SESSION['employeed']) {
 		header('Location: /Login');
 	}
 	o_log('Page Loaded');
@@ -98,7 +98,7 @@
 
 		if ($work) {
 			// Check for Email duplicates
-			$data = view('accounts', "email='$email1'");
+			$data = view('persons', "email='$email1'");
 			if ($data['personid']) {
 				$text = "The email address \"$email1\" already exists.<br />";
 				$work = false;

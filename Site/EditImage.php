@@ -4,7 +4,7 @@
 	include('includes/uploadPhoto.php');
 	include('includes/protection.php');
 	include('includes/api.php');
-	if ($_SESSION['employeed']  ==  'f') {
+	if ($_SESSION['employeed']  ==  'f' || !$_SESSION['employeed']) {
 		header('Location: /Login');
 	}
 	

@@ -133,7 +133,7 @@
 		
 		if ($work) {
 			// Check for Email duplicates
-			$data = view('accounts',"email='$email1'");
+			$data = view('persons',"email='$email1'");
 			if($data['personid']) {
 				$text = "The email address \"$email1\" already exists.<br />";
 				$work = false;
@@ -236,7 +236,7 @@
         <!--        I changed this to align the logout to the right-->
         <ul class="nav navbar-nav navbar-right">
                 	<?php
-						 if ($_SESSION['admin'] == 'false') {
+						 if ($_SESSION['admin'] == 'true') {
 							echo('<li class="nav-item active">
 								<a class="nav-link" href="'.getCompanyLink().'">Manage Company</a>
 							</li>');

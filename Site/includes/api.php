@@ -371,7 +371,7 @@
 		while ($row = pg_fetch_assoc($result)) {
 			$companyid = encrypt($row['companyid']);
 			$name = $row['name'];
-			if ($row['deleted'] != 'f') {
+			if ($row['deleted'] == 't') {
 				$deleted = ' class="text-muted"';
 			} else {
 				$deleted = '';

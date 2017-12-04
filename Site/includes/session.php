@@ -39,7 +39,7 @@
 			$_SESSION['super_admin'] = 'false';
 		}
 		
-		if ($data['deleted'] != 'f') {
+		if ($data['deleted'] == 't') {
 			session_unset();
 			session_destroy();
 			if (isset($_COOKIE['Login'])) {
@@ -89,7 +89,7 @@
 			$_SESSION['super_admin'] = 'false';
 		}
 		
-		if ($data['deleted'] != 'f') {
+		if ($data['deleted'] == 't') {
 			session_unset();
 			session_destroy();
 			if (isset($_COOKIE['Login'])) {
@@ -108,5 +108,8 @@
 		pg_close($conn);
 	} else {
 		//NOT ALLOWED IN
+	}
+	if ($_SERVER['REQUEST_URI'] != '/Login/' && !$_SESSION['employeed']) {
+		header('Location: /Login/');
 	}
 ?>

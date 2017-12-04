@@ -3,7 +3,7 @@
 	include('includes/session.php');
 	include('includes/protection.php');
 	include('includes/api.php');
-	if ($_SESSION['employeed']  ==  'f') {
+	if ($_SESSION['employeed']  ==  'f' || !$_SESSION['employeed']) {
 		header('Location: /Login');
 	}
 	if (isset($_GET['p'])) {
@@ -18,6 +18,7 @@
 	$personResult = view('persons','personid='.$pid);
 	$clientResult = view('clients','personid='.$pid);
 	$coachResult  = view('coaches','personid='.$pid);
+	$admin = view('companies','admin_personid='.$pid);
 
 	$prefix = $personResult['prefix'];
 	$firstname = $personResult['first_name'];
@@ -72,7 +73,7 @@
 		$supervisorFull = '<tr><td>Supervisor:</td><td><input type="checkbox" name="supervisor" autocomplete="off" '.$supervisor.' /></td></tr>';
 	}
 
-	if ($coachResult['coachid']) {
+	if ($coachResult['coachid'] && !isset($admin['companyid'])) {
 		$coachInfo = '<tr><td><h3>Coach Information</h3></td><td>&thinsp;</td></tr>
                     '.$supervisorFull.'
                     <tr><td>Employeed:</td><td><input type="checkbox" name="employeed" autocomplete="off" '.$employeed.' /></td></tr>
@@ -107,15 +108,20 @@
 		$goals = $_POST['goals'];
 		$needs = $_POST['needs'];
 		$selfawareness = $_POST['selfawareness'];
-		if(isset($_POST['supervisor'])) {
+		if (!isset($admin['companyid'])) {
+			if(isset($_POST['supervisor'])) {
+				$supervisor = 'true';
+			} else {
+				$supervisor = 'false';
+			}
+			if(isset($_POST['employeed'])) {
+				$employeed = 'true';
+			} else {
+				$employeed = 'false';
+			}
+		} else {
 			$supervisor = 'true';
-		} else {
-			$supervisor = 'false';
-		}
-		if(isset($_POST['employeed'])) {
 			$employeed = 'true';
-		} else {
-			$employeed = 'false';
 		}
 		if(isset($_POST['deceased'])) {
 			$deceased = 'true';

@@ -143,7 +143,7 @@
                 <!--        I changed this to align the logout to the right-->
                 <ul class="nav navbar-nav navbar-right">
                 	<?php
-						 if ($_SESSION['admin'] == 'false') {
+						 if ($_SESSION['admin'] == 'true') {
 							echo('<li class="nav-item active">
 								<a class="nav-link" href="'.getCompanyLink().'">Manage Company</a>
 							</li>');

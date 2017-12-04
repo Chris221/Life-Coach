@@ -4,7 +4,7 @@
 	include('includes/api.php');
 	include('includes/protection.php');
 	include('includes/db.php');
-	if ($_SESSION['employeed']  ==  'f') {
+	if ($_SESSION['employeed']  ==  'f' || !$_SESSION['employeed']) {
 		header('Location: /Login');
 	}
 	$title = 'Profile';
@@ -15,10 +15,10 @@
 			header('Location: /Profile');
 		}
 		o_log('Page Loaded','Profile ID: '.$pid);
-		$pTitle =  'Client Photo';
-		$iTitle = 'Client Info';
-		$proTitle = 'Client Profile';
-		$nTitle = "Client Notes";
+		$pTitle =  "Client's Photo";
+		$iTitle = "Client's Info";
+		$proTitle = "Client's Profile";
+		$nTitle = "Client's Notes";
 		$notelink = '/Notes/?p='.encrypt($pid);
 		$eTitle = "Client's Life Events";
 		$eventlink = '/Events/?p='.encrypt($pid);
@@ -44,12 +44,26 @@
 	$personResult = view('persons','personid='.$pid);
 	$clientResult = view('clients','personid='.$pid);
 	$coachResult  = view('coaches','personid='.$pid);
-	$admin  = view('companies','admin_personid='.$pid);
+	$admin = view('companies','admin_personid='.$pid);
 	
 	if ($admin['companyid'] > '0') {
+		$adminLine = '<tr><td><h3>Admin Information</h3></td></tr>
+						<tr><td>Company Name:</td><td>'.$admin['name'].'</td></tr>
+						<tr><td>Company Location:</td><td>'.$admin['location'].'</td></tr>
+						<tr><td>Company Website:</td><td><a href="http://'.$admin['domain'].'/">'.$admin['domain'].'</a></td></tr>
+						<tr><td>&thinsp;</td><td>&thinsp;</td></tr>';
 		$deleteDisabled = ' disabled';
 	} else if ($pid == $_SESSION['personid']) {
 		$deleteDisabled = ' disabled';
+	} else if ($coachResult['coachid']) {
+		$pTitle =  "Coach's Photo";
+		$iTitle = "Coach's Info";
+		$proTitle = "Coach's Profile";
+		$nTitle = "Coach's Notes";
+		$eTitle = "Coach's Life Events";
+		if (($coachResult['supervisor'] == 't') && ($_SESSION['supervisor'] == 'f')) {
+			$deleteDisabled = ' disabled';
+		}
 	}
 
 	$name = addStrTogether($personResult['prefix'],$personResult['first_name']);
@@ -86,7 +100,7 @@
 	$goals = $clientResult['goals'];
 	$needs = $clientResult['needs'];
 	$gender = $personResult['gender'];
-	if ($personResult['deceased'] != 'f') {
+	if ($personResult['deceased'] == 't') {
 		$deceased = 'Yes';
 	} else  {
 		$deceased = 'No';
@@ -101,12 +115,12 @@
 	}
 
 	if ($coachResult['coachid']) {
-		if ($coachResult['supervisor'] != 'f') {
+		if ($coachResult['supervisor'] == 't') {
 			$supervisor = 'Yes';
 		} else  {
 			$supervisor = 'No';
 		}
-		if ($coachResult['employeed'] != 'f') {
+		if ($coachResult['employeed'] == 't') {
 			$employeed = 'Yes';
 		} else  {
 			$employeed = 'No';
@@ -131,7 +145,7 @@
 		<tr><td>Last Active on:</td><td>'.$lastActive.'</td></tr>
 		<tr><td>Password:</td><td>Encrypted'.$resetpass.'</td></tr>
 		<tr><td>&thinsp;</td><td>&thinsp;</td></tr>
-		';
+		'.$adminLine;
 	} else {
 		$myCoachResult  = view('accounts','coachid='.$cid);
 		$cName = addStrTogether($myCoachResult['prefix'],$myCoachResult['first_name']);

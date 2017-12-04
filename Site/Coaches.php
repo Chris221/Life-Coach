@@ -3,9 +3,9 @@
 	include('includes/session.php');
 	include('includes/api.php');
 	include('includes/protection.php');
-	if ($_SESSION['employeed']  ==  'f') {
-        header('Location: /Login');
-    }
+	if ($_SESSION['employeed']  ==  'f' || !$_SESSION['employeed']) {
+		header('Location: /Login');
+	}
 	o_log('Page Loaded');
 	$title = 'Coaches';
 
