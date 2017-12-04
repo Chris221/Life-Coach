@@ -58,18 +58,18 @@
 		$other = 'selected';
 	}
 
-	if ($coachResult['supervisor'] != 'f') {
+	if ($coachResult['supervisor'] == 't') {
 		$supervisor = 'checked';
 	}
-	if ($coachResult['employeed'] != 'f') {
+	if ($coachResult['employeed'] == 't') {
 		$employeed = 'checked';
 	}
 	
-	if ($personResult['deceased'] != 'f') {
+	if ($personResult['deceased'] == 't') {
 		$deceased = 'checked';
 	}
 	
-	if ($_SESSION['supervisor'] != 'f') {
+	if ($_SESSION['supervisor'] == 't') {
 		$supervisorFull = '<tr><td>Supervisor:</td><td><input type="checkbox" name="supervisor" autocomplete="off" '.$supervisor.' /></td></tr>';
 	}
 
