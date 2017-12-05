@@ -1,7 +1,7 @@
 <?php
 	//Loading Includes
-	include('includes/log.php');
 	include('includes/session.php');
+	include('includes/log.php');
 	if ($_SESSION['employeed'] == 't') {
 		header('Location: /');
 	}

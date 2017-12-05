@@ -135,7 +135,7 @@
 	} else {
 		//NOT ALLOWED IN
 	}
-	if ($_SERVER['REQUEST_URI'] != '/Login/' && !$_SESSION['employeed']) {
+	if (($_SERVER['REQUEST_URI'] != '/Login/' && $_SERVER['REQUEST_URI'] != '/ForgotPassword/') && !$_SESSION['employeed']) {
 		//if not logged in and not on the login redirect to login
 		header('Location: /Login/');
 	}

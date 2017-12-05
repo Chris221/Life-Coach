@@ -1,7 +1,7 @@
 <?php
 	//Loading Includes
-	include('includes/log.php');
 	include('includes/session.php');
+	include('includes/log.php');
 	include('includes/api.php');
 	include('includes/protection.php');
 	if ($_SESSION['employeed']  ==  'f' || !$_SESSION['employeed']) {
