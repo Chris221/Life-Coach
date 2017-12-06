@@ -265,14 +265,14 @@
                                 echo($text);
                                 echo('<table>
                         <form action="#" method="post" enctype="multipart/form-data">
-                            <tr><td><h3 class="image_header">Photo</h3></td><td>&thinsp;</td></tr>
+                            <tr><td><h3 class="image_header text-left">Photo</h3></td><td>&thinsp;</td></tr>
                             <input type="hidden" name="MAX_FILE_SIZE" value="5120000">
                             <tr><td><input name="image" type="file" accept="image/*"></td><td>&thinsp;</td></tr>
                             <tr><td>The photo can not be any larger then 5MB.</td><td>&thinsp;</td></tr>
                             <tr><td>The photo types supported are JPG, PNG, & GIF.</td><td>&thinsp;</td></tr>
                             <tr><td>May take up to 5 minutes as the server processes the image.</td><td>&thinsp;</td></tr>
                             
-                            </table><table>
+                            </table><table class="text-left">
                             
                             <tr><td><h3>Personal Information</h3></td><td>&thinsp;</td></tr>
                             <tr><td>Prefix:</td><td><input type="text" name="prefix" autocomplete="off" /></td></tr>
