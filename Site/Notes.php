@@ -154,7 +154,7 @@
                     <div class="card text-center page-margin0 left right">
                         <div class="card-header title">
 							<div class="row">
-								<div class="col-sm-2">
+								<div class="col-sm-2 text-left">
 									<a href="<?php echo($back); ?>" class="btn btn-primary">Back</a>
 								</div>
 								<div class="col-sm-8">
