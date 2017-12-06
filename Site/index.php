@@ -143,7 +143,7 @@
             </div>
         </div>
 		<div class= "row">
-			<div class="col-sm-6">
+			<div class="col-sm-6" id="todayWin">
 				<div class="card text-center page-margin0 calendar-list">
 					<div class="card-header title">Daily Tasks</div>
 					<div class="card-body" id="today">
@@ -151,7 +151,7 @@
 				</div>
 			</div>
 			<div class="col-sm-6">
-				<div class="card text-center page-margin0">
+				<div class="card text-center page-margin0" id="calMonth">
 						<div class="card-body" id='calendar'>
 						</div>
 			</div>

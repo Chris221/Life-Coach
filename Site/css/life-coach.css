@@ -270,6 +270,14 @@ p {
         font-size: 1rem;
     }
 
+    h2 {
+        font-size: 1.5rem;
+    }
+
+    h4 {
+        font-size: 1rem;
+    }
+
     table {
         text-align: left;
         width: 50px;
@@ -281,6 +289,18 @@ p {
 
     input[type=datetime-local]{
         width: 150px;
+    }
+
+    #calMonth {
+        display: none;
+    }
+
+    .fc-view>table {
+        height: 400px;
+    }
+
+    .fc-scroller {
+        height: 350px!important;
     }
 
     /*input[type=submit], input[type=reset]{
