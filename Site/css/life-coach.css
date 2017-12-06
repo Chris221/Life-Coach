@@ -224,6 +224,10 @@ p {
     title, body{
         font-size: medium;
     }
+
+    .fc-scroller {
+        height: 350px!important;
+    }
 }
 
 
