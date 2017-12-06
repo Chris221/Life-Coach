@@ -269,9 +269,8 @@
                     <?php
                     echo($upload_image_text);
                     echo($text);
-                    echo('
+                    echo('<table>
                 <form action="#" method="post" enctype="multipart/form-data">
-                    <table>
                     <tr><td><h3 class="image_header">Photo</h3></td><td>&thinsp;</td></tr>
                     <input type="hidden" name="MAX_FILE_SIZE" value="5120000">
                     <tr><td><input name="image" type="file" accept="image/*"></td><td>&thinsp;</td></tr>
@@ -305,10 +304,11 @@
                     <tr><td>Password:* <span class="password_info">(minimum 8 characters)</span></td><td><input type="password" name="pass1"  autocomplete="off" /></td></tr>
                     <tr><td>Confirm Password:*</td><td><input type="password" name="pass2"  autocomplete="off" /></td></tr>
                     <tr><td>&thinsp;</td><td>&thinsp;</td></tr>
-                    </table>
-                    <input type="submit" value="Submit" class="button" /><br />
-                    <input type="reset" value="Reset" class="button" />
+                    </table><table>
+                    <tr><td><input type="submit" value="Submit" class="button" /></td></tr>
+                    <tr><td><input type="reset" value="Reset" class="button" /></td></tr>
                 </form>
+                </table>
             ');
                     ?>
                 </div>
