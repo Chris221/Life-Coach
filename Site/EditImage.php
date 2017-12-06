@@ -26,7 +26,7 @@
 					<tr><td><input name="image" type="file" accept="image/*"></td><td>&thinsp;</td></tr>
 					<tr><td>The photo can not be any larger then 5MB.</td><td>&thinsp;</td></tr>
 					<tr><td>The photo types supported are JPG, PNG, & GIF.</td><td>&thinsp;</td></tr>
-					<tr><td>May take up to 5 minutes as the server processes the image.</td><td>&thinsp;</td></tr>
+					<tr><td>May take up to a minute as the server processes the image.</td><td>&thinsp;</td></tr>
 					<tr><td><input type="submit" value="Submit" class="button" /></td></tr>
 				</table>
 			</form>';
