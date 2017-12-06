@@ -295,6 +295,14 @@ p {
         width: 150px;
     }
 
+    input[type=submit]{
+        alignment: left;
+    }
+
+    tr {
+        width: 75px;
+    }
+
     #calMonth {
         display: none;
     }
@@ -307,9 +315,9 @@ p {
         height: 350px!important;
     }
 
-    /*input[type=submit], input[type=reset]{
-        width: 100px;
-    }*/
+    .title {
+        font-size: 1rem;
+    }
 
 }
 
