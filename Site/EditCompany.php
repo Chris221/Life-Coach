@@ -114,7 +114,7 @@
                 <ul class="nav navbar-nav navbar-right">
                 	<?php
 						 if ($_SESSION['admin'] == 'true') {
-							echo('<li class="nav-item">
+							echo('<li class="nav-item active">
 								<a class="nav-link" href="'.getCompanyLink().'">Manage Company</a>
 							</li>');
 						}

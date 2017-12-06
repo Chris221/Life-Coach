@@ -6,7 +6,7 @@
 	$parents_close = '';
 	$currentID = '';
 
-	function getPerson($pid, $debug = false) {
+	function getPerson($pid, $c = false, $debug = false) {
 		//Loading Includes
 		include('includes/db.php');
 		include('includes/includes/db.php');
@@ -214,7 +214,7 @@
 		$spouse = '';
 		$spouse_close = '';
 		$parents_close = '';
-		$p = getPerson($pid);
+		$p = getPerson($pid, true);
 		
 		include('includes/db.php');
 		$sql = 'SELECT personid2, relationship FROM relationships WHERE personid1='.$pid.';';
