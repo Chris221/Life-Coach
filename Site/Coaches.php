@@ -102,10 +102,10 @@
                     <div class="card text-center page-margin0 left">
                         <div class="card-header title">
                             <div class = "row">
-                                <div class = "col-sm-2 text-left">
+                                <div class = "col-sm-3 text-left">
                                     <a href="/Coaches" class="btn btn-primary">All Coaches</a>
                                 </div>
-                                <div class = "col-sm-7">
+                                <div class = "col-sm-6">
                                     <form class="form-inline my-2 my-lg-0" method="get" action="#">
                                         <input class="form-control mr-sm-2" type="search" placeholder="Search all coaches" name="s">
                                         <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>

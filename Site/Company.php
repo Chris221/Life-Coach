@@ -68,10 +68,10 @@
 						<div class="card text-center page-margin0 left">
 							<div class="card-header title">
 								<div class = "row">
-									<div class = "col-sm-2 text-left">
+									<div class = "col-sm-3 text-left">
 										<a href="/Company?c='.$_GET['c'].'" class="btn btn-primary">All Companies</a>
 									</div>
-									<div class = "col-sm-7">
+									<div class = "col-sm-6">
 										<form class="form-inline my-2 my-lg-0" method="get" action="#">
 											<input type="hidden" value="'.$_GET['c'].'" name="c">
 											<input class="form-control mr-sm-2" type="search" placeholder="Search all companies" name="s">
