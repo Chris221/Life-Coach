@@ -180,6 +180,14 @@
 			$work = false;
 		}
 		if ($work) {
+			// Check for Email duplicates
+			$data = view('persons', "email='$email'");
+			if ($data['personid'] && ($data['personid'] <> $pid)) {
+				$text = "The email address \"$email\" already exists.<br />";
+				$work = false;
+			}
+		}
+		if ($work) {
 			//$photoid = uploadImage();
 			$email = strtolower($email);
 			$correctDOB = date("Y-m-d", strtotime($dob));
