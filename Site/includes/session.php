@@ -6,8 +6,6 @@
 		//Loading Includes
 		include('includes/db.php');
 		include('includes/protection.php');
-		include('db.php');
-		include('protection.php');
 		//gets personid from cookie
 		$personid = (int) decrypt($_COOKIE['Login']);
 		$sql = "SELECT * FROM accounts WHERE personid='$personid';";
